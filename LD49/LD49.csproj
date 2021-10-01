@@ -38,7 +38,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Components" />
-      <Folder Include="Data" />
     </ItemGroup>
     <Import Project="..\machina\MachinaAssets\MachinaAssets.projitems" Label="Shared" />
 </Project>
