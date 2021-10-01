@@ -1,6 +1,6 @@
 ﻿namespace LD49.Data
 {
-    public class ConstantMathExpression : IMathExpression
+    public class ConstantMathExpression : MathExpression
     {
         private int value;
 
@@ -8,29 +8,46 @@
         {
             this.value = i;
         }
-        
-        public IMathExpression Multiply(int i)
+
+        public override MathExpression Multiply(MathExpression i)
         {
-            this.value *= i;
+            if (i is ConstantMathExpression otherConstant)
+            {
+                this.value *= otherConstant.value;
+            }
+
             return this;
         }
 
-        public IMathExpression Add(int i)
+        public override MathExpression Add(MathExpression i)
         {
-            this.value += i;
+            if (i is ConstantMathExpression otherConstant)
+            {
+                this.value += otherConstant.value;
+            }
+
             return this;
         }
 
-        public IMathExpression Subtract(int i)
+        public override MathExpression Subtract(MathExpression i)
         {
-            this.value -= i;
+            if (i is ConstantMathExpression otherConstant)
+            {
+                this.value -= otherConstant.value;
+            }
+
             return this;
         }
 
-        public IMathExpression DivideBy(int i)
+        public override MathExpression DivideBy(MathExpression i)
         {
-            this.value /= i;
-            return this;
+            if (i is ConstantMathExpression otherConstant && this.value % otherConstant.value == 0)
+            {
+                this.value /= otherConstant.value;
+                return this;
+            }
+
+            return new FractionalMathExpression(new ConstantMathExpression(this.value), i);
         }
 
         public override string ToString()

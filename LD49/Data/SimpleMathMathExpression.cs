@@ -1,45 +1,30 @@
 ﻿namespace LD49.Data
 {
-    public class SimpleMathMathExpression : IMathExpression
+    public class SimpleMathMathExpression : MathExpression
     {
-        private readonly IMathExpression denominator = new ConstantMathExpression(1);
-        private int addend;
-        private int factor = 1;
-
-        public IMathExpression Add(int i)
+        public override MathExpression Add(MathExpression i)
         {
-            this.addend += i;
             return this;
         }
 
-        public IMathExpression DivideBy(int i)
+        public override MathExpression DivideBy(MathExpression i)
         {
-            this.denominator.Multiply(i);
             return this;
         }
 
-        public IMathExpression Multiply(int i)
+        public override MathExpression Multiply(MathExpression i)
         {
-            this.factor *= i;
             return this;
         }
 
-        public IMathExpression Subtract(int i)
+        public override MathExpression Subtract(MathExpression i)
         {
-            this.addend -= i;
             return this;
         }
 
         public override string ToString()
         {
-            var fractionalSegment = "";
-
-            if (this.denominator.ToString() != "1")
-            {
-                fractionalSegment = " / " + this.denominator;
-            }
-
-            return this.addend * this.factor + fractionalSegment;
+            return "";
         }
     }
 }
