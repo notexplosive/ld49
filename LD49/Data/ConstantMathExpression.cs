@@ -2,7 +2,7 @@
 {
     public class ConstantMathExpression : MathExpression
     {
-        private int value;
+        private readonly int value;
 
         public ConstantMathExpression(int i)
         {
@@ -13,7 +13,7 @@
         {
             if (i is ConstantMathExpression otherConstant)
             {
-                this.value *= otherConstant.value;
+                return new ConstantMathExpression(this.value * otherConstant.value);
             }
 
             return this;
@@ -23,7 +23,7 @@
         {
             if (i is ConstantMathExpression otherConstant)
             {
-                this.value += otherConstant.value;
+                return new ConstantMathExpression(this.value + otherConstant.value);
             }
 
             return this;
@@ -33,7 +33,7 @@
         {
             if (i is ConstantMathExpression otherConstant)
             {
-                this.value -= otherConstant.value;
+                return new ConstantMathExpression(this.value - otherConstant.value);
             }
 
             return this;
@@ -43,8 +43,7 @@
         {
             if (i is ConstantMathExpression otherConstant && this.value % otherConstant.value == 0)
             {
-                this.value /= otherConstant.value;
-                return this;
+                return new ConstantMathExpression(this.value / otherConstant.value);
             }
 
             return new FractionalMathExpression(new ConstantMathExpression(this.value), i);
