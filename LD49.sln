@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMachina", "machina\Test
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MachinaAssets", "machina\MachinaAssets\MachinaAssets.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLD49", "TestLD49\TestLD49.csproj", "{40FC4358-24AD-498A-A891-7CF3B1D872D8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		machina\MachinaAssets\MachinaAssets.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
@@ -63,6 +65,18 @@ Global
 		{FE79A015-6A67-41CC-9396-6EE29EB8AF9B}.Release|x64.Build.0 = Release|Any CPU
 		{FE79A015-6A67-41CC-9396-6EE29EB8AF9B}.Release|x86.ActiveCfg = Release|Any CPU
 		{FE79A015-6A67-41CC-9396-6EE29EB8AF9B}.Release|x86.Build.0 = Release|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Debug|x64.Build.0 = Debug|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Debug|x86.Build.0 = Debug|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Release|x64.ActiveCfg = Release|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Release|x64.Build.0 = Release|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Release|x86.ActiveCfg = Release|Any CPU
+		{40FC4358-24AD-498A-A891-7CF3B1D872D8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,13 +12,16 @@
   <ItemGroup>
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
+    <None Remove="screenshots\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
     <EmbeddedResource Include="Icon.bmp" />
+    <EmbeddedResource Remove="screenshots\**" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+    <MonoGameContentReference Remove="screenshots\**" />
   </ItemGroup>
   <ItemGroup>
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
@@ -29,6 +32,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\machina\Machina\Machina.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="screenshots\**" />
   </ItemGroup>
   <Import Project="..\machina\MachinaAssets\MachinaAssets.projitems" Label="Shared" />
 </Project>
