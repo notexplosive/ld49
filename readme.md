@@ -1,4 +1,4 @@
-# Made using [Machina](https://github.com/notexplosive/machina)
+# Made with [Machina](https://github.com/notexplosive/machina) by NotExplosive
 
 To clone this repo:
 
