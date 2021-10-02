@@ -180,5 +180,17 @@ namespace TestLD49
         {
             MathOperator.Add(MathOperator.Negate(One.Instance), One.Instance).Should().Be(Zero.Instance);
         }
+
+        [Fact]
+        public void prime_minus_zero_is_prime()
+        {
+            MathOperator.Subtract(Prime.Seven, Zero.Instance).Should().Be(Prime.Seven);
+        }
+
+        [Fact]
+        public void zero_minus_prime_is_negative_prime()
+        {
+            MathOperator.Subtract(Zero.Instance,Prime.Seven).Should().Be(MathOperator.Negate(Prime.Seven));
+        }
     }
 }
