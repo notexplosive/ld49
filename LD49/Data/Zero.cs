@@ -26,7 +26,7 @@
 
     public class One : SpecialNumber
     {
-        public static readonly MathExpression Instance = new One();
+        public static readonly SpecialNumber Instance = new One();
 
         private One() : base(1)
         {
@@ -35,7 +35,7 @@
 
     public class Infinity : SpecialNumber
     {
-        public static readonly MathExpression Instance = new Infinity();
+        public static readonly SpecialNumber Instance = new Infinity();
 
         private Infinity() : base(int.MaxValue)
         {
@@ -44,7 +44,7 @@
 
     public class Zero : SpecialNumber
     {
-        public static readonly MathExpression Instance = new Zero();
+        public static readonly SpecialNumber Instance = new Zero();
 
         private Zero() : base(0)
         {
