@@ -4,7 +4,7 @@ using Xunit;
 
 namespace TestLD49
 {
-    public class NegateTests
+    public class UnaryTests
     {
         [Fact]
         public void negate_to_get_negative()
