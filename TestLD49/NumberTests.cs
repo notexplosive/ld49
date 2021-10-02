@@ -192,5 +192,17 @@ namespace TestLD49
         {
             MathOperator.Subtract(Zero.Instance,Prime.Seven).Should().Be(MathOperator.Negate(Prime.Seven));
         }
+
+        [Fact]
+        public void prime_plus_one()
+        {
+            MathOperator.Add(Prime.Three, One.Instance).ToString().Should().Be("(1 + 3)");
+        }
+        
+        [Fact]
+        public void one_plus_prime()
+        {
+            MathOperator.Add(One.Instance, Prime.Three).ToString().Should().Be("(1 + 3)");
+        }
     }
 }
