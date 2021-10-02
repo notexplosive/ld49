@@ -30,21 +30,6 @@ namespace LD49.Data
         public static MathExpression Create(MathExpression left, MathExpression right)
         {
             // X + (A + B) -> X + A + B
-            if (left is AddMathExpression add1 && right is AddMathExpression add2)
-            {
-                return AddMathExpression.Simplify(new Builder().Add(add1).Add(add2).Build());
-            }
-
-            if (left is AddMathExpression leftAdd && right is Prime rightPrime)
-            {
-                return AddMathExpression.Simplify(new Builder().Add(leftAdd).Add(rightPrime).Build());
-            }
-
-            if (left is Prime leftPrime && right is AddMathExpression rightAdd)
-            {
-                return AddMathExpression.Simplify(new Builder().Add(leftPrime).Add(rightAdd).Build());
-            }
-
             return AddMathExpression.Simplify(new Builder().Add(left).Add(right).Build());
         }
 
