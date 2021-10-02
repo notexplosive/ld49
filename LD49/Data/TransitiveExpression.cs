@@ -44,11 +44,6 @@ namespace LD49.Data
             return $"({string.Join($" {this.symbol} ", this.content)})";
         }
 
-        public List<MathExpression> GetContent()
-        {
-            return this.content.ToList();
-        }
-
         protected abstract class TransitiveBuilder<TBuilderType, TExpressionType>
             where TBuilderType : class
             where TExpressionType : TransitiveExpression
