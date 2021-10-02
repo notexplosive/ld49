@@ -68,7 +68,7 @@ namespace LD49.Data
 
         public static MathExpression Inverse(MathExpression i)
         {
-            return FractionalMathExpression.Create(One.Instance, i);
+            return InverseExpression.Create(i);
         }
 
         public virtual MathExpression Add(MathExpression i)
@@ -88,7 +88,7 @@ namespace LD49.Data
 
         public virtual MathExpression DivideBy(MathExpression i)
         {
-            return FractionalMathExpression.Create(this, i);
+            return MultiplyMathExpression.Create(this, InverseExpression.Create(i));
         }
     }
 }

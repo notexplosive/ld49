@@ -60,19 +60,13 @@ namespace LD49.Data
                 return MultiplyMathExpression.Simplify(new MultiplyMathExpression(leftPrime, rightAdd));
             }
 
-            // (A * B) * 1 / X -> ((A * B) / X)
-            if (left is MultiplyMathExpression leftNumeratorMul && right is FractionalMathExpression rightFrac)
+            // (1 / X) * (1 / Y) -> 1 / (X * Y)
+            if (left is InverseExpression leftInverse && right is InverseExpression rightInverse)
             {
-                return FractionalMathExpression.Create(
-                    MultiplyMathExpression.Create(leftNumeratorMul, rightFrac.Numerator),
-                    rightFrac.Denominator);
-            }
-
-            if (left is FractionalMathExpression leftFrac && right is MultiplyMathExpression rightNumeratorMul)
-            {
-                return FractionalMathExpression.Create(
-                    MultiplyMathExpression.Create(rightNumeratorMul, leftFrac.Numerator),
-                    leftFrac.Denominator);
+                return InverseExpression.Create(
+                    MultiplyMathExpression.Create(
+                        MathExpression.Inverse(leftInverse),
+                        MathExpression.Inverse(rightInverse)));
             }
 
             return MultiplyMathExpression.Simplify(new MultiplyMathExpression(left, right));

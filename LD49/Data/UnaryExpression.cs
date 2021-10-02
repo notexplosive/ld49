@@ -3,9 +3,9 @@
     public abstract class UnaryExpression : MathExpression
     {
         protected readonly MathExpression inner;
-        private readonly char symbol;
+        private readonly string symbol;
 
-        protected UnaryExpression(MathExpression inner, char symbol)
+        protected UnaryExpression(MathExpression inner, string symbol)
         {
             this.inner = inner;
             this.symbol = symbol;

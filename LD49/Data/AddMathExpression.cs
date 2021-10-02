@@ -120,10 +120,11 @@ namespace LD49.Data
 
         public override MathExpression DivideBy(MathExpression i)
         {
-            // (A + B) / X -> (A/X + B/X)
+            // (A + B) / X -> (A* 1/X) + (B * 1/X)
             return new AddMathExpression(
-                FractionalMathExpression.Create(this.content[0], i),
-                FractionalMathExpression.Create(this.content[1], i));
+                MultiplyMathExpression.Create(InverseExpression.Create(this.content[0]), i),
+                MultiplyMathExpression.Create(InverseExpression.Create(this.content[1]), i)
+                );
         }
     }
 }

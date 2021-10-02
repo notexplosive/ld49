@@ -9,7 +9,7 @@ namespace TestLD49
         [Fact]
         public void divide_into_fraction()
         {
-            Prime.Eleven.DivideBy(Prime.Three).ToString().Should().Be("(11 / 3)");
+            Prime.Eleven.DivideBy(Prime.Three).ToString().Should().Be("((1 / 3) * 11)");
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace TestLD49
         }
 
         [Fact]
-        public void add_one_then_divide_multiple()
+        public void divide_multiple()
         {
             One.Instance.DivideBy(Prime.Three).DivideBy(Prime.Three).ToString().Should().Be("(1 / (3 * 3))");
         }
@@ -117,12 +117,13 @@ namespace TestLD49
         [Fact]
         public void expression_times_one_is_expression()
         {
-            Prime.Five.DivideBy(Prime.Seven).Multiply(One.Instance).ToString().Should().Be("(5 / 7)");
+            Prime.Five.DivideBy(Prime.Seven).Multiply(One.Instance).ToString().Should().Be("(5 * (1 / 7))");
         }
 
         [Fact]
-        public void complex_expression_with_inverse_cancels()
+        public void complex_multiply_expression_with_inverse_cancels()
         {
+            // this one is hard, do this one last.
             Prime.Two.Multiply(Prime.Three).Multiply(Prime.Thirteen).Multiply(MathExpression.Inverse(Prime.Two)).ToString().Should().Be("(3 * 13)");
         }
     }
