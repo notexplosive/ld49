@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Transactions;
 
 namespace LD49.Data
 {
@@ -24,6 +23,22 @@ namespace LD49.Data
             this.content = contentList.ToImmutableArray();
         }
 
+        public override int UnderlyingValue
+        {
+            get
+            {
+                var total = 0;
+                foreach (var n in this.content)
+                {
+                    total = UnderlyingFunction(total, n.UnderlyingValue);
+                }
+
+                return total;
+            }
+        }
+
+        protected abstract int UnderlyingFunction(int prevValue, int currentValue);
+
         public override string ToString()
         {
             return $"({string.Join($" {this.symbol} ", this.content)})";
@@ -34,8 +49,8 @@ namespace LD49.Data
             return this.content.ToList();
         }
 
-        protected abstract class TransitiveBuilder<TBuilderType, TExpressionType> 
-            where TBuilderType : class 
+        protected abstract class TransitiveBuilder<TBuilderType, TExpressionType>
+            where TBuilderType : class
             where TExpressionType : TransitiveExpression
         {
             protected readonly List<MathExpression> content = new List<MathExpression>();

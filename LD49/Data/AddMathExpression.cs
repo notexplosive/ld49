@@ -8,18 +8,9 @@ namespace LD49.Data
         {
         }
 
-        public override int UnderlyingValue
+        protected override int UnderlyingFunction(int prevValue, int currentValue)
         {
-            get
-            {
-                var total = 0;
-                foreach (var n in this.content)
-                {
-                    total += n.UnderlyingValue;
-                }
-
-                return total;
-            }
+            return prevValue + currentValue;
         }
 
         public static MathExpression Create(MathExpression left, MathExpression right)
