@@ -9,16 +9,18 @@ namespace LD49.Data
         {
         }
 
-
-        private MultiplyMathExpression(MultiplyMathExpression leftSet, MultiplyMathExpression rightSet) : base('*', leftSet, rightSet)
+        private MultiplyMathExpression(MultiplyMathExpression leftSet, MultiplyMathExpression rightSet) : base('*',
+            leftSet, rightSet)
         {
         }
 
-        private MultiplyMathExpression(MultiplyMathExpression leftSet, Prime rightPrime) : base('*', leftSet, rightPrime)
+        private MultiplyMathExpression(MultiplyMathExpression leftSet, Prime rightPrime) : base('*', leftSet,
+            rightPrime)
         {
         }
 
-        private MultiplyMathExpression(Prime leftPrime, MultiplyMathExpression rightSet) : base('*', leftPrime, rightSet)
+        private MultiplyMathExpression(Prime leftPrime, MultiplyMathExpression rightSet) : base('*', leftPrime,
+            rightSet)
         {
         }
 
@@ -56,6 +58,21 @@ namespace LD49.Data
             if (left is Prime leftPrime && right is MultiplyMathExpression rightAdd)
             {
                 return MultiplyMathExpression.Simplify(new MultiplyMathExpression(leftPrime, rightAdd));
+            }
+
+            // (A * B) * 1 / X -> ((A * B) / X)
+            if (left is MultiplyMathExpression leftNumeratorMul && right is FractionalMathExpression rightFrac)
+            {
+                return FractionalMathExpression.Create(
+                    MultiplyMathExpression.Create(leftNumeratorMul, rightFrac.Numerator),
+                    rightFrac.Denominator);
+            }
+
+            if (left is FractionalMathExpression leftFrac && right is MultiplyMathExpression rightNumeratorMul)
+            {
+                return FractionalMathExpression.Create(
+                    MultiplyMathExpression.Create(rightNumeratorMul, leftFrac.Numerator),
+                    leftFrac.Denominator);
             }
 
             return MultiplyMathExpression.Simplify(new MultiplyMathExpression(left, right));
@@ -107,10 +124,8 @@ namespace LD49.Data
             {
                 return One.Instance;
             }
-            else
-            {
-                return finalExpressions[0];
-            }
+
+            return finalExpressions[0];
         }
     }
 }

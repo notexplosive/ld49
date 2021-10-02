@@ -2,13 +2,20 @@
 {
     public class FractionalMathExpression : PairExpression
     {
-        public FractionalMathExpression(MathExpression numerator, MathExpression denominator)
+        private FractionalMathExpression(MathExpression numerator, MathExpression denominator)
             : base(numerator, denominator, '/')
         {
         }
 
-        private MathExpression Numerator => this.left;
-        private MathExpression Denominator => this.right;
+        public MathExpression Numerator => this.left;
+        public MathExpression Denominator => this.right;
+
+        public override int UnderlyingValue => Denominator.UnderlyingValue / Numerator.UnderlyingValue;
+
+        public static MathExpression Create(MathExpression numerator, MathExpression denominator)
+        {
+            return FractionalMathExpression.Simplify(new FractionalMathExpression(numerator, denominator));
+        }
 
         public override MathExpression Multiply(MathExpression i)
         {
@@ -22,6 +29,16 @@
 
         private static MathExpression Simplify(FractionalMathExpression fraction)
         {
+            if (fraction.Denominator is One)
+            {
+                return fraction.Numerator;
+            }
+
+            if (fraction.Denominator is Zero)
+            {
+                return Infinity.Instance;
+            }
+
             if (fraction.Numerator == fraction.Denominator)
             {
                 return One.Instance;
@@ -29,7 +46,5 @@
 
             return fraction;
         }
-
-        public override int UnderlyingValue => this.Denominator.UnderlyingValue / this.Numerator.UnderlyingValue;
     }
 }

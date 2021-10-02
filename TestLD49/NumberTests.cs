@@ -119,5 +119,11 @@ namespace TestLD49
         {
             Prime.Five.DivideBy(Prime.Seven).Multiply(One.Instance).ToString().Should().Be("(5 / 7)");
         }
+
+        [Fact]
+        public void complex_expression_with_inverse_cancels()
+        {
+            Prime.Two.Multiply(Prime.Three).Multiply(Prime.Thirteen).Multiply(MathExpression.Inverse(Prime.Two)).ToString().Should().Be("(3 * 13)");
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace LD49.Data
 {
@@ -57,6 +58,11 @@ namespace LD49.Data
         public override string ToString()
         {
             return $"({string.Join($" {this.symbol} ", this.content)})";
+        }
+
+        public List<MathExpression> GetContent()
+        {
+            return this.content.ToList();
         }
     }
 }

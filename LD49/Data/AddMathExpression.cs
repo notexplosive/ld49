@@ -122,8 +122,8 @@ namespace LD49.Data
         {
             // (A + B) / X -> (A/X + B/X)
             return new AddMathExpression(
-                new FractionalMathExpression(this.content[0], i),
-                new FractionalMathExpression(this.content[1], i));
+                FractionalMathExpression.Create(this.content[0], i),
+                FractionalMathExpression.Create(this.content[1], i));
         }
     }
 }

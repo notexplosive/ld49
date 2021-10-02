@@ -8,12 +8,12 @@ namespace LD49.Data
 
         public int CompareTo(MathExpression other)
         {
-            if (object.ReferenceEquals(this, other))
+            if (ReferenceEquals(this, other))
             {
                 return 0;
             }
 
-            if (object.ReferenceEquals(null, other))
+            if (ReferenceEquals(null, other))
             {
                 return 1;
             }
@@ -28,7 +28,7 @@ namespace LD49.Data
 
         public override bool Equals(object obj)
         {
-            return object.ReferenceEquals(this, obj) || obj is MathExpression other && Equals(other);
+            return ReferenceEquals(this, obj) || obj is MathExpression other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -38,12 +38,12 @@ namespace LD49.Data
 
         public static bool operator ==(MathExpression left, MathExpression right)
         {
-            return object.Equals(left, right);
+            return Equals(left, right);
         }
 
         public static bool operator !=(MathExpression left, MathExpression right)
         {
-            return !object.Equals(left, right);
+            return !Equals(left, right);
         }
 
         public virtual MathExpression Multiply(MathExpression i)
@@ -57,18 +57,18 @@ namespace LD49.Data
             {
                 return Zero.Instance;
             }
-            
-            return MultiplyMathExpression.Create(this,i);
+
+            return MultiplyMathExpression.Create(this, i);
         }
 
         public static MathExpression Negate(MathExpression i)
         {
             return new NegateExpression(i);
         }
-        
+
         public static MathExpression Inverse(MathExpression i)
         {
-            return new FractionalMathExpression(One.Instance,i);
+            return FractionalMathExpression.Create(One.Instance, i);
         }
 
         public virtual MathExpression Add(MathExpression i)
@@ -83,22 +83,12 @@ namespace LD49.Data
                 return this;
             }
 
-            return Add(Negate(i));
+            return Add(MathExpression.Negate(i));
         }
 
         public virtual MathExpression DivideBy(MathExpression i)
         {
-            if (i is One)
-            {
-                return this;
-            }
-
-            if (i is Zero)
-            {
-                return Infinity.Instance;
-            }
-
-            return new FractionalMathExpression(this, i);
+            return FractionalMathExpression.Create(this, i);
         }
     }
 }
