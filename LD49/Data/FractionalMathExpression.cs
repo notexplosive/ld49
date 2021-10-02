@@ -15,22 +15,36 @@ namespace LD49.Data
 
         public override MathExpression Multiply(MathExpression i)
         {
-            return this.numerator.Multiply(i);
+            return AttemptToSimplify(new FractionalMathExpression(this.numerator.Multiply(i), this.denominator));
         }
 
         public override MathExpression Add(MathExpression i)
         {
-            return new SimpleMathMathExpression().Add(this).Add(i);
+            throw new NotImplementedException();
         }
 
         public override MathExpression Subtract(MathExpression i)
         {
-            return new SimpleMathMathExpression().Add(this).Subtract(i);
+            throw new NotImplementedException();
         }
 
         public override MathExpression DivideBy(MathExpression i)
         {
-            return new FractionalMathExpression(this.numerator,this.denominator.Multiply(i));
+            return AttemptToSimplify(new FractionalMathExpression(this.numerator,this.denominator.Multiply(i)));
+        }
+
+        private static MathExpression AttemptToSimplify(FractionalMathExpression fraction)
+        {
+            if (fraction.numerator is ConstantMathExpression && fraction.denominator is ConstantMathExpression)
+            {
+                var attemptResult = fraction.numerator.DivideBy(fraction.denominator);
+                if (attemptResult is ConstantMathExpression)
+                {
+                    return attemptResult;
+                }
+            }
+            
+            return fraction;
         }
 
         public override string ToString()
