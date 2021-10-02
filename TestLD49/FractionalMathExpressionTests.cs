@@ -23,12 +23,6 @@ namespace TestLD49
         {
             new FractionalMathExpression(One.Instance, Prime.Three).Multiply(Prime.Three).ToString().Should().Be("1");
         }
-        
-        [Fact]
-        public void simplify_to_just_numerator()
-        {
-            new FractionalMathExpression(Prime.Seven, Prime.Three).Multiply(Prime.Three).ToString().Should().Be("7");
-        }
 
         [Fact]
         public void add_to_fraction()
