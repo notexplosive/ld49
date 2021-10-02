@@ -38,20 +38,6 @@ namespace LD49.Data
             return Prime.All.ContainsKey(val);
         }
 
-        public override MathExpression Add(MathExpression i)
-        {
-            if (i is Prime otherPrime)
-            {
-                var sum = otherPrime.value + this.value;
-                if (Prime.IsPrime(sum))
-                {
-                    return Prime.All[sum];
-                }
-            }
-
-            return base.Add(i);
-        }
-
         public override MathExpression DivideBy(MathExpression i)
         {
             if (i == this)

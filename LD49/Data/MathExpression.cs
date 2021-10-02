@@ -4,6 +4,23 @@ namespace LD49.Data
 {
     public abstract class MathExpression : IComparable<MathExpression>
     {
+        public abstract int UnderlyingValue { get; }
+
+        public int CompareTo(MathExpression other)
+        {
+            if (object.ReferenceEquals(this, other))
+            {
+                return 0;
+            }
+
+            if (object.ReferenceEquals(null, other))
+            {
+                return 1;
+            }
+
+            return UnderlyingValue.CompareTo(other.UnderlyingValue);
+        }
+
         protected bool Equals(MathExpression other)
         {
             return ToString() == other.ToString();
@@ -39,24 +56,14 @@ namespace LD49.Data
             return new MultiplyMathExpression(this, i);
         }
 
-        public MathExpression Negate(MathExpression i)
+        public static MathExpression Negate(MathExpression i)
         {
             return new NegateExpression(i);
         }
 
         public virtual MathExpression Add(MathExpression i)
         {
-            if (i is Zero)
-            {
-                return this;
-            }
-
-            if (i == Negate(this) || this == Negate(i))
-            {
-                return Zero.Instance;
-            }
-
-            return new AddMathExpression(this, i);
+            return AddMathExpression.Create(this, i);
         }
 
         public MathExpression Subtract(MathExpression i)
@@ -83,22 +90,5 @@ namespace LD49.Data
 
             return new FractionalMathExpression(this, i);
         }
-        
-        public int CompareTo(MathExpression other)
-        {
-            if (object.ReferenceEquals(this, other))
-            {
-                return 0;
-            }
-
-            if (object.ReferenceEquals(null, other))
-            {
-                return 1;
-            }
-
-            return this.UnderlyingValue.CompareTo(other.UnderlyingValue);
-        }
-        
-        public abstract int UnderlyingValue { get; }
     }
 }

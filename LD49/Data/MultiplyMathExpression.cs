@@ -3,7 +3,7 @@
     public class MultiplyMathExpression : TransitiveExpression
     {
         public MultiplyMathExpression(MathExpression rightFactor, MathExpression leftFactor)
-            : base(leftFactor, '*', rightFactor)
+            : base('*', leftFactor, rightFactor)
         {
         }
 

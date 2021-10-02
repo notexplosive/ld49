@@ -27,7 +27,7 @@ namespace TestLD49
         [Fact]
         public void add_multiple()
         {
-            One.Instance.Add(Prime.Three).Add(Prime.Two).ToString().Should().Be("(2 + (1 + 3))");
+            One.Instance.Add(Prime.Three).Add(Prime.Two).ToString().Should().Be("(1 + 2 + 3)");
         }
 
         [Fact]
@@ -70,6 +70,24 @@ namespace TestLD49
         public void multiply_by_one_does_nothing()
         {
             One.Instance.Multiply(Prime.Thirteen).Should().Be(Prime.Thirteen);
+        }
+
+        [Fact]
+        public void sum_two_primes_to_expression_not_prime()
+        {
+            Prime.Two.Add(Prime.Three).ToString().Should().Be("(2 + 3)");
+        }
+
+        [Fact]
+        public void sum_three_primes_to_expression_not_prime()
+        {
+            Prime.Three.Add(Prime.Seven).Add(Prime.Three).ToString().Should().Be("(3 + 3 + 7)");
+        }
+        
+        [Fact]
+        public void sum_three_primes_to_expression()
+        {
+            Prime.Three.Add(Prime.Three).Add(Prime.Three).ToString().Should().Be("(3 + 3 + 3)");
         }
     }
 }
