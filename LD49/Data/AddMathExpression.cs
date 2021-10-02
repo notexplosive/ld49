@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace LD49.Data
 {
@@ -42,6 +43,7 @@ namespace LD49.Data
                 allExpressions.Add(item);
             }
 
+            // Cancel out negates
             for (var i = 0; i < allExpressions.Count; i++)
             {
                 for (var j = 0; j < allExpressions.Count; j++)
@@ -72,7 +74,12 @@ namespace LD49.Data
 
             if (finalExpressions.Count > 1)
             {
-                return new AddMathExpression(finalExpressions.ToArray());
+                var builder = new Builder();
+                foreach (var item in finalExpressions.ToArray())
+                {
+                    builder.Add(item);
+                }
+                return builder.Build();
             }
 
             if (finalExpressions.Count == 0)
@@ -81,12 +88,6 @@ namespace LD49.Data
             }
 
             return finalExpressions[0];
-        }
-
-        public override MathExpression Multiply(MathExpression i)
-        {
-            // X * (A + B) -> AX + BX
-            return new AddMathExpression(this.content[0].Multiply(i), this.content[1].Multiply(i));
         }
 
         public override MathExpression DivideBy(MathExpression i)
@@ -100,7 +101,7 @@ namespace LD49.Data
 
         private class Builder : TransitiveBuilder<Builder, AddMathExpression>
         {
-            public AddMathExpression Build()
+            public override AddMathExpression Build()
             {
                 return new AddMathExpression(this.content.ToArray());
             }

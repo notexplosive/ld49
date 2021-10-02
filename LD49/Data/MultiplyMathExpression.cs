@@ -44,8 +44,14 @@ namespace LD49.Data
 
         private static MathExpression Simplify(MultiplyMathExpression expression)
         {
-            var allExpressions = new List<MathExpression>();
+            if (expression.content.Contains(Zero.Instance))
+            {
+                // Anything times zero is zero
+                return Zero.Instance;
+            }
 
+            var allExpressions = new List<MathExpression>();
+            
             foreach (var item in expression.content)
             {
                 allExpressions.Add(item);
@@ -81,7 +87,12 @@ namespace LD49.Data
 
             if (finalExpressions.Count > 1)
             {
-                return new MultiplyMathExpression(finalExpressions.ToArray());
+                var builder = new Builder();
+                foreach (var item in finalExpressions.ToArray())
+                {
+                    builder.Add(item);
+                }
+                return builder.Build();
             }
 
             if (finalExpressions.Count == 0)
@@ -94,7 +105,7 @@ namespace LD49.Data
 
         private class Builder : TransitiveBuilder<Builder, MultiplyMathExpression>
         {
-            public MultiplyMathExpression Build()
+            public override MultiplyMathExpression Build()
             {
                 return new MultiplyMathExpression(this.content.ToArray());
             }

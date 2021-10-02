@@ -132,5 +132,29 @@ namespace TestLD49
         {
             Prime.Three.Multiply(Prime.Seven).Multiply(InverseExpression.Create(Prime.Three)).Should().Be(Prime.Seven);
         }
+
+        [Fact]
+        public void prime_times_one_is_same()
+        {
+            Prime.Seven.Multiply(One.Instance).Should().Be(Prime.Seven);
+        }
+        
+        [Fact]
+        public void one_times_prime_is_same()
+        {
+            One.Instance.Multiply(Prime.Seven).Should().Be(Prime.Seven);
+        }
+        
+        [Fact]
+        public void prime_times_zero_is_zero()
+        {
+            Prime.Seven.Multiply(Zero.Instance).Should().Be(Zero.Instance);
+        }
+        
+        [Fact]
+        public void zero_times_prime_is_zero()
+        {
+            Zero.Instance.Multiply(Prime.Seven).Should().Be(Zero.Instance);
+        }
     }
 }

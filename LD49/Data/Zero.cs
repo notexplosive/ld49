@@ -31,11 +31,6 @@
         private One() : base(1)
         {
         }
-
-        public override MathExpression Multiply(MathExpression i)
-        {
-            return i;
-        }
     }
 
     public class Infinity : SpecialNumber

@@ -46,18 +46,8 @@ namespace LD49.Data
             return !Equals(left, right);
         }
 
-        public virtual MathExpression Multiply(MathExpression i)
+        public MathExpression Multiply(MathExpression i)
         {
-            if (i is One)
-            {
-                return this;
-            }
-
-            if (i is Zero)
-            {
-                return Zero.Instance;
-            }
-
             return MultiplyMathExpression.Create(this, i);
         }
 

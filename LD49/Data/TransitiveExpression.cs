@@ -34,7 +34,7 @@ namespace LD49.Data
             return this.content.ToList();
         }
 
-        protected class TransitiveBuilder<TBuilderType, TExpressionType> 
+        protected abstract class TransitiveBuilder<TBuilderType, TExpressionType> 
             where TBuilderType : class 
             where TExpressionType : TransitiveExpression
         {
@@ -61,6 +61,8 @@ namespace LD49.Data
                     Add(expression);
                 }
             }
+
+            public abstract TExpressionType Build();
         }
     }
 }
