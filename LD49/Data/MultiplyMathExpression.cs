@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 namespace LD49.Data
 {
@@ -27,41 +27,10 @@ namespace LD49.Data
                 return Zero.Instance;
             }
 
-            var allExpressions = new List<MathExpression>();
-
-            foreach (var item in expression.content)
-            {
-                allExpressions.Add(item);
-            }
-
             // Cancel out inverses
-            for (var i = 0; i < allExpressions.Count; i++)
-            {
-                for (var j = 0; j < allExpressions.Count; j++)
-                {
-                    if (i != j)
-                    {
-                        var left = allExpressions[i];
-                        var right = allExpressions[j];
-
-                        if (left == MathOperator.Inverse(right) || right == MathOperator.Inverse(left))
-                        {
-                            allExpressions[i] = One.Instance;
-                            allExpressions[j] = One.Instance;
-                        }
-                    }
-                }
-            }
-
-            var finalExpressions = new List<MathExpression>();
-
-            foreach (var exp in allExpressions)
-            {
-                if (exp != One.Instance)
-                {
-                    finalExpressions.Add(exp);
-                }
-            }
+            var finalExpressions =
+                TransitiveExpression.FilterExpressions(expression.content.ToArray(), One.Instance,
+                    MathOperator.Inverse);
 
             if (finalExpressions.Count > 1)
             {
