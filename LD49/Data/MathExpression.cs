@@ -9,7 +9,7 @@
 
         public override bool Equals(object obj)
         {
-            return ReferenceEquals(this, obj) || obj is MathExpression other && Equals(other);
+            return object.ReferenceEquals(this, obj) || obj is MathExpression other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -19,30 +19,30 @@
 
         public static bool operator ==(MathExpression left, MathExpression right)
         {
-            return Equals(left, right);
+            return object.Equals(left, right);
         }
 
         public static bool operator !=(MathExpression left, MathExpression right)
         {
-            return !Equals(left, right);
+            return !object.Equals(left, right);
         }
 
-        public MathExpression Multiply(MathExpression i)
+        public virtual MathExpression Multiply(MathExpression i)
         {
             return new MultiplyMathExpression(this, i);
         }
 
-        public MathExpression Add(MathExpression i)
+        public virtual MathExpression Add(MathExpression i)
         {
             return new AddMathExpression(this, i);
         }
 
-        public MathExpression Subtract(MathExpression i)
+        public virtual MathExpression Subtract(MathExpression i)
         {
             return new SubtractMathExpression(this, i);
         }
 
-        public MathExpression DivideBy(MathExpression i)
+        public virtual MathExpression DivideBy(MathExpression i)
         {
             return new FractionalMathExpression(this, i);
         }
