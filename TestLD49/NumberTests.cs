@@ -123,7 +123,8 @@ namespace TestLD49
         [Fact]
         public void expression_times_one_is_expression()
         {
-            MathOperator.Multiply(MathOperator.Divide(Prime.Five, Prime.Seven),One.Instance).ToString().Should().Be("(5 * (1 / 7))");
+            MathOperator.Multiply(MathOperator.Divide(Prime.Five, Prime.Seven), One.Instance).ToString().Should()
+                .Be("(5 * (1 / 7))");
         }
 
         [Fact]
@@ -166,6 +167,18 @@ namespace TestLD49
         public void zero_times_prime_is_zero()
         {
             MathOperator.Multiply(Zero.Instance, Prime.Seven).Should().Be(Zero.Instance);
+        }
+
+        [Fact]
+        public void one_cancels_with_negative_one()
+        {
+            MathOperator.Add(One.Instance, MathOperator.Negate(One.Instance)).Should().Be(Zero.Instance);
+        }
+
+        [Fact]
+        public void negative_one_cancels_with_one()
+        {
+            MathOperator.Add(MathOperator.Negate(One.Instance), One.Instance).Should().Be(Zero.Instance);
         }
     }
 }
