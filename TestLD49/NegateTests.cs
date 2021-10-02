@@ -9,7 +9,13 @@ namespace TestLD49
         [Fact]
         public void negate_to_get_negative()
         {
-            new NegateExpression(Prime.Seven).ToString().Should().Be("(-7)");
+            NegateExpression.Create(Prime.Seven).ToString().Should().Be("(-7)");
+        }
+
+        [Fact]
+        public void negate_zero_is_zero()
+        {
+            NegateExpression.Create(Zero.Instance).Should().Be(Zero.Instance);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace LD49.Data
 
         public static MathExpression Negate(MathExpression value)
         {
-            return new NegateExpression(value);
+            return NegateExpression.Create(value);
         }
 
         public static MathExpression Inverse(MathExpression value)
