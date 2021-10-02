@@ -4,11 +4,6 @@ namespace LD49.Data
 {
     public class MultiplyMathExpression : TransitiveExpression
     {
-        private MultiplyMathExpression(MathExpression rightFactor, MathExpression leftFactor)
-            : base('*', leftFactor, rightFactor)
-        {
-        }
-
         private MultiplyMathExpression(params MathExpression[] expressions) : base('*', expressions)
         {
         }

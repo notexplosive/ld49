@@ -1,15 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace LD49.Data
 {
     public class AddMathExpression : TransitiveExpression
     {
-        private AddMathExpression(MathExpression leftAddend, MathExpression rightAddend)
-            : base('+', leftAddend, rightAddend)
-        {
-        }
-
         private AddMathExpression(params MathExpression[] expressions) : base('+', expressions)
         {
         }
@@ -79,6 +73,7 @@ namespace LD49.Data
                 {
                     builder.Add(item);
                 }
+
                 return builder.Build();
             }
 
