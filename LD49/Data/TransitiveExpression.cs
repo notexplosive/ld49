@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -42,6 +43,40 @@ namespace LD49.Data
         public override string ToString()
         {
             return $"({string.Join($" {this.symbol} ", this.content)})";
+        }
+
+        protected static List<MathExpression> FilterExpressions(MathExpression[] allExpressions,
+            SpecialNumber eraseNumber, Func<MathExpression, MathExpression> invertFunction)
+        {
+            for (var i = 0; i < allExpressions.Length; i++)
+            {
+                for (var j = 0; j < allExpressions.Length; j++)
+                {
+                    if (i != j)
+                    {
+                        var left = allExpressions[i];
+                        var right = allExpressions[j];
+
+                        if (left == invertFunction(right) || right == invertFunction(left))
+                        {
+                            allExpressions[i] = eraseNumber;
+                            allExpressions[j] = eraseNumber;
+                        }
+                    }
+                }
+            }
+
+            var result = new List<MathExpression>();
+
+            foreach (var exp in allExpressions)
+            {
+                if (exp != eraseNumber)
+                {
+                    result.Add(exp);
+                }
+            }
+
+            return result;
         }
 
         protected abstract class TransitiveBuilder<TBuilderType, TExpressionType>

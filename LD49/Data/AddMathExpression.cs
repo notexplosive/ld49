@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace LD49.Data
 {
@@ -44,40 +42,6 @@ namespace LD49.Data
             }
 
             return finalExpressions[0];
-        }
-
-        private static List<MathExpression> FilterExpressions(MathExpression[] allExpressions,
-            SpecialNumber eraseNumber, Func<MathExpression, MathExpression> invertFunction)
-        {
-            for (var i = 0; i < allExpressions.Length; i++)
-            {
-                for (var j = 0; j < allExpressions.Length; j++)
-                {
-                    if (i != j)
-                    {
-                        var left = allExpressions[i];
-                        var right = allExpressions[j];
-
-                        if (left == invertFunction(right) || right == invertFunction(left))
-                        {
-                            allExpressions[i] = eraseNumber;
-                            allExpressions[j] = eraseNumber;
-                        }
-                    }
-                }
-            }
-
-            var result = new List<MathExpression>();
-
-            foreach (var exp in allExpressions)
-            {
-                if (exp != eraseNumber)
-                {
-                    result.Add(exp);
-                }
-            }
-
-            return result;
         }
 
         private class Builder : TransitiveBuilder<Builder, AddMathExpression>
