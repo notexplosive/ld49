@@ -228,5 +228,22 @@ namespace TestLD49
                                 MathOperator.Inverse(Prime.Five))),
                         MathOperator.Multiply(Prime.Five, Prime.Five)))).Should().Be(One.Instance);
         }
+
+        [Fact]
+        public void lots_of_cancels_add()
+        {
+            MathOperator.Add(
+                MathOperator.Add(
+                    Prime.Three, Prime.Eleven),
+                MathOperator.Add(
+                    MathOperator.Add(
+                        MathOperator.Negate(Prime.Five), MathOperator.Negate(Prime.Three)),
+                    MathOperator.Add(
+                        MathOperator.Add(MathOperator.Negate(Prime.Eleven),
+                            MathOperator.Add(
+                                MathOperator.Add(Prime.Two, MathOperator.Negate(Prime.Two)),
+                                MathOperator.Negate(Prime.Five))),
+                        MathOperator.Add(Prime.Five, Prime.Five)))).Should().Be(Zero.Instance);
+        }
     }
 }
