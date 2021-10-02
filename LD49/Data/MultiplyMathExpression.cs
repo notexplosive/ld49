@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace LD49.Data
 {
@@ -30,22 +29,6 @@ namespace LD49.Data
 
         public static MathExpression Create(MathExpression left, MathExpression right)
         {
-            // X * (A * B) -> X * A * B
-            if (left is MultiplyMathExpression mul1 && right is MultiplyMathExpression mul2)
-            {
-                return MultiplyMathExpression.Simplify(new Builder().Add(mul1).Add(mul2).Build());
-            }
-
-            if (left is MultiplyMathExpression leftMul && right is Prime rightPrime)
-            {
-                return MultiplyMathExpression.Simplify(new Builder().Add(leftMul).Add(rightPrime).Build());
-            }
-
-            if (left is Prime leftPrime && right is MultiplyMathExpression rightMul)
-            {
-                return MultiplyMathExpression.Simplify(new Builder().Add(leftPrime).Add(rightMul).Build());
-            }
-
             // (1 / X) * (1 / Y) -> 1 / (X * Y)
             if (left is InverseExpression leftInverse && right is InverseExpression rightInverse)
             {
@@ -55,7 +38,8 @@ namespace LD49.Data
                         MathExpression.Inverse(rightInverse)));
             }
 
-            return MultiplyMathExpression.Simplify(new MultiplyMathExpression(left, right));
+            // X * (A * B) -> X * A * B
+            return MultiplyMathExpression.Simplify(new Builder().Add(left).Add(right).Build());
         }
 
         private static MathExpression Simplify(MultiplyMathExpression expression)

@@ -126,5 +126,11 @@ namespace TestLD49
             // this one is hard, do this one last.
             Prime.Two.Multiply(Prime.Three).Multiply(Prime.Thirteen).Multiply(MathExpression.Inverse(Prime.Two)).ToString().Should().Be("(3 * 13)");
         }
+
+        [Fact]
+        public void simple_multiply_expression_with_inverse_cancels()
+        {
+            Prime.Three.Multiply(Prime.Seven).Multiply(InverseExpression.Create(Prime.Three)).Should().Be(Prime.Seven);
+        }
     }
 }
