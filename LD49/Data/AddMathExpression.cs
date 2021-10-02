@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LD49.Data
 {
@@ -29,33 +30,8 @@ namespace LD49.Data
             }
 
             // Cancel out negates
-            for (var i = 0; i < allExpressions.Count; i++)
-            {
-                for (var j = 0; j < allExpressions.Count; j++)
-                {
-                    if (i != j)
-                    {
-                        var left = allExpressions[i];
-                        var right = allExpressions[j];
-
-                        if (left == MathOperator.Negate(right) || right == MathOperator.Negate(left))
-                        {
-                            allExpressions[i] = Zero.Instance;
-                            allExpressions[j] = Zero.Instance;
-                        }
-                    }
-                }
-            }
-
-            var finalExpressions = new List<MathExpression>();
-
-            foreach (var exp in allExpressions)
-            {
-                if (exp != Zero.Instance)
-                {
-                    finalExpressions.Add(exp);
-                }
-            }
+            var finalExpressions =
+                AddMathExpression.FilterExpressions(allExpressions, Zero.Instance, MathOperator.Negate);
 
             if (finalExpressions.Count > 1)
             {
@@ -74,6 +50,40 @@ namespace LD49.Data
             }
 
             return finalExpressions[0];
+        }
+
+        private static List<MathExpression> FilterExpressions(List<MathExpression> allExpressions,
+            SpecialNumber eraseNumber, Func<MathExpression, MathExpression> invertFunction)
+        {
+            for (var i = 0; i < allExpressions.Count; i++)
+            {
+                for (var j = 0; j < allExpressions.Count; j++)
+                {
+                    if (i != j)
+                    {
+                        var left = allExpressions[i];
+                        var right = allExpressions[j];
+
+                        if (left == invertFunction(right) || right == invertFunction(left))
+                        {
+                            allExpressions[i] = eraseNumber;
+                            allExpressions[j] = eraseNumber;
+                        }
+                    }
+                }
+            }
+
+            var result = new List<MathExpression>();
+
+            foreach (var exp in allExpressions)
+            {
+                if (exp != eraseNumber)
+                {
+                    result.Add(exp);
+                }
+            }
+
+            return result;
         }
 
         private class Builder : TransitiveBuilder<Builder, AddMathExpression>
