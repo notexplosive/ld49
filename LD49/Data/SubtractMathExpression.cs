@@ -1,6 +1,6 @@
 ﻿namespace LD49.Data
 {
-    public class SubtractMathExpression : TwoPrimeExpression
+    public class SubtractMathExpression : PairExpression
     {
         public SubtractMathExpression(MathExpression minuend, MathExpression subtrahend)
             : base(minuend, subtrahend, '-')

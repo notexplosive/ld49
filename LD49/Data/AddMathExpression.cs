@@ -2,7 +2,7 @@
 
 namespace LD49.Data
 {
-    public class AddMathExpression : TwoPrimeExpression
+    public class AddMathExpression : PairExpression
     {
         public AddMathExpression(MathExpression leftAddend, MathExpression rightAddend)
             : base(leftAddend, rightAddend, '+')

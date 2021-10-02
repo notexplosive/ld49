@@ -1,6 +1,6 @@
 ﻿namespace LD49.Data
 {
-    public class FractionalMathExpression : TwoPrimeExpression
+    public class FractionalMathExpression : PairExpression
     {
         public FractionalMathExpression(MathExpression numerator, MathExpression denominator)
             : base(numerator, denominator, '/')

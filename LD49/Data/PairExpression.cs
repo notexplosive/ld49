@@ -2,13 +2,13 @@
 
 namespace LD49.Data
 {
-    public abstract class TwoPrimeExpression : MathExpression
+    public abstract class PairExpression : MathExpression
     {
         protected readonly MathExpression left;
         protected readonly MathExpression right;
         private readonly char symbol;
 
-        protected TwoPrimeExpression(MathExpression left, MathExpression right, char symbol)
+        protected PairExpression(MathExpression left, MathExpression right, char symbol)
         {
             if (left is Prime p1 && right is Prime p2)
             {

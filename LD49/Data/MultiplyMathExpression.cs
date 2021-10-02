@@ -1,6 +1,6 @@
 ﻿namespace LD49.Data
 {
-    public class MultiplyMathExpression : TwoPrimeExpression
+    public class MultiplyMathExpression : PairExpression
     {
         public MultiplyMathExpression(MathExpression rightFactor, MathExpression leftFactor)
             : base(leftFactor,rightFactor, '*')
