@@ -29,5 +29,11 @@ namespace TestLD49
         {
             MathOperator.Inverse(MathOperator.Inverse(Prime.Thirteen)).Should().Be(Prime.Thirteen);
         }
+
+        [Fact]
+        public void inverse_zero_should_be_infinity()
+        {
+            MathOperator.Inverse(Zero.Instance).Should().Be(Infinity.Instance);
+        }
     }
 }

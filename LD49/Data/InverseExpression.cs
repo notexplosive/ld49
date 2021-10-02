@@ -17,6 +17,11 @@
                 return givenInverse.inner;
             }
 
+            if (expression is Zero)
+            {
+                return Infinity.Instance;
+            }
+
             return new InverseExpression(expression);
         }
     }
