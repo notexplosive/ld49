@@ -272,5 +272,17 @@ namespace TestLD49
         {
             MathOperator.Divide(Prime.Seven, One.Instance).Should().Be(Prime.Seven);
         }
+
+        [Fact]
+        public void expressions_do_not_cancel_out_add()
+        {
+            MathOperator.Subtract(MathOperator.Add(Prime.Five, Prime.Three),MathOperator.Add(Prime.Three, Prime.Five)).ToString().Should().Be("((-(3 + 5)) + 3 + 5)");
+        }
+        
+        [Fact]
+        public void expressions_do_not_cancel_out_multiply()
+        {
+            MathOperator.Divide(MathOperator.Multiply(Prime.Five, Prime.Three),MathOperator.Multiply(Prime.Three, Prime.Five)).ToString().Should().Be("((1 / (3 * 5)) * 3 * 5)");
+        }
     }
 }
