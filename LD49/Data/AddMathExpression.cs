@@ -35,7 +35,7 @@ namespace LD49.Data
 
         public override string ToString()
         {
-            return this.leftAddend + " + " + this.rightAddend;
+            return $"({this.leftAddend} + {this.rightAddend})";
         }
     }
 }

@@ -15,7 +15,7 @@ namespace TestLD49
         [Fact]
         public void divide_into_fraction()
         {
-            new ConstantMathExpression(10).DivideBy(3).ToString().Should().Be("10 / 3");
+            new ConstantMathExpression(10).DivideBy(3).ToString().Should().Be("(10 / 3)");
         }
 
         [Fact]
@@ -39,13 +39,13 @@ namespace TestLD49
         [Fact]
         public void add_one_then_divide_by_three()
         {
-            new ConstantMathExpression(1).DivideBy(3).ToString().Should().Be("1 / 3");
+            new ConstantMathExpression(1).DivideBy(3).ToString().Should().Be("(1 / 3)");
         }
 
         [Fact]
         public void add_one_then_divide_multiple()
         {
-            new ConstantMathExpression(1).DivideBy(3).DivideBy(3).ToString().Should().Be("1 / 9");
+            new ConstantMathExpression(1).DivideBy(3).DivideBy(3).ToString().Should().Be("(1 / 9)");
         }
 
         [Fact]

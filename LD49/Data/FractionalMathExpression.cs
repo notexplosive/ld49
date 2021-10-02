@@ -49,7 +49,7 @@ namespace LD49.Data
 
         public override string ToString()
         {
-            return this.numerator + " / " + this.denominator;
+            return $"({this.numerator} / {this.denominator})";
         }
     }
 }
