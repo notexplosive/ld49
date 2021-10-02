@@ -34,6 +34,7 @@ namespace LD49.Data
                 allExpressions.Add(item);
             }
 
+            // Cancel out inverses
             for (var i = 0; i < allExpressions.Count; i++)
             {
                 for (var j = 0; j < allExpressions.Count; j++)
