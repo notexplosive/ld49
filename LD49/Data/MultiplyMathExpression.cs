@@ -79,7 +79,7 @@ namespace LD49.Data
                         var left = allExpressions[i];
                         var right = allExpressions[j];
 
-                        if (left == MathExpression.Negate(right) || right == MathExpression.Negate(left))
+                        if (left == MathExpression.Inverse(right) || right == MathExpression.Inverse(left))
                         {
                             allExpressions[i] = One.Instance;
                             allExpressions[j] = One.Instance;

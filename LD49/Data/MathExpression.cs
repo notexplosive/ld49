@@ -48,6 +48,16 @@ namespace LD49.Data
 
         public virtual MathExpression Multiply(MathExpression i)
         {
+            if (i is One)
+            {
+                return this;
+            }
+
+            if (i is Zero)
+            {
+                return Zero.Instance;
+            }
+            
             return MultiplyMathExpression.Create(this,i);
         }
 

@@ -95,5 +95,29 @@ namespace TestLD49
         {
             Prime.Five.Multiply(Prime.Two).Multiply(Prime.Three).ToString().Should().Be("(2 * 3 * 5)");
         }
+
+        [Fact]
+        public void get_inverse()
+        {
+            MathExpression.Inverse(Prime.Five).ToString().Should().Be("(1 / 5)");
+        }
+
+        [Fact]
+        public void prime_times_inverse_is_one()
+        {
+            Prime.Five.Multiply(MathExpression.Inverse(Prime.Five)).Should().Be(One.Instance);
+        }
+        
+        [Fact]
+        public void prime_plus_negate_is_zero()
+        {
+            Prime.Five.Add(MathExpression.Negate(Prime.Five)).Should().Be(Zero.Instance);
+        }
+
+        [Fact]
+        public void expression_times_one_is_expression()
+        {
+            Prime.Five.DivideBy(Prime.Seven).Multiply(One.Instance).ToString().Should().Be("(5 / 7)");
+        }
     }
 }

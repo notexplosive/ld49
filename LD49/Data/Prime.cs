@@ -18,26 +18,6 @@ namespace LD49.Data
             Prime.All.Add(this.value, this);
         }
 
-        public override MathExpression Multiply(MathExpression i)
-        {
-            if (i is One)
-            {
-                return this;
-            }
-
-            if (i is Zero)
-            {
-                return Zero.Instance;
-            }
-
-            return base.Multiply(i);
-        }
-
-        public static bool IsPrime(int val)
-        {
-            return Prime.All.ContainsKey(val);
-        }
-
         public override MathExpression DivideBy(MathExpression i)
         {
             if (i == this)
