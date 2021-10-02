@@ -27,26 +27,6 @@ namespace LD49.Data
             this.symbol = symbol;
         }
 
-        public override MathExpression Multiply(MathExpression i)
-        {
-            return new MultiplyMathExpression(this, i);
-        }
-
-        public override MathExpression Add(MathExpression i)
-        {
-            return new AddMathExpression(this, i);
-        }
-
-        public override MathExpression Subtract(MathExpression i)
-        {
-            return new SubtractMathExpression(this, i);
-        }
-
-        public override MathExpression DivideBy(MathExpression i)
-        {
-            return new FractionalMathExpression(this, i);
-        }
-
         public override string ToString()
         {
             return $"({this.left} {symbol} {this.right})";

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LD49.Data
+﻿namespace LD49.Data
 {
     public abstract class MathExpression
     {
@@ -11,28 +9,43 @@ namespace LD49.Data
 
         public override bool Equals(object obj)
         {
-            return object.ReferenceEquals(this, obj) || obj is MathExpression other && Equals(other);
+            return ReferenceEquals(this, obj) || obj is MathExpression other && Equals(other);
         }
 
         public override int GetHashCode()
         {
-            return this.ToString().GetHashCode();
+            return ToString().GetHashCode();
         }
 
         public static bool operator ==(MathExpression left, MathExpression right)
         {
-            return object.Equals(left, right);
+            return Equals(left, right);
         }
 
         public static bool operator !=(MathExpression left, MathExpression right)
         {
-            return !object.Equals(left, right);
+            return !Equals(left, right);
         }
 
-        public abstract MathExpression Multiply(MathExpression i);
-        public abstract MathExpression Add(MathExpression i);
-        public abstract MathExpression Subtract(MathExpression i);
-        public abstract MathExpression DivideBy(MathExpression i);
+        public MathExpression Multiply(MathExpression i)
+        {
+            return new MultiplyMathExpression(this, i);
+        }
+
+        public MathExpression Add(MathExpression i)
+        {
+            return new AddMathExpression(this, i);
+        }
+
+        public MathExpression Subtract(MathExpression i)
+        {
+            return new SubtractMathExpression(this, i);
+        }
+
+        public MathExpression DivideBy(MathExpression i)
+        {
+            return new FractionalMathExpression(this, i);
+        }
 
         public static implicit operator MathExpression(int i)
         {

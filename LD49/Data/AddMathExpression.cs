@@ -21,11 +21,6 @@ namespace LD49.Data
             return new AddMathExpression(this, i);
         }
 
-        public override MathExpression Subtract(MathExpression i)
-        {
-            throw new NotImplementedException();
-        }
-
         public override MathExpression DivideBy(MathExpression i)
         {
             // (A + B) / X -> (A/X + B/X)
