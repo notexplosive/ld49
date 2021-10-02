@@ -4,8 +4,8 @@ using Xunit;
 
 namespace TestLD49
 {
-    public class SimpleMathExpressionTests
+    public class AddMathExpressionTests
     {
-        
+
     }
 }

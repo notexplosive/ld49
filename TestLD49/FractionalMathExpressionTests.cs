@@ -29,5 +29,11 @@ namespace TestLD49
         {
             new FractionalMathExpression(7, 3).Multiply(3).ToString().Should().Be("7");
         }
+
+        [Fact]
+        public void add_to_fraction()
+        {
+            new FractionalMathExpression(7, 3).Add(10).ToString().Should().Be("7 / 3 + 10");
+        }
     }
 }

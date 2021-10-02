@@ -20,7 +20,7 @@ namespace LD49.Data
 
         public override MathExpression Add(MathExpression i)
         {
-            throw new NotImplementedException();
+            return new AddMathExpression(this, i);
         }
 
         public override MathExpression Subtract(MathExpression i)
