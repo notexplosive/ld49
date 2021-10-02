@@ -4,7 +4,7 @@ using Xunit;
 
 namespace TestLD49
 {
-    public class PrimeTest
+    public class NumberTests
     {
         [Fact]
         public void divide_into_fraction()
