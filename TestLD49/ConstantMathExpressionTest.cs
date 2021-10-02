@@ -4,78 +4,72 @@ using Xunit;
 
 namespace TestLD49
 {
-    public class ConstantMathExpressionTest
+    public class PrimeTest
     {
-        [Fact]
-        public void divide_into_constant()
-        {
-            new ConstantMathExpression(10).DivideBy(2).ToString().Should().Be("5");
-        }
-
         [Fact]
         public void divide_into_fraction()
         {
-            new ConstantMathExpression(10).DivideBy(3).ToString().Should().Be("(10 / 3)");
+            Prime.Eleven.DivideBy(Prime.Three).ToString().Should().Be("(11 / 3)");
         }
 
         [Fact]
         public void empty_expression_is_zero()
         {
-            new ConstantMathExpression(0).ToString().Should().Be("0");
+            Zero.Instance.ToString().Should().Be("0");
         }
 
         [Fact]
         public void add_one()
         {
-            new ConstantMathExpression(0).Add(1).ToString().Should().Be("1");
+            Zero.Instance.Add(One.Instance).ToString().Should().Be("1");
         }
 
         [Fact]
         public void add_multiple()
         {
-            new ConstantMathExpression(1).Add(3).Add(2).ToString().Should().Be("6");
+            One.Instance.Add(Prime.Three).Add(Prime.Two).ToString().Should().Be("((1 + 3) + 2)");
         }
 
         [Fact]
         public void add_one_then_divide_by_three()
         {
-            new ConstantMathExpression(1).DivideBy(3).ToString().Should().Be("(1 / 3)");
+            One.Instance.DivideBy(Prime.Three).ToString().Should().Be("(1 / 3)");
         }
 
         [Fact]
         public void add_one_then_divide_multiple()
         {
-            new ConstantMathExpression(1).DivideBy(3).DivideBy(3).ToString().Should().Be("(1 / 9)");
+            One.Instance.DivideBy(Prime.Three).DivideBy(Prime.Three).ToString().Should().Be("(1 / (3 * 3))");
         }
 
         [Fact]
-        public void multiply_by_four()
+        public void multiply_by_three()
         {
-            new ConstantMathExpression(1).Multiply(4).ToString().Should().Be("4");
+            One.Instance.Multiply(Prime.Three).ToString().Should().Be("3");
         }
 
         [Fact]
         public void multiply_by_several_things()
         {
-            new ConstantMathExpression(1).Multiply(4).Multiply(5).Multiply(2).ToString().Should().Be("40");
-        }
-
-        [Fact]
-        public void subtract_three()
-        {
-            new ConstantMathExpression(0).Subtract(3).ToString().Should().Be("-3");
+            Prime.Three.Multiply(Prime.Five).Multiply(Prime.Two).ToString().Should().Be("(5 * (2 * 3))");
         }
 
         [Fact]
         public void add_and_subtract_cancel_out()
         {
-            new ConstantMathExpression(5).Subtract(5).ToString().Should().Be("0");
+            Prime.Five.Subtract(Prime.Five).ToString().Should().Be("0");
         }
 
         [Fact]
         public void multiply_and_divide_cancel_out()
         {
-            new ConstantMathExpression(1).Multiply(13).DivideBy(13).ToString().Should().Be("1");
+            Prime.Thirteen.DivideBy(Prime.Thirteen).Should().Be(One.Instance);
+        }
+
+        [Fact]
+        public void multiply_by_one_does_nothing()
+        {
+            One.Instance.Multiply(Prime.Thirteen).Should().Be(Prime.Thirteen);
         }
     }
 }

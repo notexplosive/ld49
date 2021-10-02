@@ -5,7 +5,7 @@ namespace LD49.Data
     public class AddMathExpression : PairExpression
     {
         public AddMathExpression(MathExpression leftAddend, MathExpression rightAddend)
-            : base(leftAddend, rightAddend, '+')
+            : base(leftAddend, rightAddend, '+', true)
         {
         }
 

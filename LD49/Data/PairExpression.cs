@@ -8,9 +8,9 @@ namespace LD49.Data
         protected readonly MathExpression right;
         private readonly char symbol;
 
-        protected PairExpression(MathExpression left, MathExpression right, char symbol)
+        protected PairExpression(MathExpression left, MathExpression right, char symbol, bool isTransitive)
         {
-            if (left is Prime p1 && right is Prime p2)
+            if (isTransitive && left is Prime p1 && right is Prime p2)
             {
                 var list = new List<Prime> {p1, p2};
                 list.Sort();

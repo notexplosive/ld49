@@ -29,27 +29,47 @@
 
         public virtual MathExpression Multiply(MathExpression i)
         {
+            if (i is One)
+            {
+                return this;
+            }
+
             return new MultiplyMathExpression(this, i);
         }
 
         public virtual MathExpression Add(MathExpression i)
         {
+            if (i is Zero)
+            {
+                return this;
+            }
+
             return new AddMathExpression(this, i);
         }
 
         public virtual MathExpression Subtract(MathExpression i)
         {
+            if (i is Zero)
+            {
+                return this;
+            }
+
             return new SubtractMathExpression(this, i);
         }
 
         public virtual MathExpression DivideBy(MathExpression i)
         {
-            return new FractionalMathExpression(this, i);
-        }
+            if (i is One)
+            {
+                return this;
+            }
 
-        public static implicit operator MathExpression(int i)
-        {
-            return new ConstantMathExpression(i);
+            if (i is Zero)
+            {
+                return Infinity.Instance;
+            }
+
+            return new FractionalMathExpression(this, i);
         }
     }
 }

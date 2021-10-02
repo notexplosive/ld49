@@ -3,7 +3,7 @@
     public class MultiplyMathExpression : PairExpression
     {
         public MultiplyMathExpression(MathExpression rightFactor, MathExpression leftFactor)
-            : base(leftFactor,rightFactor, '*')
+            : base(leftFactor,rightFactor, '*', true)
         {
         }
 

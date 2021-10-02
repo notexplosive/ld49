@@ -3,7 +3,7 @@
     public class SubtractMathExpression : PairExpression
     {
         public SubtractMathExpression(MathExpression minuend, MathExpression subtrahend)
-            : base(minuend, subtrahend, '-')
+            : base(minuend, subtrahend, '-', false)
         {
         }
 
