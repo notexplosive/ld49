@@ -71,7 +71,7 @@ namespace LD49.Data
             return InverseExpression.Create(i);
         }
 
-        public virtual MathExpression Add(MathExpression i)
+        public MathExpression Add(MathExpression i)
         {
             return AddMathExpression.Create(this, i);
         }

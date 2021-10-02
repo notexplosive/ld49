@@ -8,19 +8,7 @@ namespace LD49.Data
             : base('+', leftAddend, rightAddend)
         {
         }
-
-        private AddMathExpression(AddMathExpression leftSet, AddMathExpression rightSet) : base('+', leftSet, rightSet)
-        {
-        }
-
-        private AddMathExpression(AddMathExpression leftSet, Prime rightPrime) : base('+', leftSet, rightPrime)
-        {
-        }
-
-        private AddMathExpression(Prime leftPrime, AddMathExpression rightSet) : base('+', leftPrime, rightSet)
-        {
-        }
-
+        
         private AddMathExpression(params MathExpression[] expressions) : base('+', expressions)
         {
         }
@@ -44,20 +32,20 @@ namespace LD49.Data
             // X + (A + B) -> X + A + B
             if (left is AddMathExpression add1 && right is AddMathExpression add2)
             {
-                return AddMathExpression.Simplify(new AddMathExpression(add1, add2));
+                return AddMathExpression.Simplify(new Builder().Add(add1).Add(add2).Build());
             }
 
             if (left is AddMathExpression leftAdd && right is Prime rightPrime)
             {
-                return AddMathExpression.Simplify(new AddMathExpression(leftAdd, rightPrime));
+                return AddMathExpression.Simplify(new Builder().Add(leftAdd).Add(rightPrime).Build());
             }
 
             if (left is Prime leftPrime && right is AddMathExpression rightAdd)
             {
-                return AddMathExpression.Simplify(new AddMathExpression(leftPrime, rightAdd));
+                return AddMathExpression.Simplify(new Builder().Add(leftPrime).Add(rightAdd).Build());
             }
 
-            return AddMathExpression.Simplify(new AddMathExpression(left, right));
+            return AddMathExpression.Simplify(new Builder().Add(left).Add(right).Build());
         }
 
         private static MathExpression Simplify(AddMathExpression expression)
@@ -125,6 +113,14 @@ namespace LD49.Data
                 MultiplyMathExpression.Create(InverseExpression.Create(this.content[0]), i),
                 MultiplyMathExpression.Create(InverseExpression.Create(this.content[1]), i)
                 );
+        }
+        
+        private class Builder : TransitiveBuilder<Builder, AddMathExpression>
+        {
+            public AddMathExpression Build()
+            {
+                return new AddMathExpression(this.content.ToArray());
+            }
         }
     }
 }

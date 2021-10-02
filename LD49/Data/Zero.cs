@@ -54,20 +54,5 @@
         private Zero() : base(0)
         {
         }
-
-        public override MathExpression Add(MathExpression i)
-        {
-            return i;
-        }
-
-        public override MathExpression Multiply(MathExpression i)
-        {
-            return this;
-        }
-
-        public override MathExpression DivideBy(MathExpression i)
-        {
-            return this;
-        }
     }
 }

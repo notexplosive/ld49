@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace LD49.Data
 {
@@ -6,21 +7,6 @@ namespace LD49.Data
     {
         private MultiplyMathExpression(MathExpression rightFactor, MathExpression leftFactor)
             : base('*', leftFactor, rightFactor)
-        {
-        }
-
-        private MultiplyMathExpression(MultiplyMathExpression leftSet, MultiplyMathExpression rightSet) : base('*',
-            leftSet, rightSet)
-        {
-        }
-
-        private MultiplyMathExpression(MultiplyMathExpression leftSet, Prime rightPrime) : base('*', leftSet,
-            rightPrime)
-        {
-        }
-
-        private MultiplyMathExpression(Prime leftPrime, MultiplyMathExpression rightSet) : base('*', leftPrime,
-            rightSet)
         {
         }
 
@@ -47,17 +33,17 @@ namespace LD49.Data
             // X * (A * B) -> X * A * B
             if (left is MultiplyMathExpression mul1 && right is MultiplyMathExpression mul2)
             {
-                return MultiplyMathExpression.Simplify(new MultiplyMathExpression(mul1, mul2));
+                return MultiplyMathExpression.Simplify(new Builder().Add(mul1).Add(mul2).Build());
             }
 
             if (left is MultiplyMathExpression leftMul && right is Prime rightPrime)
             {
-                return MultiplyMathExpression.Simplify(new MultiplyMathExpression(leftMul, rightPrime));
+                return MultiplyMathExpression.Simplify(new Builder().Add(leftMul).Add(rightPrime).Build());
             }
 
             if (left is Prime leftPrime && right is MultiplyMathExpression rightMul)
             {
-                return MultiplyMathExpression.Simplify(new MultiplyMathExpression(leftPrime, rightMul));
+                return MultiplyMathExpression.Simplify(new Builder().Add(leftPrime).Add(rightMul).Build());
             }
 
             // (1 / X) * (1 / Y) -> 1 / (X * Y)
@@ -120,6 +106,14 @@ namespace LD49.Data
             }
 
             return finalExpressions[0];
+        }
+
+        private class Builder : TransitiveBuilder<Builder, MultiplyMathExpression>
+        {
+            public MultiplyMathExpression Build()
+            {
+                return new MultiplyMathExpression(this.content.ToArray());
+            }
         }
     }
 }

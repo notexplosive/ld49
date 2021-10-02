@@ -29,5 +29,11 @@ namespace TestLD49
         {
             MultiplyMathExpression.Create(InverseExpression.Create(Prime.Seven), Prime.Three).Add(Prime.Thirteen).ToString().Should().Be("((3 * (1 / 7)) + 13)");
         }
+
+        [Fact]
+        public void add_and_multiply_mixed()
+        {
+            Prime.Eleven.Add(Prime.Seven).Multiply(Prime.Three).Add((Prime.Thirteen)).ToString().Should().Be("((3 * 7) + (3 * 11) + 13)");
+        }
     }
 }

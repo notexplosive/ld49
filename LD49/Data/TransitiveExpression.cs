@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Transactions;
 
 namespace LD49.Data
 {
@@ -23,38 +24,6 @@ namespace LD49.Data
             this.content = contentList.ToImmutableArray();
         }
 
-        protected TransitiveExpression(char symbol, TransitiveExpression leftSet, TransitiveExpression rightSet) :
-            this(symbol)
-        {
-            var bothSetsContent = new List<MathExpression>();
-            bothSetsContent.AddRange(leftSet.content);
-            bothSetsContent.AddRange(rightSet.content);
-            bothSetsContent.Sort();
-
-            this.content = bothSetsContent.ToImmutableArray();
-        }
-
-        protected TransitiveExpression(char symbol, TransitiveExpression leftSet, Prime rightPrime) : this(symbol)
-        {
-            var bothSetsContent = new List<MathExpression>();
-            bothSetsContent.AddRange(leftSet.content);
-            bothSetsContent.Add(rightPrime);
-            bothSetsContent.Sort();
-
-            this.content = bothSetsContent.ToImmutableArray();
-        }
-
-        protected TransitiveExpression(char symbol, Prime leftPrime, TransitiveExpression rightSet) :
-            this(symbol)
-        {
-            var bothSetsContent = new List<MathExpression>();
-            bothSetsContent.Add(leftPrime);
-            bothSetsContent.AddRange(rightSet.content);
-            bothSetsContent.Sort();
-
-            this.content = bothSetsContent.ToImmutableArray();
-        }
-
         public override string ToString()
         {
             return $"({string.Join($" {this.symbol} ", this.content)})";
@@ -63,6 +32,35 @@ namespace LD49.Data
         public List<MathExpression> GetContent()
         {
             return this.content.ToList();
+        }
+
+        protected class TransitiveBuilder<TBuilderType, TExpressionType> 
+            where TBuilderType : class 
+            where TExpressionType : TransitiveExpression
+        {
+            protected readonly List<MathExpression> content = new List<MathExpression>();
+
+            public TBuilderType Add(MathExpression expression)
+            {
+                if (expression is TExpressionType transitiveExpression)
+                {
+                    AddMany(transitiveExpression.content.ToArray());
+                }
+                else
+                {
+                    this.content.Add(expression);
+                }
+
+                return this as TBuilderType;
+            }
+
+            private void AddMany(params MathExpression[] expressions)
+            {
+                foreach (var expression in expressions)
+                {
+                    Add(expression);
+                }
+            }
         }
     }
 }
