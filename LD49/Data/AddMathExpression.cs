@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LD49.Data
 {
@@ -22,16 +23,9 @@ namespace LD49.Data
 
         private static MathExpression Simplify(AddMathExpression expression)
         {
-            var allExpressions = new List<MathExpression>();
-
-            foreach (var item in expression.content)
-            {
-                allExpressions.Add(item);
-            }
-
             // Cancel out negates
             var finalExpressions =
-                AddMathExpression.FilterExpressions(allExpressions, Zero.Instance, MathOperator.Negate);
+                AddMathExpression.FilterExpressions(expression.content.ToArray(), Zero.Instance, MathOperator.Negate);
 
             if (finalExpressions.Count > 1)
             {
@@ -52,12 +46,12 @@ namespace LD49.Data
             return finalExpressions[0];
         }
 
-        private static List<MathExpression> FilterExpressions(List<MathExpression> allExpressions,
+        private static List<MathExpression> FilterExpressions(MathExpression[] allExpressions,
             SpecialNumber eraseNumber, Func<MathExpression, MathExpression> invertFunction)
         {
-            for (var i = 0; i < allExpressions.Count; i++)
+            for (var i = 0; i < allExpressions.Length; i++)
             {
-                for (var j = 0; j < allExpressions.Count; j++)
+                for (var j = 0; j < allExpressions.Length; j++)
                 {
                     if (i != j)
                     {
