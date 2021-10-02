@@ -8,7 +8,7 @@ namespace LD49.Data
             : base('+', leftAddend, rightAddend)
         {
         }
-        
+
         private AddMathExpression(params MathExpression[] expressions) : base('+', expressions)
         {
         }
@@ -79,10 +79,8 @@ namespace LD49.Data
             {
                 return Zero.Instance;
             }
-            else
-            {
-                return finalExpressions[0];
-            }
+
+            return finalExpressions[0];
         }
 
         public override MathExpression Multiply(MathExpression i)
@@ -97,9 +95,9 @@ namespace LD49.Data
             return new AddMathExpression(
                 MultiplyMathExpression.Create(InverseExpression.Create(this.content[0]), i),
                 MultiplyMathExpression.Create(InverseExpression.Create(this.content[1]), i)
-                );
+            );
         }
-        
+
         private class Builder : TransitiveBuilder<Builder, AddMathExpression>
         {
             public AddMathExpression Build()
