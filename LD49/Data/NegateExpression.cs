@@ -14,6 +14,12 @@
                 return Zero.Instance;
             }
             
+            if (value is NegateExpression givenNegate)
+            {
+                // (-(-X)) -> X
+                return givenNegate.inner;
+            }
+            
             return new NegateExpression(value);
         }
 

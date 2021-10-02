@@ -17,5 +17,17 @@ namespace TestLD49
         {
             NegateExpression.Create(Zero.Instance).Should().Be(Zero.Instance);
         }
+
+        [Fact]
+        public void negate_twice()
+        {
+            MathOperator.Negate(MathOperator.Negate(Prime.Thirteen)).Should().Be(Prime.Thirteen);
+        }
+        
+        [Fact]
+        public void inverse_twice()
+        {
+            MathOperator.Inverse(MathOperator.Inverse(Prime.Thirteen)).Should().Be(Prime.Thirteen);
+        }
     }
 }
