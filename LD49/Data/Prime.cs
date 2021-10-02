@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LD49.Data
 {
-    public class Prime : Number, IComparable<Prime>
+    public class Prime : Number
     {
         private static readonly Dictionary<int, Prime> All = new Dictionary<int, Prime>();
         public static Prime Two = new Prime(2);
@@ -16,21 +16,6 @@ namespace LD49.Data
         private Prime(int value) : base(value)
         {
             Prime.All.Add(this.value, this);
-        }
-
-        public int CompareTo(Prime other)
-        {
-            if (object.ReferenceEquals(this, other))
-            {
-                return 0;
-            }
-
-            if (object.ReferenceEquals(null, other))
-            {
-                return 1;
-            }
-
-            return this.value.CompareTo(other.value);
         }
 
         public override MathExpression Multiply(MathExpression i)

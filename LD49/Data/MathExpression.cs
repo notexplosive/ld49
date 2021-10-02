@@ -1,6 +1,8 @@
-﻿namespace LD49.Data
+﻿using System;
+
+namespace LD49.Data
 {
-    public abstract class MathExpression
+    public abstract class MathExpression : IComparable<MathExpression>
     {
         protected bool Equals(MathExpression other)
         {
@@ -71,5 +73,22 @@
 
             return new FractionalMathExpression(this, i);
         }
+        
+        public int CompareTo(MathExpression other)
+        {
+            if (object.ReferenceEquals(this, other))
+            {
+                return 0;
+            }
+
+            if (object.ReferenceEquals(null, other))
+            {
+                return 1;
+            }
+
+            return this.UnderlyingValue.CompareTo(other.UnderlyingValue);
+        }
+        
+        public abstract int UnderlyingValue { get; }
     }
 }

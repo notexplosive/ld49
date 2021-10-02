@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 namespace LD49.Data
 {
@@ -8,22 +8,11 @@ namespace LD49.Data
         protected readonly MathExpression right;
         private readonly char symbol;
 
-        protected PairExpression(MathExpression left, MathExpression right, char symbol, bool isTransitive)
+        protected PairExpression(MathExpression left, MathExpression right, char symbol)
         {
-            if (isTransitive && left is Prime p1 && right is Prime p2)
-            {
-                var list = new List<Prime> {p1, p2};
-                list.Sort();
-                this.left = list[0];
-                this.right = list[1];
-            }
-            else
-            {
-                this.left = left;
-                this.right = right;
-            }
-            
-            
+            this.left = left;
+            this.right = right;
+
             this.symbol = symbol;
         }
 

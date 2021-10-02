@@ -2,17 +2,17 @@
 
 namespace LD49.Data
 {
-    public class AddMathExpression : PairExpression
+    public class AddMathExpression : TransitiveExpression
     {
         public AddMathExpression(MathExpression leftAddend, MathExpression rightAddend)
-            : base(leftAddend, rightAddend, '+', true)
+            : base(leftAddend, '+', rightAddend)
         {
         }
 
         public override MathExpression Multiply(MathExpression i)
         {
             // X * (A + B) -> AX + BX
-            return new AddMathExpression(this.left.Multiply(i), this.right.Multiply(i));
+            return new AddMathExpression(this.content[0].Multiply(i), this.content[1].Multiply(i));
         }
 
         public override MathExpression Add(MathExpression i)
@@ -25,8 +25,22 @@ namespace LD49.Data
         {
             // (A + B) / X -> (A/X + B/X)
             return new AddMathExpression(
-                new FractionalMathExpression(this.left, i),
-                new FractionalMathExpression(this.right, i));
+                new FractionalMathExpression(this.content[0], i),
+                new FractionalMathExpression(this.content[1], i));
+        }
+
+        public override int UnderlyingValue
+        {
+            get
+            {
+                var total = 0;
+                foreach (var n in this.content)
+                {
+                    total += n.UnderlyingValue;
+                }
+
+                return total;
+            }
         }
     }
 }

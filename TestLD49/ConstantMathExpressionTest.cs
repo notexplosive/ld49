@@ -27,7 +27,7 @@ namespace TestLD49
         [Fact]
         public void add_multiple()
         {
-            One.Instance.Add(Prime.Three).Add(Prime.Two).ToString().Should().Be("((1 + 3) + 2)");
+            One.Instance.Add(Prime.Three).Add(Prime.Two).ToString().Should().Be("(2 + (1 + 3))");
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace TestLD49
         [Fact]
         public void multiply_by_several_things()
         {
-            Prime.Three.Multiply(Prime.Five).Multiply(Prime.Two).ToString().Should().Be("(5 * (2 * 3))");
+            Prime.Three.Multiply(Prime.Five).Multiply(Prime.Two).ToString().Should().Be("((2 * 3) * 5)");
         }
 
         [Fact]

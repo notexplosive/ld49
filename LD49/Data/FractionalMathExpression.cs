@@ -3,7 +3,7 @@
     public class FractionalMathExpression : PairExpression
     {
         public FractionalMathExpression(MathExpression numerator, MathExpression denominator)
-            : base(numerator, denominator, '/' , false)
+            : base(numerator, denominator, '/')
         {
         }
 
@@ -19,7 +19,7 @@
         {
             return FractionalMathExpression.Simplify(new FractionalMathExpression(Numerator, Denominator.Multiply(i)));
         }
-        
+
         private static MathExpression Simplify(FractionalMathExpression fraction)
         {
             if (fraction.Numerator == fraction.Denominator)
@@ -29,5 +29,7 @@
 
             return fraction;
         }
+
+        public override int UnderlyingValue => this.Denominator.UnderlyingValue / this.Numerator.UnderlyingValue;
     }
 }

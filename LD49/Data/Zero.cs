@@ -13,6 +13,8 @@
         {
             return this.value.ToString();
         }
+
+        public override int UnderlyingValue => this.value;
     }
 
     public abstract class SpecialNumber : Number

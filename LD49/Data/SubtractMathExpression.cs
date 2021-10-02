@@ -3,7 +3,7 @@
     public class SubtractMathExpression : PairExpression
     {
         public SubtractMathExpression(MathExpression minuend, MathExpression subtrahend)
-            : base(minuend, subtrahend, '-', false)
+            : base(minuend, subtrahend, '-')
         {
         }
 
@@ -11,5 +11,7 @@
         {
             return new MultiplyMathExpression(this.left.Multiply(i), this.left.Multiply(i));
         }
+
+        public override int UnderlyingValue => this.left.UnderlyingValue - this.right.UnderlyingValue;
     }
 }
