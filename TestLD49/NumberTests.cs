@@ -41,7 +41,7 @@ namespace TestLD49
         public void divide_multiple()
         {
             MathOperator.Divide(MathOperator.Divide(One.Instance, Prime.Three), Prime.Three).ToString().Should()
-                .Be("(1 / (3 * 3))");
+                .Be("((1 / 3) * (1 / 3))");
         }
 
         [Fact]
@@ -190,7 +190,7 @@ namespace TestLD49
         [Fact]
         public void zero_minus_prime_is_negative_prime()
         {
-            MathOperator.Subtract(Zero.Instance,Prime.Seven).Should().Be(MathOperator.Negate(Prime.Seven));
+            MathOperator.Subtract(Zero.Instance, Prime.Seven).Should().Be(MathOperator.Negate(Prime.Seven));
         }
 
         [Fact]
@@ -198,11 +198,35 @@ namespace TestLD49
         {
             MathOperator.Add(Prime.Three, One.Instance).ToString().Should().Be("(1 + 3)");
         }
-        
+
         [Fact]
         public void one_plus_prime()
         {
             MathOperator.Add(One.Instance, Prime.Three).ToString().Should().Be("(1 + 3)");
+        }
+
+        [Fact]
+        public void three_plus_one_plus_one()
+        {
+            MathOperator.Add(One.Instance, MathOperator.Add(Prime.Three, One.Instance)).ToString().Should()
+                .Be("(1 + 1 + 3)");
+        }
+
+        [Fact]
+        public void lots_of_cancels_multiply()
+        {
+            MathOperator.Multiply(
+                MathOperator.Multiply(
+                    Prime.Three, Prime.Eleven),
+                MathOperator.Multiply(
+                    MathOperator.Multiply(
+                        MathOperator.Inverse(Prime.Five), MathOperator.Inverse(Prime.Three)),
+                    MathOperator.Multiply(
+                        MathOperator.Multiply(MathOperator.Inverse(Prime.Eleven),
+                            MathOperator.Multiply(
+                                MathOperator.Multiply(Prime.Two, MathOperator.Inverse(Prime.Two)),
+                                MathOperator.Inverse(Prime.Five))),
+                        MathOperator.Multiply(Prime.Five, Prime.Five)))).Should().Be(One.Instance);
         }
     }
 }

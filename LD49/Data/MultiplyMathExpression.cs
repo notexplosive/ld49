@@ -29,15 +29,6 @@ namespace LD49.Data
 
         public static MathExpression Create(MathExpression left, MathExpression right)
         {
-            // (1 / X) * (1 / Y) -> 1 / (X * Y)
-            if (left is InverseExpression leftInverse && right is InverseExpression rightInverse)
-            {
-                return InverseExpression.Create(
-                    MultiplyMathExpression.Create(
-                        MathOperator.Inverse(leftInverse),
-                        MathOperator.Inverse(rightInverse)));
-            }
-
             // X * (A * B) -> X * A * B
             return MultiplyMathExpression.Simplify(new Builder().Add(left).Add(right).Build());
         }
