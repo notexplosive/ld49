@@ -23,7 +23,8 @@ namespace LD49.Data
         {
             // Cancel out negates
             var finalExpressions =
-                AddMathExpression.FilterExpressions(expression.content.ToArray(), Zero.Instance, MathOperator.Negate);
+                TransitiveExpression.FilterExpressions(expression.content.ToArray(), Zero.Instance,
+                    MathOperator.Negate);
 
             if (finalExpressions.Count > 1)
             {
