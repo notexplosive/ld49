@@ -118,11 +118,6 @@ namespace LD49.Data
             return new AddMathExpression(this.content[0].Multiply(i), this.content[1].Multiply(i));
         }
 
-        public override MathExpression Add(MathExpression i)
-        {
-            return base.Add(i);
-        }
-
         public override MathExpression DivideBy(MathExpression i)
         {
             // (A + B) / X -> (A/X + B/X)

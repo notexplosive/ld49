@@ -2,7 +2,7 @@
 {
     public class NegateExpression : UnaryExpression
     {
-        public NegateExpression(MathExpression inner) : 
+        public NegateExpression(MathExpression inner) :
             base(inner, '-')
         {
         }

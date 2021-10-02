@@ -51,7 +51,7 @@ namespace TestLD49
         [Fact]
         public void multiply_by_several_things()
         {
-            Prime.Three.Multiply(Prime.Five).Multiply(Prime.Two).ToString().Should().Be("((2 * 3) * 5)");
+            Prime.Three.Multiply(Prime.Five).Multiply(Prime.Two).ToString().Should().Be("(2 * 3 * 5)");
         }
 
         [Fact]
@@ -88,6 +88,12 @@ namespace TestLD49
         public void sum_three_primes_to_expression()
         {
             Prime.Three.Add(Prime.Three).Add(Prime.Three).ToString().Should().Be("(3 + 3 + 3)");
+        }
+
+        [Fact]
+        public void product_three_numbers_to_express()
+        {
+            Prime.Five.Multiply(Prime.Two).Multiply(Prime.Three).ToString().Should().Be("(2 * 3 * 5)");
         }
     }
 }

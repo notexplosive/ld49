@@ -48,17 +48,17 @@ namespace LD49.Data
 
         public virtual MathExpression Multiply(MathExpression i)
         {
-            if (i is One)
-            {
-                return this;
-            }
-
-            return new MultiplyMathExpression(this, i);
+            return MultiplyMathExpression.Create(this,i);
         }
 
         public static MathExpression Negate(MathExpression i)
         {
             return new NegateExpression(i);
+        }
+        
+        public static MathExpression Inverse(MathExpression i)
+        {
+            return new FractionalMathExpression(One.Instance,i);
         }
 
         public virtual MathExpression Add(MathExpression i)
