@@ -9,7 +9,7 @@ namespace TestLD49
         [Fact]
         public void divide_into_fraction()
         {
-            Prime.Eleven.DivideBy(Prime.Three).ToString().Should().Be("((1 / 3) * 11)");
+            MathOperator.Divide(Prime.Eleven, Prime.Three).ToString().Should().Be("((1 / 3) * 11)");
         }
 
         [Fact]
@@ -21,140 +21,151 @@ namespace TestLD49
         [Fact]
         public void add_one()
         {
-            Zero.Instance.Add(One.Instance).ToString().Should().Be("1");
+            MathOperator.Add(Zero.Instance, One.Instance).ToString().Should().Be("1");
         }
 
         [Fact]
         public void add_multiple()
         {
-            One.Instance.Add(Prime.Three).Add(Prime.Two).ToString().Should().Be("(1 + 2 + 3)");
+            MathOperator.Add(MathOperator.Add(One.Instance, Prime.Three), Prime.Two).ToString().Should()
+                .Be("(1 + 2 + 3)");
         }
 
         [Fact]
         public void add_one_then_divide_by_three()
         {
-            One.Instance.DivideBy(Prime.Three).ToString().Should().Be("(1 / 3)");
+            MathOperator.Divide(One.Instance, Prime.Three).ToString().Should().Be("(1 / 3)");
         }
 
         [Fact]
         public void divide_multiple()
         {
-            One.Instance.DivideBy(Prime.Three).DivideBy(Prime.Three).ToString().Should().Be("(1 / (3 * 3))");
+            MathOperator.Divide(MathOperator.Divide(One.Instance, Prime.Three), Prime.Three).ToString().Should()
+                .Be("(1 / (3 * 3))");
         }
 
         [Fact]
         public void multiply_by_three()
         {
-            One.Instance.Multiply(Prime.Three).ToString().Should().Be("3");
+            MathOperator.Multiply(One.Instance, Prime.Three).ToString().Should().Be("3");
         }
 
         [Fact]
         public void multiply_by_several_things()
         {
-            Prime.Three.Multiply(Prime.Five).Multiply(Prime.Two).ToString().Should().Be("(2 * 3 * 5)");
+            MathOperator.Multiply(MathOperator.Multiply(Prime.Three, Prime.Five), Prime.Two).ToString().Should()
+                .Be("(2 * 3 * 5)");
         }
 
         [Fact]
         public void add_and_subtract_cancel_out()
         {
-            Prime.Five.Subtract(Prime.Five).ToString().Should().Be("0");
+            MathOperator.Subtract(Prime.Five, Prime.Five).ToString().Should().Be("0");
         }
 
         [Fact]
         public void multiply_and_divide_cancel_out()
         {
-            Prime.Thirteen.DivideBy(Prime.Thirteen).Should().Be(One.Instance);
+            MathOperator.Divide(Prime.Thirteen, Prime.Thirteen).Should().Be(One.Instance);
         }
 
         [Fact]
         public void multiply_by_one_does_nothing()
         {
-            One.Instance.Multiply(Prime.Thirteen).Should().Be(Prime.Thirteen);
+            MathOperator.Multiply(One.Instance, Prime.Thirteen).Should().Be(Prime.Thirteen);
         }
 
         [Fact]
         public void sum_two_primes_to_expression_not_prime()
         {
-            Prime.Two.Add(Prime.Three).ToString().Should().Be("(2 + 3)");
+            MathOperator.Add(Prime.Two, Prime.Three).ToString().Should().Be("(2 + 3)");
         }
 
         [Fact]
         public void sum_three_primes_to_expression_not_prime()
         {
-            Prime.Three.Add(Prime.Seven).Add(Prime.Three).ToString().Should().Be("(3 + 3 + 7)");
+            MathOperator.Add(MathOperator.Add(Prime.Three, Prime.Seven), Prime.Three).ToString().Should()
+                .Be("(3 + 3 + 7)");
         }
-        
+
         [Fact]
         public void sum_three_primes_to_expression()
         {
-            Prime.Three.Add(Prime.Three).Add(Prime.Three).ToString().Should().Be("(3 + 3 + 3)");
+            MathOperator.Add(MathOperator.Add(Prime.Three, Prime.Three), Prime.Three).ToString().Should()
+                .Be("(3 + 3 + 3)");
         }
 
         [Fact]
         public void product_three_numbers_to_express()
         {
-            Prime.Five.Multiply(Prime.Two).Multiply(Prime.Three).ToString().Should().Be("(2 * 3 * 5)");
+            MathOperator.Multiply(MathOperator.Multiply(Prime.Five, Prime.Two), Prime.Three).ToString().Should()
+                .Be("(2 * 3 * 5)");
         }
 
         [Fact]
         public void get_inverse()
         {
-            MathExpression.Inverse(Prime.Five).ToString().Should().Be("(1 / 5)");
+            MathOperator.Inverse(Prime.Five).ToString().Should().Be("(1 / 5)");
         }
 
         [Fact]
         public void prime_times_inverse_is_one()
         {
-            Prime.Five.Multiply(MathExpression.Inverse(Prime.Five)).Should().Be(One.Instance);
+            MathOperator.Multiply(Prime.Five, MathOperator.Inverse(Prime.Five)).Should().Be(One.Instance);
         }
-        
+
         [Fact]
         public void prime_plus_negate_is_zero()
         {
-            Prime.Five.Add(MathExpression.Negate(Prime.Five)).Should().Be(Zero.Instance);
+            MathOperator.Add(Prime.Five, MathOperator.Negate(Prime.Five)).Should().Be(Zero.Instance);
         }
 
         [Fact]
         public void expression_times_one_is_expression()
         {
-            Prime.Five.DivideBy(Prime.Seven).Multiply(One.Instance).ToString().Should().Be("(5 * (1 / 7))");
+            MathOperator.Multiply(MathOperator.Divide(Prime.Five, Prime.Seven),One.Instance).ToString().Should().Be("(5 * (1 / 7))");
         }
 
         [Fact]
         public void complex_multiply_expression_with_inverse_cancels()
         {
-            // this one is hard, do this one last.
-            Prime.Two.Multiply(Prime.Three).Multiply(Prime.Thirteen).Multiply(MathExpression.Inverse(Prime.Two)).ToString().Should().Be("(3 * 13)");
+            MathOperator.Multiply(
+                MathOperator.Multiply(
+                    Prime.Thirteen,
+                    MathOperator.Multiply(Prime.Two, Prime.Three)),
+                MathOperator.Inverse(Prime.Two)).ToString().Should().Be("(3 * 13)");
         }
 
         [Fact]
         public void simple_multiply_expression_with_inverse_cancels()
         {
-            Prime.Three.Multiply(Prime.Seven).Multiply(InverseExpression.Create(Prime.Three)).Should().Be(Prime.Seven);
+            MathOperator.Multiply(MathOperator.Multiply(Prime.Three, Prime.Seven),
+                    InverseExpression.Create(Prime.Three)).Should()
+                .Be(Prime.Seven);
         }
 
         [Fact]
         public void prime_times_one_is_same()
         {
-            Prime.Seven.Multiply(One.Instance).Should().Be(Prime.Seven);
+            MathOperator.Multiply(Prime.Seven, One.Instance).Should().Be(Prime.Seven);
         }
-        
+
         [Fact]
         public void one_times_prime_is_same()
         {
-            One.Instance.Multiply(Prime.Seven).Should().Be(Prime.Seven);
+            MathOperator.Multiply(One.Instance, Prime.Seven).Should().Be(Prime.Seven);
         }
-        
+
         [Fact]
         public void prime_times_zero_is_zero()
         {
-            Prime.Seven.Multiply(Zero.Instance).Should().Be(Zero.Instance);
+            MathOperator.Multiply(Prime.Seven, Zero.Instance).Should().Be(Zero.Instance);
         }
-        
+
         [Fact]
         public void zero_times_prime_is_zero()
         {
-            Zero.Instance.Multiply(Prime.Seven).Should().Be(Zero.Instance);
+            MathOperator.Multiply(Zero.Instance, Prime.Seven).Should().Be(Zero.Instance);
         }
     }
 }

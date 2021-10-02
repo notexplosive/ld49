@@ -34,8 +34,8 @@ namespace LD49.Data
             {
                 return InverseExpression.Create(
                     MultiplyMathExpression.Create(
-                        MathExpression.Inverse(leftInverse),
-                        MathExpression.Inverse(rightInverse)));
+                        MathOperator.Inverse(leftInverse),
+                        MathOperator.Inverse(rightInverse)));
             }
 
             // X * (A * B) -> X * A * B
@@ -66,7 +66,7 @@ namespace LD49.Data
                         var left = allExpressions[i];
                         var right = allExpressions[j];
 
-                        if (left == MathExpression.Inverse(right) || right == MathExpression.Inverse(left))
+                        if (left == MathOperator.Inverse(right) || right == MathOperator.Inverse(left))
                         {
                             allExpressions[i] = One.Instance;
                             allExpressions[j] = One.Instance;

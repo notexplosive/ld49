@@ -17,15 +17,5 @@ namespace LD49.Data
         {
             Prime.All.Add(this.value, this);
         }
-
-        public override MathExpression DivideBy(MathExpression i)
-        {
-            if (i == this)
-            {
-                return One.Instance;
-            }
-            
-            return base.DivideBy(i);
-        }
     }
 }

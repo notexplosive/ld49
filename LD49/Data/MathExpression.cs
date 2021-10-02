@@ -2,18 +2,51 @@
 
 namespace LD49.Data
 {
+    public static class MathOperator
+    {
+        public static MathExpression Multiply(MathExpression left, MathExpression right)
+        {
+            return MultiplyMathExpression.Create(left, right);
+        }
+
+        public static MathExpression Negate(MathExpression value)
+        {
+            return new NegateExpression(value);
+        }
+
+        public static MathExpression Inverse(MathExpression value)
+        {
+            return InverseExpression.Create(value);
+        }
+
+        public static MathExpression Add(MathExpression left, MathExpression right)
+        {
+            return AddMathExpression.Create(left, right);
+        }
+
+        public static MathExpression Subtract(MathExpression left, MathExpression right)
+        {
+            return MathOperator.Add(left, MathOperator.Negate(right));
+        }
+
+        public static MathExpression Divide(MathExpression left, MathExpression right)
+        {
+            return MultiplyMathExpression.Create(left, MathOperator.Inverse(right));
+        }
+    }
+
     public abstract class MathExpression : IComparable<MathExpression>
     {
         public abstract int UnderlyingValue { get; }
 
         public int CompareTo(MathExpression other)
         {
-            if (ReferenceEquals(this, other))
+            if (object.ReferenceEquals(this, other))
             {
                 return 0;
             }
 
-            if (ReferenceEquals(null, other))
+            if (object.ReferenceEquals(null, other))
             {
                 return 1;
             }
@@ -28,7 +61,7 @@ namespace LD49.Data
 
         public override bool Equals(object obj)
         {
-            return ReferenceEquals(this, obj) || obj is MathExpression other && Equals(other);
+            return object.ReferenceEquals(this, obj) || obj is MathExpression other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -38,47 +71,12 @@ namespace LD49.Data
 
         public static bool operator ==(MathExpression left, MathExpression right)
         {
-            return Equals(left, right);
+            return object.Equals(left, right);
         }
 
         public static bool operator !=(MathExpression left, MathExpression right)
         {
-            return !Equals(left, right);
-        }
-
-        public MathExpression Multiply(MathExpression i)
-        {
-            return MultiplyMathExpression.Create(this, i);
-        }
-
-        public static MathExpression Negate(MathExpression i)
-        {
-            return new NegateExpression(i);
-        }
-
-        public static MathExpression Inverse(MathExpression i)
-        {
-            return InverseExpression.Create(i);
-        }
-
-        public MathExpression Add(MathExpression i)
-        {
-            return AddMathExpression.Create(this, i);
-        }
-
-        public MathExpression Subtract(MathExpression i)
-        {
-            if (i is Zero)
-            {
-                return this;
-            }
-
-            return Add(MathExpression.Negate(i));
-        }
-
-        public virtual MathExpression DivideBy(MathExpression i)
-        {
-            return MultiplyMathExpression.Create(this, InverseExpression.Create(i));
+            return !object.Equals(left, right);
         }
     }
 }

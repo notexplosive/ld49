@@ -53,7 +53,7 @@ namespace LD49.Data
                         var left = allExpressions[i];
                         var right = allExpressions[j];
 
-                        if (left == MathExpression.Negate(right) || right == MathExpression.Negate(left))
+                        if (left == MathOperator.Negate(right) || right == MathOperator.Negate(left))
                         {
                             allExpressions[i] = Zero.Instance;
                             allExpressions[j] = Zero.Instance;
@@ -88,15 +88,6 @@ namespace LD49.Data
             }
 
             return finalExpressions[0];
-        }
-
-        public override MathExpression DivideBy(MathExpression i)
-        {
-            // (A + B) / X -> (A* 1/X) + (B * 1/X)
-            return new AddMathExpression(
-                MultiplyMathExpression.Create(InverseExpression.Create(this.content[0]), i),
-                MultiplyMathExpression.Create(InverseExpression.Create(this.content[1]), i)
-            );
         }
 
         private class Builder : TransitiveBuilder<Builder, AddMathExpression>
