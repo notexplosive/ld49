@@ -30,7 +30,7 @@ namespace LD49.Data
                 return Zero.Instance;
             }
 
-            return new MultiplyMathExpression(this, i);
+            return base.Multiply(i);
         }
 
         public static bool IsPrime(int val)
@@ -49,20 +49,7 @@ namespace LD49.Data
                 }
             }
 
-            return new AddMathExpression(this, i);
-        }
-
-        public override MathExpression Subtract(MathExpression i)
-        {
-            if (i is Prime otherPrime)
-            {
-                if (i == this)
-                {
-                    return Zero.Instance;
-                }
-            }
-            
-            return new SubtractMathExpression(this, i);
+            return base.Add(i);
         }
 
         public override MathExpression DivideBy(MathExpression i)
@@ -72,7 +59,7 @@ namespace LD49.Data
                 return One.Instance;
             }
             
-            return new FractionalMathExpression(this, i);
+            return base.DivideBy(i);
         }
     }
 }

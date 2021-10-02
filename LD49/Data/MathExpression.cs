@@ -39,6 +39,11 @@ namespace LD49.Data
             return new MultiplyMathExpression(this, i);
         }
 
+        public MathExpression Negate(MathExpression i)
+        {
+            return new NegateExpression(i);
+        }
+
         public virtual MathExpression Add(MathExpression i)
         {
             if (i is Zero)
@@ -46,17 +51,22 @@ namespace LD49.Data
                 return this;
             }
 
+            if (i == Negate(this) || this == Negate(i))
+            {
+                return Zero.Instance;
+            }
+
             return new AddMathExpression(this, i);
         }
 
-        public virtual MathExpression Subtract(MathExpression i)
+        public MathExpression Subtract(MathExpression i)
         {
             if (i is Zero)
             {
                 return this;
             }
 
-            return new SubtractMathExpression(this, i);
+            return Add(Negate(i));
         }
 
         public virtual MathExpression DivideBy(MathExpression i)
