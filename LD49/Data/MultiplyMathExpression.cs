@@ -55,9 +55,9 @@ namespace LD49.Data
                 return MultiplyMathExpression.Simplify(new MultiplyMathExpression(leftMul, rightPrime));
             }
 
-            if (left is Prime leftPrime && right is MultiplyMathExpression rightAdd)
+            if (left is Prime leftPrime && right is MultiplyMathExpression rightMul)
             {
-                return MultiplyMathExpression.Simplify(new MultiplyMathExpression(leftPrime, rightAdd));
+                return MultiplyMathExpression.Simplify(new MultiplyMathExpression(leftPrime, rightMul));
             }
 
             // (1 / X) * (1 / Y) -> 1 / (X * Y)
