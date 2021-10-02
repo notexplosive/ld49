@@ -245,5 +245,32 @@ namespace TestLD49
                                 MathOperator.Negate(Prime.Five))),
                         MathOperator.Add(Prime.Five, Prime.Five)))).Should().Be(Zero.Instance);
         }
+
+        [Fact]
+        public void negate_does_not_distribute()
+        {
+            MathOperator.Negate(
+                MathOperator.Add(Prime.Three, Prime.Seven)).ToString().Should().Be("(-(3 + 7))");
+        }
+
+        [Fact]
+        public void expression_over_expression_is_one()
+        {
+            MathOperator.Divide(
+                MathOperator.Add(One.Instance, MathOperator.Add(Prime.Two, Prime.Three)),
+                MathOperator.Add(Prime.Three, MathOperator.Add(Prime.Two, One.Instance))).Should().Be(One.Instance);
+        }
+
+        [Fact]
+        public void multiply_expression_over_factor()
+        {
+            MathOperator.Divide(MathOperator.Multiply(Prime.Three, Prime.Two), Prime.Three).Should().Be(Prime.Two);
+        }
+
+        [Fact]
+        public void prime_over_one_is_prime()
+        {
+            MathOperator.Divide(Prime.Seven, One.Instance).Should().Be(Prime.Seven);
+        }
     }
 }

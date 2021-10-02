@@ -11,6 +11,12 @@ namespace TestLD49
         {
             NegateExpression.Create(Prime.Seven).ToString().Should().Be("(-7)");
         }
+        
+        [Fact]
+        public void inverse_to_get_one_over()
+        {
+            InverseExpression.Create(Prime.Seven).ToString().Should().Be("(1 / 7)");
+        }
 
         [Fact]
         public void negate_zero_is_zero()
@@ -34,6 +40,12 @@ namespace TestLD49
         public void inverse_zero_should_be_infinity()
         {
             MathOperator.Inverse(Zero.Instance).Should().Be(Infinity.Instance);
+        }
+
+        [Fact]
+        public void inverse_one_is_one()
+        {
+            MathOperator.Inverse(One.Instance).Should().Be(One.Instance);
         }
     }
 }

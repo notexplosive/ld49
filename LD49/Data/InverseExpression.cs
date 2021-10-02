@@ -22,6 +22,11 @@
                 return Infinity.Instance;
             }
 
+            if (expression is One)
+            {
+                return expression;
+            }
+
             return new InverseExpression(expression);
         }
     }
