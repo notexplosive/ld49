@@ -1,36 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace LD49.Data
 {
-    public class AddMathExpression : MathExpression
+    public class AddMathExpression : TwoPrimeExpression
     {
-        private readonly MathExpression leftAddend;
-        private readonly MathExpression rightAddend;
-
         public AddMathExpression(MathExpression leftAddend, MathExpression rightAddend)
+            : base(leftAddend, rightAddend, '+')
         {
-            if (leftAddend is Prime p1 && rightAddend is Prime p2)
-            {
-                var list = new List<Prime> {p1, p2};
-                list.Sort();
-                this.leftAddend = list[0];
-                this.rightAddend = list[1];
-            }
-            else
-            {
-                this.leftAddend = leftAddend;
-                this.rightAddend = rightAddend;
-            }
         }
 
         public override MathExpression Multiply(MathExpression i)
         {
-            return new AddMathExpression(this.leftAddend.Multiply(i), this.rightAddend.Multiply(i));
+            // X * (A + B) -> AX + BX
+            return new AddMathExpression(this.left.Multiply(i), this.right.Multiply(i));
         }
 
         public override MathExpression Add(MathExpression i)
         {
+            // X + (A + B)
             return new AddMathExpression(this, i);
         }
 
@@ -41,12 +28,10 @@ namespace LD49.Data
 
         public override MathExpression DivideBy(MathExpression i)
         {
-            return new FractionalMathExpression(this, i);
-        }
-
-        public override string ToString()
-        {
-            return $"({this.leftAddend} + {this.rightAddend})";
+            // (A + B) / X -> (A/X + B/X)
+            return new AddMathExpression(
+                new FractionalMathExpression(this.left, i),
+                new FractionalMathExpression(this.right, i));
         }
     }
 }

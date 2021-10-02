@@ -1,55 +1,39 @@
-﻿using System;
-
-namespace LD49.Data
+﻿namespace LD49.Data
 {
-    public class FractionalMathExpression : MathExpression
+    public class FractionalMathExpression : TwoPrimeExpression
     {
-        private readonly MathExpression denominator;
-        private readonly MathExpression numerator;
-
         public FractionalMathExpression(MathExpression numerator, MathExpression denominator)
+            : base(numerator, denominator, '/')
         {
-            this.numerator = numerator;
-            this.denominator = denominator;
         }
+
+        private MathExpression Numerator => this.left;
+        private MathExpression Denominator => this.right;
 
         public override MathExpression Multiply(MathExpression i)
         {
-            return AttemptToSimplify(new FractionalMathExpression(this.numerator.Multiply(i), this.denominator));
-        }
-
-        public override MathExpression Add(MathExpression i)
-        {
-            return new AddMathExpression(this, i);
-        }
-
-        public override MathExpression Subtract(MathExpression i)
-        {
-            throw new NotImplementedException();
+            return FractionalMathExpression.AttemptToSimplify(
+                new FractionalMathExpression(Numerator.Multiply(i), Denominator));
         }
 
         public override MathExpression DivideBy(MathExpression i)
         {
-            return AttemptToSimplify(new FractionalMathExpression(this.numerator,this.denominator.Multiply(i)));
+            return FractionalMathExpression.AttemptToSimplify(
+                new FractionalMathExpression(Numerator, Denominator.Multiply(i)));
         }
 
         private static MathExpression AttemptToSimplify(FractionalMathExpression fraction)
         {
-            if (fraction.numerator is ConstantMathExpression && fraction.denominator is ConstantMathExpression)
+            if (fraction.Numerator is ConstantMathExpression && fraction.Denominator is ConstantMathExpression)
             {
-                var attemptResult = fraction.numerator.DivideBy(fraction.denominator);
+                var attemptResult = fraction.Numerator.DivideBy(fraction.Denominator);
                 if (attemptResult is ConstantMathExpression)
                 {
                     return attemptResult;
                 }
             }
-            
-            return fraction;
-        }
 
-        public override string ToString()
-        {
-            return $"({this.numerator} / {this.denominator})";
+            return fraction;
         }
     }
 }
