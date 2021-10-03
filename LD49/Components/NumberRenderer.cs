@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
@@ -8,70 +7,20 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LD49.Components
 {
-    public static class HexToColor
+    public abstract class ReckonRenderer : BaseComponent
     {
-        /// <summary>
-        ///     Borrowed from stackoverflow
-        ///     https://stackoverflow.com/questions/321370/how-can-i-convert-a-hex-string-to-a-byte-array
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static byte[] StringToByteArray(string str)
-        {
-            var hexIndex = new Dictionary<string, byte>();
-            for (var i = 0; i <= 255; i++)
-            {
-                hexIndex.Add(i.ToString("X2"), (byte) i);
-            }
+        protected readonly BoundingRect boundingRect;
+        protected float totalTime;
 
-            var hexRes = new List<byte>();
-            for (var i = 0; i < str.Length; i += 2)
-            {
-                hexRes.Add(hexIndex[str.Substring(i, 2)]);
-            }
-
-            return hexRes.ToArray();
-        }
-
-        public static Color Convert(string hex)
-        {
-            var bytes = HexToColor.StringToByteArray(hex);
-            return new Color(bytes[0], bytes[1], bytes[2]);
-        }
-    }
-
-    public class NumberRenderer : BaseComponent
-    {
-        private static readonly Color[] Colors =
-        {
-            HexToColor.Convert("287271"),
-            HexToColor.Convert("2A9D8F"),
-            HexToColor.Convert("E9C46A"),
-            HexToColor.Convert("F4A261"),
-            HexToColor.Convert("E76F51"),
-            HexToColor.Convert("8B687F"),
-            HexToColor.Convert("7B435F")
-        };
-
-        private readonly BoundingRect boundingRect;
-        private readonly Number number;
-        private float totalTime;
-
-        public NumberRenderer(Actor actor, Number number) : base(actor)
+        protected ReckonRenderer(Actor actor) : base(actor)
         {
             this.boundingRect = RequireComponent<BoundingRect>();
-            this.number = number;
         }
 
-        private int ShortSide => Math.Min(this.boundingRect.Rect.Height, this.boundingRect.Rect.Width);
-        private int Radius => ShortSide / 2;
+        protected int ShortSide => Math.Min(this.boundingRect.Rect.Height, this.boundingRect.Rect.Width);
+        protected int Radius => ShortSide / 2;
 
-        public override void Update(float dt)
-        {
-            this.totalTime += dt;
-        }
-
-        private void DrawRing(SpriteBatch spriteBatch, float radius, int sides, Color color, float animationFactor,
+        protected void DrawRing(SpriteBatch spriteBatch, float radius, int sides, Color color, float animationFactor,
             RotationLevel rotationLevel)
         {
             var time = this.totalTime * animationFactor;
@@ -101,6 +50,47 @@ namespace LD49.Components
 
                 LineDrawer.DrawLine(spriteBatch, edgePoint1, edgePoint2, color, transform.Depth, 10f);
             }
+        }
+
+        public override void Update(float dt)
+        {
+            this.totalTime += dt;
+        }
+
+        protected enum RotationLevel
+        {
+            Normal,
+            Horizontal,
+            Vertical,
+            Both
+        }
+        
+        protected Vector2 Normal(int x, int y)
+        {
+            var vector = new Vector2(x, y);
+            vector.Normalize();
+            return vector;
+        }
+    }
+
+    public class NumberRenderer : ReckonRenderer
+    {
+        private static readonly Color[] Colors =
+        {
+            HexToColor.Convert("287271"),
+            HexToColor.Convert("2A9D8F"),
+            HexToColor.Convert("E9C46A"),
+            HexToColor.Convert("F4A261"),
+            HexToColor.Convert("E76F51"),
+            HexToColor.Convert("8B687F"),
+            HexToColor.Convert("7B435F")
+        };
+
+        private readonly Number number;
+
+        public NumberRenderer(Actor actor, Number number) : base(actor)
+        {
+            this.number = number;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -190,14 +180,6 @@ namespace LD49.Components
 
             MachinaGame.Print(prime, "is not a prime?");
             return 0;
-        }
-
-        private enum RotationLevel
-        {
-            Normal,
-            Horizontal,
-            Vertical,
-            Both
         }
     }
 }

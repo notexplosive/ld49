@@ -30,6 +30,11 @@ namespace LD49.Components
                     {
                         new ExpressionRenderer(child, transitiveExpression);
                     }
+
+                    if (subexpression is NamedVariable variable)
+                    {
+                        new NamedVariableRenderer(child, variable);
+                    }
                 });
 
                 if (i < content.Length - 1)

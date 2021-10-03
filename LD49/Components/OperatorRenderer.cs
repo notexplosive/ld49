@@ -7,18 +7,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LD49.Components
 {
-    public class OperatorRenderer : BaseComponent
+    public class OperatorRenderer : ReckonRenderer
     {
-        private readonly BoundingRect boundingRect;
         private readonly TransitiveExpression.SubType subType;
 
         public OperatorRenderer(Actor actor, TransitiveExpression.SubType subType) : base(actor)
         {
-            this.boundingRect = RequireComponent<BoundingRect>();
             this.subType = subType;
         }
-
-        private int ShortSide => Math.Min(this.boundingRect.Rect.Height, this.boundingRect.Rect.Width);
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -45,13 +41,6 @@ namespace LD49.Components
                 LineDrawer.DrawLine(spriteBatch, center, center + Normal(-1, 1) * legLength, Color.Gray,
                     transform.Depth, 8f);
             }
-        }
-
-        private Vector2 Normal(int x, int y)
-        {
-            var vector = new Vector2(x, y);
-            vector.Normalize();
-            return vector;
         }
     }
 }

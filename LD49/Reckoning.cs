@@ -67,7 +67,7 @@ namespace LD49
                                 Prime.Seventeen,
                                 Prime.FiftyNine),
                             MathOperator.Add(
-                                Zero.Instance,
+                                NamedVariable.Z, 
                                 Infinity.Instance
                             ))),
                     One.Instance));
