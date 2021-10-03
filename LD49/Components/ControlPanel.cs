@@ -4,6 +4,7 @@ using System.Linq;
 using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
+using Microsoft.Xna.Framework;
 
 namespace LD49.Components
 {
@@ -22,17 +23,17 @@ namespace LD49.Components
 
             this.layout = RequireComponent<LayoutGroup>();
             this.mainExpressionRenderer = mainExpressionRenderer;
-            LoadPrimesPage(0);
+            LoadNumberPage(0);
         }
 
-        private void LoadPrimesPage(int pageNumber)
+        private void LoadNumberPage(int pageNumber)
         {
             ClearPage();
             var pageLength = 7;
 
             if (pageNumber != 0)
             {
-                BuildNavigationButton("Previous Page", () => LoadPrimesPage(pageNumber - 1));
+                BuildNavigationButton("Previous Page", () => LoadNumberPage(pageNumber - 1));
             }
             else
             {
@@ -62,7 +63,7 @@ namespace LD49.Components
 
             if (!isAtEnd)
             {
-                BuildNavigationButton("Next Page", () => LoadPrimesPage(pageNumber + 1));
+                BuildNavigationButton("Next Page", () => LoadNumberPage(pageNumber + 1));
             }
             else
             {
@@ -76,6 +77,29 @@ namespace LD49.Components
             new Hoverable(primeButtonActor);
             new TooltipProvider(primeButtonActor, number.ToString());
             new ExpressionRenderer(primeButtonActor, false, number);
+
+            new Clickable(primeButtonActor);
+            var draggable = new Draggable(primeButtonActor);
+
+            void DragStart(Vector2 mousePos, Vector2 delta)
+            {
+                Reckoning.DragHand.Expression = number;
+                Reckoning.DragHand.actor.Visible = true;
+            }
+
+            void DragEnd(Vector2 mousePos, Vector2 delta)
+            {
+                Reckoning.DragHand.actor.Visible = false;
+            }
+
+            draggable.DragStart += DragStart;
+            draggable.DragEnd += DragEnd;
+
+            new CallbackOnDestroy(primeButtonActor, () =>
+            {
+                draggable.DragStart -= DragStart;
+                draggable.DragEnd -= DragEnd;
+            });
         }
 
         private void BuildNavigationButton(string tooltip, Action callback)

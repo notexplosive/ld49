@@ -15,6 +15,8 @@ namespace LD49
         {
         }
 
+        public static ExpressionRenderer DragHand { private set; get; }
+
         protected override void OnGameLoad()
         {
             SceneLayers.BackgroundColor = Color.Black;
@@ -23,6 +25,20 @@ namespace LD49
             var parent = gameScene.AddActor("LayoutRoot");
             ExpressionRenderer mainExpressionRenderer = null;
             ExpressionRenderer storageExpressionRenderer = null;
+
+            var hand = gameScene.AddActor("Hand");
+            hand.transform.Depth = 100; // very close to front
+            new BoundingRect(hand, new Point(200,200)).SetOffsetToCenter();
+
+            // make this it's own component if drag feels funky, probably need to be smarter about delta
+            new AdHoc(hand).onMouseUpdate += (Vector2 currentPosition, Vector2 positionDelta, Vector2 rawDelta) =>
+            {
+                hand.transform.Position = currentPosition;
+            };
+
+            hand.Visible = false;
+
+            Reckoning.DragHand = new ExpressionRenderer(hand, false, Zero.Instance);
 
             new BoundingRect(parent, Point.Zero);
             new BoundingRectToViewportSize(parent);

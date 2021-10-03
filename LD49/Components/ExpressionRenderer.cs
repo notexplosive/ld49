@@ -47,7 +47,9 @@ namespace LD49.Components
             }
 
             this.mainChild = transform.AddActorAsChild("MainChild");
-            new BoundingRect(this.mainChild, Point.Zero);
+            
+            var boundingRect = RequireComponent<BoundingRect>();
+            new BoundingRect(this.mainChild, boundingRect.Size, boundingRect.Offset);
         }
 
         private void BuildExpression(MathExpression expression)
