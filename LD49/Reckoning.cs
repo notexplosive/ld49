@@ -58,12 +58,17 @@ namespace LD49
                             MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White, HorizontalAlignment.Center,
                             VerticalAlignment.Center, Overflow.Ignore);
                     })
-                .AddHorizontallyStretchedElement("controls", 200,
+                .AddHorizontallyStretchedElement("controlsRoot", 200,
                     controlsRoot =>
                     {
                         new BoundingRectBorder(controlsRoot, Color.Orange);
                         var layout = new LayoutGroup(controlsRoot, Orientation.Horizontal);
-                        new ControlPanel(controlsRoot, mainExpressionRenderer);
+
+                        layout.AddBothStretchedElement("inventory", inventoryActor =>
+                        {
+                            new LayoutGroup(inventoryActor,Orientation.Horizontal);
+                            new ControlPanel(inventoryActor, mainExpressionRenderer);
+                        });
                     })
                 ;
         }

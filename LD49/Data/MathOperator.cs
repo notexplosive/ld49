@@ -9,7 +9,7 @@
             Times,
             Divide
         }
-        
+
         public static MathExpression Multiply(MathExpression left, MathExpression right)
         {
             return MultiplyMathExpression.Create(left, right);

@@ -12,7 +12,6 @@ namespace LD49.Components
         private readonly bool isHoverable;
         private MathExpression expressionImpl;
         private Actor mainChild;
-        public event Action OnExpressionChange;
 
         public ExpressionRenderer(Actor actor, bool isHoverable, MathExpression expression, int expressionDepth = 0) :
             base(actor)
@@ -38,6 +37,8 @@ namespace LD49.Components
             }
         }
 
+        public event Action OnExpressionChange;
+
         private void Clear()
         {
             if (this.mainChild != null)
@@ -58,7 +59,7 @@ namespace LD49.Components
             else if (expression is TransitiveExpression transitiveExpression)
             {
                 new TransitiveExpressionRenderer(this.mainChild, this.isHoverable,
-                    transitiveExpression, this.expressionDepth);
+                    transitiveExpression, this, this.expressionDepth);
             }
             else if (expression is NamedVariable variable)
             {

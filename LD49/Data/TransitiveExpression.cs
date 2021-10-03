@@ -120,5 +120,18 @@ namespace LD49.Data
         {
             return this.content.ToArray();
         }
+
+        public T GetFirstExpression<T>() where T : TransitiveExpression
+        {
+            foreach (var expression in this.content)
+            {
+                if (expression is T result)
+                {
+                    return result;
+                }
+            }
+
+            return null;
+        }
     }
 }

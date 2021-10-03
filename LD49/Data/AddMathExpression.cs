@@ -18,6 +18,17 @@ namespace LD49.Data
             // X + (A + B) -> X + A + B
             return AddMathExpression.Simplify(new Builder().Add(left).Add(right).Build());
         }
+        
+        public static MathExpression Distribute(MathExpression expression, AddMathExpression addExpression)
+        {
+            MathExpression result = Zero.Instance;
+            foreach (var addItem in addExpression.content)
+            {
+                result = MathOperator.Add(result, MathOperator.Multiply(expression, addItem));
+            }
+
+            return result;
+        }
 
         private static MathExpression Simplify(AddMathExpression expression)
         {

@@ -46,7 +46,7 @@ namespace LD49.Components
                         new BoundingRectBorder(secondActor, negateColor);
                     }
 
-                    new ExpressionRenderer(secondActor, true, expression.GetInnerValue(), isNegate ? 0 : 1);
+                    new ExpressionRenderer(secondActor, true, expression.GetInnerValue(), isNegate ? 2 : 1);
                 });
         }
     }

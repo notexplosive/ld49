@@ -51,6 +51,41 @@ namespace LD49.Data
             return finalExpressions[0];
         }
 
+        public bool CanDistribute()
+        {
+            var numberOfAddExpressions = 0;
+            foreach (var item in this.content)
+            {
+                if (item is AddMathExpression)
+                {
+                    numberOfAddExpressions++;
+                }
+            }
+
+            return this.content.Length == 2 && numberOfAddExpressions > 0;
+        }
+
+        public MathExpression GetExpressionExcept(MathExpression expressionToRemove)
+        {
+            var builder = new Builder();
+            var hasSkipped = false;
+
+            foreach (var expression in this.content)
+            {
+                if (expression != expressionToRemove || hasSkipped)
+                {
+                    builder.Add(expression);
+                }
+
+                if (expression == expressionToRemove)
+                {
+                    hasSkipped = true;
+                }
+            }
+
+            return MultiplyMathExpression.Simplify(builder.Build());
+        }
+
         private class Builder : TransitiveBuilder<Builder, MultiplyMathExpression>
         {
             public override MultiplyMathExpression Build()
