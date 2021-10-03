@@ -9,7 +9,7 @@ namespace LD49
 {
     public class Reckoning : MachinaGame
     {
-        public static BoundedTextRenderer tooltipTextRenderer;
+        // public static BoundedTextRenderer tooltipTextRenderer;
 
         public Reckoning(string[] args) : base("The Reckoning", args, new Point(1600, 900), new Point(1600, 900),
             ResizeBehavior.MaintainDesiredResolution)
@@ -61,8 +61,9 @@ namespace LD49
                                         ))),
                                 One.Instance));
 
-                        mainExpressionRenderer.OnExpressionChange += () => { Reckoning.tooltipTextRenderer.Text = ""; };
+                        mainExpressionRenderer.OnExpressionChange += () => { /* Reckoning.tooltipTextRenderer.Text = ""; */ };
                     })
+                    /*
                     .AddHorizontallyStretchedElement("tooltip", 60,
                         controlsRoot =>
                         {
@@ -72,13 +73,14 @@ namespace LD49
                                 HorizontalAlignment.Center,
                                 VerticalAlignment.Center, Overflow.Ignore);
                         })
+                        */
                     .AddHorizontallyStretchedElement("controlsRoot", 200,
                         controlsRoot =>
                         {
                             new BoundingRectBorder(controlsRoot, Color.Orange);
                             var layout = new LayoutGroup(controlsRoot, Orientation.Horizontal);
 
-                            layout.AddBothStretchedElement("inventory", inventoryActor =>
+                            layout.AddBothStretchedElement("numbers", inventoryActor =>
                             {
                                 new LayoutGroup(inventoryActor, Orientation.Horizontal).SetPaddingBetweenElements(5);
                                 new ControlPanel(inventoryActor, mainExpressionRenderer);
@@ -87,11 +89,20 @@ namespace LD49
                             layout.AddVerticallyStretchedElement("storage", 300,
                                 storageActor =>
                                 {
-                                    storageExpressionRenderer =
-                                        new ExpressionRenderer(storageActor, true, Zero.Instance);
+                                    var dragNumber = new DragNumber(storageActor, Zero.Instance);
+                                    storageExpressionRenderer = dragNumber.expressionRenderer;
                                 });
                         })
                     ;
+            }
+
+            void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName,
+                Action<MathExpression> onDrop)
+            {
+                new BoundingRectFill(buttonActor, new Color(Color.Orange, 0.25f));
+                new OperatorRenderer(buttonActor, operatorName, Color.White, false);
+                new Hoverable(buttonActor);
+                new DropSite(buttonActor, Reckoning.DragHand, onDrop);
             }
 
             // Build overlay panel
@@ -102,20 +113,11 @@ namespace LD49
                     new Point(gameScene.camera.UnscaledViewportSize.X, gameScene.camera.UnscaledViewportSize.Y / 2));
                 overlayPanelActor.transform.Position -= new Vector2(0, boundingRect.Size.Y);
 
-                new Hoverable(overlayPanelActor); // prevents hovers on things below it
-
-                void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName, Action<MathExpression> onDrop)
-                {
-                    new BoundingRectFill(buttonActor, new Color(Color.Orange, 0.25f));
-                    new OperatorRenderer(buttonActor, operatorName, Color.White, false);
-                    new Hoverable(buttonActor);
-                    new DropSite(buttonActor, Reckoning.DragHand, onDrop);
-                }
-
                 new LayoutGroup(overlayPanelActor, Orientation.Vertical)
                     .VerticallyStretchedSpacer()
                     .AddBothStretchedElement("OverlayContent", overlayContentActor =>
                     {
+                        new Hoverable(overlayPanelActor); // prevents hovers on things below it
                         new BoundingRectFill(overlayContentActor, new Color(Color.Orange, 0.25f));
                         new LayoutGroup(overlayContentActor, Orientation.Horizontal)
                             .SetMarginSize(new Point(32, 32))
@@ -145,6 +147,51 @@ namespace LD49
                     ;
 
                 new OverlayTrigger(overlayPanelActor, Reckoning.DragHand, expressionHoverable, Vector2.Zero);
+            }
+
+            // Build storage overlay panel
+            {
+                var storageOverlayPanelActor = gameScene.AddActor("OverlayPanel");
+                storageOverlayPanelActor.transform.Depth = 200; // close to front but behind cursor
+                var boundingRect = new BoundingRect(storageOverlayPanelActor,
+                    new Point(gameScene.camera.UnscaledViewportSize.X, gameScene.camera.UnscaledViewportSize.Y / 2));
+                storageOverlayPanelActor.transform.Position += new Vector2(0, boundingRect.Size.Y * 2);
+
+                new LayoutGroup(storageOverlayPanelActor, Orientation.Vertical)
+                    .AddBothStretchedElement("OverlayContent", overlayContentActor =>
+                    {
+                        new Hoverable(overlayContentActor); // prevents hovers on things below it
+                        new BoundingRectFill(overlayContentActor, new Color(Color.Orange, 0.25f));
+                        new LayoutGroup(overlayContentActor, Orientation.Horizontal)
+                            .SetMarginSize(new Point(32, 32))
+                            .HorizontallyStretchedSpacer()
+                            .AddBothStretchedElement("Add Button",
+                                addButton =>
+                                {
+                                    SetupOverlayButton(addButton, MathOperator.Name.Plus, expression =>
+                                    {
+                                        storageExpressionRenderer.Expression =
+                                            MathOperator.Add(storageExpressionRenderer.Expression, expression);
+                                    });
+                                })
+                            .HorizontallyStretchedSpacer()
+                            .AddBothStretchedElement("Multiply Button",
+                                multiplyButton =>
+                                {
+                                    SetupOverlayButton(multiplyButton, MathOperator.Name.Times, expression =>
+                                    {
+                                        storageExpressionRenderer.Expression =
+                                            MathOperator.Multiply(storageExpressionRenderer.Expression, expression);
+                                    });
+                                })
+                            .HorizontallyStretchedSpacer()
+                            ;
+                    })
+                    .VerticallyStretchedSpacer()
+                    ;
+
+                new OverlayTrigger(storageOverlayPanelActor, Reckoning.DragHand, expressionHoverable,
+                    new Vector2(0, gameScene.camera.UnscaledViewportSize.Y / 2f));
             }
         }
     }

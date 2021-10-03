@@ -31,7 +31,7 @@ namespace LD49.Components
 
         private void OnHovered()
         {
-            Reckoning.tooltipTextRenderer.Text = this.tooltipText;
+            // Reckoning.tooltipTextRenderer.Text = this.tooltipText;
         }
 
         private void OnUnhovered()

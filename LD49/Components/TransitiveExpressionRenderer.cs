@@ -18,8 +18,11 @@ namespace LD49.Components
             var layout = new LayoutGroup(this.actor,
                 expressionDepth % 2 == 0 ? Orientation.Horizontal : Orientation.Vertical);
 
-            new Hoverable(this.actor);
-            new TooltipProvider(this.actor, expression.ToString());
+            if (isHoverable)
+            {
+                new Hoverable(this.actor);
+                new TooltipProvider(this.actor, expression.ToString());
+            }
 
             var content = expression.GetContents();
             var i = 0;
@@ -44,7 +47,9 @@ namespace LD49.Components
                                 operatorLayout.AddHorizontallyStretchedElement("DistributeButton", 50, buttonActor =>
                                 {
                                     new BoundingRectBorder(buttonActor, Color.Orange);
-                                    new BoundedTextRenderer(buttonActor,"Distribute",MachinaGame.Assets.GetSpriteFont("DefaultFont"),Color.White, HorizontalAlignment.Center,VerticalAlignment.Center, Overflow.Ignore);
+                                    new BoundedTextRenderer(buttonActor, "Distribute",
+                                        MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
+                                        HorizontalAlignment.Center, VerticalAlignment.Center, Overflow.Ignore);
                                     new Hoverable(buttonActor);
                                     var clickable = new Clickable(buttonActor);
 

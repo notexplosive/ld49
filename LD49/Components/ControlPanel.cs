@@ -74,11 +74,7 @@ namespace LD49.Components
 
         private void SetupNumberButton(Actor primeButtonActor, MathExpression number)
         {
-            new Hoverable(primeButtonActor);
-            new TooltipProvider(primeButtonActor, number.ToString());
-            new ExpressionRenderer(primeButtonActor, false, number);
-
-            new DragNumber(primeButtonActor);
+            new DragNumber(primeButtonActor, number);
         }
 
         private void BuildNavigationButton(string tooltip, Action callback)

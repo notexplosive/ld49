@@ -1,4 +1,5 @@
-﻿using Machina.Components;
+﻿using LD49.Data;
+using Machina.Components;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,10 +9,15 @@ namespace LD49.Components
     public class DragNumber : BaseComponent
     {
         private readonly Draggable draggable;
+        public readonly ExpressionRenderer expressionRenderer;
         private readonly ExpressionRenderer renderer;
 
-        public DragNumber(Actor actor) : base(actor)
+        public DragNumber(Actor actor, MathExpression expression) : base(actor)
         {
+            this.expressionRenderer = new ExpressionRenderer(actor, false, expression);
+            new Hoverable(actor);
+            new TooltipProvider(actor, expression.ToString());
+
             this.renderer = RequireComponent<ExpressionRenderer>();
 
             new Clickable(actor);
@@ -29,6 +35,7 @@ namespace LD49.Components
 
         private void DragStart(Vector2 mousePos, Vector2 delta)
         {
+            MachinaGame.Print("Picked up", this.expressionRenderer.Expression);
             Reckoning.DragHand.PickUp(this.renderer);
             Reckoning.DragHand.actor.Visible = true;
         }

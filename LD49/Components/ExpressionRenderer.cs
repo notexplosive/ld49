@@ -2,28 +2,26 @@
 using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
-using Microsoft.Xna.Framework;
 
 namespace LD49.Components
 {
     public class ExpressionRenderer : BaseComponent
     {
+        public readonly BoundingRect boundingRect;
         private readonly int expressionDepth;
         private readonly bool isHoverable;
         private MathExpression expressionImpl;
         private Actor mainChild;
-        public readonly BoundingRect boundingRect;
 
         public ExpressionRenderer(Actor actor, bool isHoverable, MathExpression expression, int expressionDepth = 0) :
             base(actor)
         {
-            Clear();
+            this.boundingRect = RequireComponent<BoundingRect>();
             this.isHoverable = isHoverable;
             this.expressionDepth = expressionDepth;
             Expression = expression;
 
-            this.boundingRect = RequireComponent<BoundingRect>();
-            boundingRect.onSizeChange += size => { this.mainChild.GetComponent<BoundingRect>().SetSize(size); };
+            this.boundingRect.onSizeChange += size => { this.mainChild.GetComponent<BoundingRect>().SetSize(size); };
         }
 
         public MathExpression Expression
@@ -48,9 +46,8 @@ namespace LD49.Components
             }
 
             this.mainChild = transform.AddActorAsChild("MainChild");
-            
-            var boundingRect = RequireComponent<BoundingRect>();
-            new BoundingRect(this.mainChild, boundingRect.Size, boundingRect.Offset);
+
+            new BoundingRect(this.mainChild, this.boundingRect.Size, this.boundingRect.Offset);
         }
 
         private void BuildExpression(MathExpression expression)
