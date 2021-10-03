@@ -7,51 +7,32 @@ namespace LD49.Components
 {
     public class ExpressionRenderer : BaseComponent
     {
-        public ExpressionRenderer(Actor actor, TransitiveExpression expression) : base(actor)
+        public ExpressionRenderer(Actor actor, MathExpression expression) : base(actor)
         {
-            var transitiveType = expression is AddMathExpression ? TransitiveExpression.SubType.Add : TransitiveExpression.SubType.Multiply;
-
-            var layout = new LayoutGroup(this.actor,
-                transitiveType == TransitiveExpression.SubType.Add ? Orientation.Horizontal : Orientation.Vertical);
-
-            var content = expression.GetContents();
-            var i = 0;
-
-            foreach (var subexpression in content)
+            if (expression is Number number)
             {
-                layout.AddBothStretchedElement("item", child =>
-                {
-                    if (subexpression is Number number)
-                    {
-                        new NumberRenderer(child, number);
-                    }
-
-                    if (subexpression is TransitiveExpression transitiveExpression)
-                    {
-                        new ExpressionRenderer(child, transitiveExpression);
-                    }
-
-                    if (subexpression is NamedVariable variable)
-                    {
-                        new NamedVariableRenderer(child, variable);
-                    }
-                });
-
-                if (i < content.Length - 1)
-                {
-                    layout.AddBothStretchedElement("symbol", child => { new OperatorRenderer(child, transitiveType); });
-                }
-
-                i++;
+                new NumberRenderer(actor, number);
             }
-        }
 
-        public override void Update(float dt)
-        {
-        }
+            if (expression is TransitiveExpression transitiveExpression)
+            {
+                new TransitiveExpressionRenderer(actor, transitiveExpression);
+            }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
+            if (expression is NamedVariable variable)
+            {
+                new NamedVariableRenderer(actor, variable);
+            }
+
+            if (expression is InverseExpression inverseExpression)
+            {
+                new UnaryExpressionRenderer(actor, inverseExpression);
+            }
+
+            if (expression is NegateExpression negateExpression)
+            {
+                new UnaryExpressionRenderer(actor, negateExpression);
+            }
         }
     }
 }

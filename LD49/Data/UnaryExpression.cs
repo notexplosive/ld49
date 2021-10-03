@@ -15,5 +15,10 @@
         {
             return $"({this.symbol}{this.inner})";
         }
+
+        public MathExpression GetInnerValue()
+        {
+            return this.inner;
+        }
     }
 }

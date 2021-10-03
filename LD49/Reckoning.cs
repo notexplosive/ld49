@@ -58,7 +58,6 @@ namespace LD49
             new BoundingRectToViewportSize(parent);
 
             new ExpressionRenderer(parent,
-                (TransitiveExpression)
                 MathOperator.Add(
                     MathOperator.Add(
                         Prime.Seven,
@@ -67,8 +66,8 @@ namespace LD49
                                 Prime.Seventeen,
                                 Prime.FiftyNine),
                             MathOperator.Add(
-                                NamedVariable.Z, 
-                                Infinity.Instance
+                                MathOperator.Inverse(MathOperator.Negate(MathOperator.Add(NamedVariable.Z,NamedVariable.X))),
+                                Zero.Instance
                             ))),
                     One.Instance));
         }

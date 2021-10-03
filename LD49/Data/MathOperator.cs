@@ -2,6 +2,14 @@
 {
     public static class MathOperator
     {
+        public enum Name
+        {
+            Plus,
+            Minus,
+            Times,
+            Divide
+        }
+        
         public static MathExpression Multiply(MathExpression left, MathExpression right)
         {
             return MultiplyMathExpression.Create(left, right);
