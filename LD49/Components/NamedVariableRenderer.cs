@@ -17,6 +17,7 @@ namespace LD49.Components
             this.variable = variable;
             
             new Hoverable(this.actor);
+            new TooltipProvider(this.actor, variable.ToString());
         }
 
         public override void Update(float dt)

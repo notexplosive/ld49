@@ -18,6 +18,7 @@ namespace LD49.Components
                 expressionDepth % 2 == 0 ? Orientation.Horizontal : Orientation.Vertical);
 
             new Hoverable(this.actor);
+            new TooltipProvider(this.actor, expression.ToString());
             
             var content = expression.GetContents();
             var i = 0;

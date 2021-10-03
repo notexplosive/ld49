@@ -32,6 +32,8 @@ namespace LD49.Components
             {
                 new Hoverable(this.actor);
             }
+
+            new TooltipProvider(this.actor, number.ToString());
         }
 
         public override void Update(float dt)

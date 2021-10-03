@@ -21,6 +21,7 @@ namespace LD49.Components
             var negateColor = Color.Cyan;
 
             new Hoverable(this.actor);
+            new TooltipProvider(this.actor, expression.ToString());
 
             if (isNegate)
             {
