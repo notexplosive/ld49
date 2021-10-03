@@ -1,4 +1,5 @@
-﻿using LD49.Data;
+﻿using System;
+using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
@@ -8,8 +9,8 @@ namespace LD49.Components
 {
     public class DragHand : BaseComponent
     {
-        private readonly ExpressionRenderer expressionRenderer;
         private readonly BoundingRect boundingRect;
+        private readonly ExpressionRenderer expressionRenderer;
 
         public DragHand(Actor actor) : base(actor)
         {
@@ -23,6 +24,11 @@ namespace LD49.Components
             get => this.expressionRenderer.Expression;
             set => this.expressionRenderer.Expression = value;
         }
+
+        public bool IsHolding =>
+            this.actor.Visible; // this should probably be the other way around but whatever, visible is a proxy for holding
+
+        public event Action<MathExpression> Dropped;
 
         public override void Update(float dt)
         {
@@ -40,7 +46,12 @@ namespace LD49.Components
         public void PickUp(ExpressionRenderer renderer)
         {
             this.boundingRect.SetSize(renderer.boundingRect.Size);
-            this.Expression = renderer.Expression;
+            Expression = renderer.Expression;
+        }
+
+        public void Drop(Vector2 mousePos)
+        {
+            Dropped?.Invoke(Expression);
         }
     }
 }

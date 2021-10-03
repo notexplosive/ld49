@@ -90,6 +90,7 @@ namespace LD49.Components
             void DragEnd(Vector2 mousePos, Vector2 delta)
             {
                 Reckoning.DragHand.actor.Visible = false;
+                Reckoning.DragHand.Drop(mousePos);
             }
 
             draggable.DragStart += DragStart;
