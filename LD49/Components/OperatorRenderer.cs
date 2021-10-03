@@ -47,8 +47,8 @@ namespace LD49.Components
             {
                 // Underscore underneath the number
                 var longLegLength = ShortSide / 2;
-                LineDrawer.DrawLine(spriteBatch, center + Normal(1, 1) * longLegLength,
-                    center + Normal(-1, 1) * longLegLength, Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center + new Vector2(longLegLength, longLegLength),
+                    center + new Vector2(-longLegLength, longLegLength), Color.Gray,
                     transform.Depth, 8f);
             }
 

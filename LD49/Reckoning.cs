@@ -56,20 +56,26 @@ namespace LD49
             var parent = gameScene.AddActor("LayoutRoot");
             new BoundingRect(parent, Point.Zero);
             new BoundingRectToViewportSize(parent);
-
-            new ExpressionRenderer(parent,
-                MathOperator.Add(
-                    MathOperator.Add(
-                        Prime.Seven,
-                        MathOperator.Multiply(
+            new LayoutGroup(parent, Orientation.Vertical)
+                .PixelSpacer(100)
+                .AddBothStretchedElement("main expression", expressionActor =>
+                {
+                    new ExpressionRenderer(expressionActor,
+                        MathOperator.Add(
                             MathOperator.Add(
-                                Prime.Seventeen,
-                                Prime.FiftyNine),
-                            MathOperator.Add(
-                                MathOperator.Inverse(MathOperator.Negate(MathOperator.Add(NamedVariable.Z,NamedVariable.X))),
-                                Zero.Instance
-                            ))),
-                    One.Instance));
+                                Prime.Seven,
+                                MathOperator.Multiply(
+                                    MathOperator.Add(
+                                        Prime.Seventeen,
+                                        Prime.FiftyNine),
+                                    MathOperator.Add(
+                                        MathOperator.Inverse(
+                                            MathOperator.Negate(MathOperator.Add(NamedVariable.Z, NamedVariable.X))),
+                                        Zero.Instance
+                                    ))),
+                            One.Instance));
+                })
+                .PixelSpacer(100);
         }
     }
 }
