@@ -1,17 +1,18 @@
-﻿using LD49.Components;
-using LD49.Data;
+﻿using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace LD49.Content
+namespace LD49.Components
 {
     public class ExpressionRenderer : BaseComponent
     {
         public ExpressionRenderer(Actor actor, TransitiveExpression expression) : base(actor)
         {
-            var layout = new LayoutGroup(this.actor, expression is AddMathExpression ? Orientation.Horizontal : Orientation.Vertical);
+            var transitiveType = expression is AddMathExpression ? TransitiveExpression.SubType.Add : TransitiveExpression.SubType.Multiply;
+
+            var layout = new LayoutGroup(this.actor,
+                transitiveType == TransitiveExpression.SubType.Add ? Orientation.Horizontal : Orientation.Vertical);
 
             var content = expression.GetContents();
             var i = 0;
@@ -33,7 +34,7 @@ namespace LD49.Content
 
                 if (i < content.Length - 1)
                 {
-                    layout.AddBothStretchedElement("symbol", child => { new BoundingRectFill(child, Color.Orange); });
+                    layout.AddBothStretchedElement("symbol", child => { new OperatorRenderer(child, transitiveType); });
                 }
 
                 i++;

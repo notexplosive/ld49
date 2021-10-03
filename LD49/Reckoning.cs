@@ -1,5 +1,5 @@
 ﻿using System;
-using LD49.Content;
+using LD49.Components;
 using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
@@ -59,12 +59,12 @@ namespace LD49
                             Prime.Seven,
                             MathOperator.Multiply(
                                 MathOperator.Add(
-                                    Prime.Seventeen, 
-                                    Prime.FiftyNine), 
+                                    Prime.Seventeen,
+                                    Prime.FiftyNine),
                                 MathOperator.Add(
                                     Prime.Three,
                                     Prime.Thirteen
-                                    ))),
+                                ))),
                         Prime.Thirteen));
             });
         }

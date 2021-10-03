@@ -5,7 +5,6 @@ using Machina.Components;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 
 namespace LD49.Components
 {
@@ -72,7 +71,7 @@ namespace LD49.Components
             this.totalTime += dt;
         }
 
-        private void DrawCircle(SpriteBatch spriteBatch, float radius, int sides, Color color, float animationFactor,
+        private void DrawRing(SpriteBatch spriteBatch, float radius, int sides, Color color, float animationFactor,
             RotationLevel rotationLevel)
         {
             var time = this.totalTime * animationFactor;
@@ -99,8 +98,8 @@ namespace LD49.Components
                                  + new Vector2(
                                      MathF.Cos(angle) * horizontalRadius,
                                      MathF.Sin(angle) * verticalRadius);
-                spriteBatch.DrawLine(edgePoint1, edgePoint2, color, 10f, transform.Depth);
-                spriteBatch.DrawCircle(new CircleF(edgePoint1, 5f), 10, color, 5f, transform.Depth);
+
+                LineDrawer.DrawLine(spriteBatch, edgePoint1, edgePoint2, color, transform.Depth, 10f);
             }
         }
 
@@ -119,7 +118,7 @@ namespace LD49.Components
 
                 for (var i = 0; i < pageIndex; i++)
                 {
-                    DrawCircle(spriteBatch,
+                    DrawRing(spriteBatch,
                         Radius - i * 5,
                         sideCount,
                         color,

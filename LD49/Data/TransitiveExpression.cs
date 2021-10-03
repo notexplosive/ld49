@@ -7,6 +7,12 @@ namespace LD49.Data
 {
     public abstract class TransitiveExpression : MathExpression
     {
+        public enum SubType
+        {
+            Add,
+            Multiply
+        }
+        
         protected readonly ImmutableArray<MathExpression> content;
         private readonly char symbol;
 
