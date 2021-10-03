@@ -12,11 +12,16 @@ namespace LD49.Components
         private readonly ReckonRenderer reckonRenderer;
         private readonly MathOperator.Name symbol;
 
-        public OperatorRenderer(Actor actor, MathOperator.Name symbol, Color color) : base(actor)
+        public OperatorRenderer(Actor actor, MathOperator.Name symbol, Color color, bool isHoverable) : base(actor)
         {
             this.reckonRenderer = new ReckonRenderer(actor, RequireComponent<BoundingRect>());
             this.symbol = symbol;
             this.color = color;
+
+            if (isHoverable)
+            {
+                new Hoverable(this.actor);
+            }
         }
 
         public override void Update(float dt)

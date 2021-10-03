@@ -23,10 +23,15 @@ namespace LD49.Components
         private readonly Number number;
         private readonly ReckonRenderer reckonRenderer;
 
-        public NumberRenderer(Actor actor, Number number) : base(actor)
+        public NumberRenderer(Actor actor, Number number, bool isHoverable) : base(actor)
         {
             this.reckonRenderer = new ReckonRenderer(actor, RequireComponent<BoundingRect>());
             this.number = number;
+
+            if (isHoverable)
+            {
+                new Hoverable(this.actor);
+            }
         }
 
         public override void Update(float dt)

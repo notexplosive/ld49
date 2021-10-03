@@ -7,7 +7,7 @@ namespace LD49.Components
 {
     public class TransitiveExpressionRenderer : BaseComponent
     {
-        public TransitiveExpressionRenderer(Actor actor, TransitiveExpression expression, int expressionDepth) :
+        public TransitiveExpressionRenderer(Actor actor, bool isHoverable, TransitiveExpression expression, int expressionDepth) :
             base(actor)
         {
             var transitiveType = expression is AddMathExpression
@@ -17,12 +17,14 @@ namespace LD49.Components
             var layout = new LayoutGroup(this.actor,
                 expressionDepth % 2 == 0 ? Orientation.Horizontal : Orientation.Vertical);
 
+            new Hoverable(this.actor);
+            
             var content = expression.GetContents();
             var i = 0;
 
             foreach (var subexpression in content)
             {
-                layout.AddBothStretchedElement("item", child => { new ExpressionRenderer(child, subexpression, expressionDepth + 1); });
+                layout.AddBothStretchedElement("item", child => { new ExpressionRenderer(child, isHoverable, subexpression, expressionDepth + 1); });
 
                 if (i < content.Length - 1)
                 {
@@ -33,7 +35,7 @@ namespace LD49.Components
                                 transitiveType == TransitiveExpression.SubType.Add
                                     ? MathOperator.Name.Plus
                                     : MathOperator.Name.Times,
-                                Color.Gray);
+                                Color.Gray, false);
                         });
                 }
 

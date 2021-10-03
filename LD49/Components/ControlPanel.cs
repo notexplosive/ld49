@@ -72,13 +72,13 @@ namespace LD49.Components
 
             this.layout.AddBothStretchedElement("Back", buttonActor =>
             {
-                new ExpressionRenderer(buttonActor, prime);
+                new ExpressionRenderer(buttonActor, false, prime);
                 SetupExecuteButton(buttonActor, () => LoadPrimesPage(0));
             });
             this.layout.AddBothStretchedElement("Add",
                 buttonActor =>
                 {
-                    new OperatorRenderer(buttonActor, MathOperator.Name.Plus, Color.White);
+                    new OperatorRenderer(buttonActor, MathOperator.Name.Plus, Color.White, false);
                     SetupExecuteButton(buttonActor,
                         () =>
                         {
@@ -89,7 +89,7 @@ namespace LD49.Components
             this.layout.AddBothStretchedElement("Subtract",
                 buttonActor =>
                 {
-                    new OperatorRenderer(buttonActor, MathOperator.Name.Minus, Color.White);
+                    new OperatorRenderer(buttonActor, MathOperator.Name.Minus, Color.White, false);
                     SetupExecuteButton(buttonActor,
                         () =>
                         {
@@ -100,7 +100,7 @@ namespace LD49.Components
             this.layout.AddBothStretchedElement("Multiply",
                 buttonActor =>
                 {
-                    new OperatorRenderer(buttonActor, MathOperator.Name.Times, Color.White);
+                    new OperatorRenderer(buttonActor, MathOperator.Name.Times, Color.White, false);
                     SetupExecuteButton(buttonActor,
                         () =>
                         {
@@ -114,11 +114,11 @@ namespace LD49.Components
                     new LayoutGroup(buttonActor, Orientation.Vertical)
                         .AddBothStretchedElement("numerator", numeratorActor =>
                         {
-                            new NumberRenderer(numeratorActor, Zero.Instance);
-                            new OperatorRenderer(numeratorActor, MathOperator.Name.Divide, Color.White);
+                            new NumberRenderer(numeratorActor, Zero.Instance, false);
+                            new OperatorRenderer(numeratorActor, MathOperator.Name.Divide, Color.White, false);
                         })
                         .AddBothStretchedElement("denominator",
-                            denominatorActor => { new NumberRenderer(denominatorActor, Zero.Instance); });
+                            denominatorActor => { new NumberRenderer(denominatorActor, Zero.Instance, false); });
                     SetupExecuteButton(buttonActor,
                         () =>
                         {
@@ -129,7 +129,7 @@ namespace LD49.Components
             this.layout.AddBothStretchedElement("Combine",
                 buttonActor =>
                 {
-                    new NumberRenderer(buttonActor, Infinity.Instance);
+                    new NumberRenderer(buttonActor, Infinity.Instance, false);
 
                     SetupExecuteButton(buttonActor,
                         () => { });
@@ -156,7 +156,7 @@ namespace LD49.Components
         private void SetupPrimeButton(Actor primeButtonActor, MathExpression prime, Action callback)
         {
             new Hoverable(primeButtonActor);
-            new ExpressionRenderer(primeButtonActor, prime);
+            new ExpressionRenderer(primeButtonActor, false, prime);
             var clickable = new Clickable(primeButtonActor);
 
             void ClickAction(MouseButton button)

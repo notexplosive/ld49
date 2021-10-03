@@ -61,7 +61,7 @@ namespace LD49
                 .SetMarginSize(new Point(100, 50))
                 .AddBothStretchedElement("main expression", expressionActor =>
                 {
-                    mainExpressionRenderer = new ExpressionRenderer(expressionActor,
+                    mainExpressionRenderer = new ExpressionRenderer(expressionActor, true,
                         MathOperator.Multiply(
                             MathOperator.Add(
                                 Prime.Seven,

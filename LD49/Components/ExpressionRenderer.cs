@@ -8,20 +8,20 @@ namespace LD49.Components
     public class ExpressionRenderer : BaseComponent
     {
         private readonly int expressionDepth;
+        private readonly bool isHoverable;
         private MathExpression expressionImpl;
         private Actor mainChild;
 
-        public ExpressionRenderer(Actor actor, MathExpression expression, int expressionDepth = 0) : base(actor)
+        public ExpressionRenderer(Actor actor, bool isHoverable, MathExpression expression, int expressionDepth = 0) :
+            base(actor)
         {
             Clear();
+            this.isHoverable = isHoverable;
             this.expressionDepth = expressionDepth;
             Expression = expression;
 
             var boundingRect = RequireComponent<BoundingRect>();
-            boundingRect.onSizeChange += (Point size) =>
-            {
-                this.mainChild.GetComponent<BoundingRect>().SetSize(size);
-            };
+            boundingRect.onSizeChange += size => { this.mainChild.GetComponent<BoundingRect>().SetSize(size); };
         }
 
         public MathExpression Expression
@@ -50,11 +50,11 @@ namespace LD49.Components
         {
             if (expression is Number number)
             {
-                new NumberRenderer(this.mainChild, number);
+                new NumberRenderer(this.mainChild, number, this.isHoverable);
             }
             else if (expression is TransitiveExpression transitiveExpression)
             {
-                new TransitiveExpressionRenderer(this.mainChild,
+                new TransitiveExpressionRenderer(this.mainChild, this.isHoverable,
                     transitiveExpression, this.expressionDepth);
             }
             else if (expression is NamedVariable variable)

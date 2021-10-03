@@ -20,18 +20,20 @@ namespace LD49.Components
 
             var negateColor = Color.Cyan;
 
+            new Hoverable(this.actor);
+
             if (isNegate)
             {
                 layout.AddVerticallyStretchedElement("first", 32,
-                    firstActor => { new OperatorRenderer(firstActor, MathOperator.Name.Minus, negateColor); });
+                    firstActor => { new OperatorRenderer(firstActor, MathOperator.Name.Minus, negateColor, false); });
             }
             else
             {
                 layout.AddBothStretchedElement("first",
                     firstActor =>
                     {
-                        new NumberRenderer(firstActor, One.Instance);
-                        new OperatorRenderer(firstActor, MathOperator.Name.Divide, Color.Gray);
+                        new NumberRenderer(firstActor, One.Instance, false);
+                        new OperatorRenderer(firstActor, MathOperator.Name.Divide, Color.Gray, false);
                     });
             }
 
@@ -43,7 +45,7 @@ namespace LD49.Components
                         new BoundingRectBorder(secondActor, negateColor);
                     }
 
-                    new ExpressionRenderer(secondActor, expression.GetInnerValue(), isNegate ? 0 : 1);
+                    new ExpressionRenderer(secondActor, true, expression.GetInnerValue(), isNegate ? 0 : 1);
                 });
         }
     }

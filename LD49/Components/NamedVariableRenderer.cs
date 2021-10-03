@@ -15,6 +15,8 @@ namespace LD49.Components
         {
             this.reckonRenderer = new ReckonRenderer(actor, RequireComponent<BoundingRect>());
             this.variable = variable;
+            
+            new Hoverable(this.actor);
         }
 
         public override void Update(float dt)
