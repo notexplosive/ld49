@@ -52,7 +52,7 @@ namespace LD49
 
             AddItemToRow(actor =>
             {
-                new TransitiveExpressionRenderer(actor,
+                new ExpressionRenderer(actor,
                     (TransitiveExpression)
                     MathOperator.Add(
                         MathOperator.Add(

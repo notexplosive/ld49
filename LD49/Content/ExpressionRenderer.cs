@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LD49.Content
 {
-    public class TransitiveExpressionRenderer : BaseComponent
+    public class ExpressionRenderer : BaseComponent
     {
-        public TransitiveExpressionRenderer(Actor actor, TransitiveExpression expression) : base(actor)
+        public ExpressionRenderer(Actor actor, TransitiveExpression expression) : base(actor)
         {
             var layout = new LayoutGroup(this.actor, expression is AddMathExpression ? Orientation.Horizontal : Orientation.Vertical);
 
@@ -27,7 +27,7 @@ namespace LD49.Content
 
                     if (subexpression is TransitiveExpression transitiveExpression)
                     {
-                        new TransitiveExpressionRenderer(child, transitiveExpression);
+                        new ExpressionRenderer(child, transitiveExpression);
                     }
                 });
 
