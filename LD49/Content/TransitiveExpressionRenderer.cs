@@ -11,7 +11,7 @@ namespace LD49.Content
     {
         public TransitiveExpressionRenderer(Actor actor, TransitiveExpression expression) : base(actor)
         {
-            var layout = new LayoutGroup(this.actor, Orientation.Horizontal);
+            var layout = new LayoutGroup(this.actor, expression is AddMathExpression ? Orientation.Horizontal : Orientation.Vertical);
 
             var content = expression.GetContents();
             var i = 0;
@@ -23,6 +23,11 @@ namespace LD49.Content
                     if (subexpression is Prime prime)
                     {
                         new PrimeRenderer(child, prime);
+                    }
+
+                    if (subexpression is TransitiveExpression transitiveExpression)
+                    {
+                        new TransitiveExpressionRenderer(child, transitiveExpression);
                     }
                 });
 

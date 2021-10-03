@@ -50,7 +50,23 @@ namespace LD49
                 }
             }
 
-            AddItemToRow(actor => { new TransitiveExpressionRenderer(actor, (TransitiveExpression)MathOperator.Add(MathOperator.Add(Prime.Seven, Prime.Seventeen),Prime.Thirteen)); });
+            AddItemToRow(actor =>
+            {
+                new TransitiveExpressionRenderer(actor,
+                    (TransitiveExpression)
+                    MathOperator.Add(
+                        MathOperator.Add(
+                            Prime.Seven,
+                            MathOperator.Multiply(
+                                MathOperator.Add(
+                                    Prime.Seventeen, 
+                                    Prime.FiftyNine), 
+                                MathOperator.Add(
+                                    Prime.Three,
+                                    Prime.Thirteen
+                                    ))),
+                        Prime.Thirteen));
+            });
         }
     }
 }
