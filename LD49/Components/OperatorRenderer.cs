@@ -34,7 +34,7 @@ namespace LD49.Components
             var legLength = this.reckonRenderer.ShortSide / 4f;
             var center = this.reckonRenderer.boundingRect.Rect.Center.ToVector2();
 
-            if (this.symbol == MathOperator.Name.Times || this.symbol == MathOperator.Name.Plus)
+            if (this.symbol == MathOperator.Name.Plus)
             {
                 LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(legLength, 0), this.color,
                     transform.Depth, 8f);

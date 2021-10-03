@@ -8,6 +8,8 @@ namespace LD49
 {
     public class Reckoning : MachinaGame
     {
+        public static BoundedTextRenderer tooltipTextRenderer;
+
         public Reckoning(string[] args) : base("The Reckoning", args, new Point(1600, 900), new Point(1600, 900),
             ResizeBehavior.MaintainDesiredResolution)
         {
@@ -17,41 +19,6 @@ namespace LD49
         {
             SceneLayers.BackgroundColor = Color.Black;
             var gameScene = SceneLayers.AddNewScene();
-
-            /*
-            {
-                var layoutRoot = gameScene.AddActor("LayoutRoot");
-                new BoundingRect(layoutRoot, Point.Zero);
-                new BoundingRectToViewportSize(layoutRoot);
-                var rows = new LayoutGroup(layoutRoot, Orientation.Vertical);
-
-                LayoutGroup CreateRow()
-                {
-                    LayoutGroup group = null;
-                    rows.AddBothStretchedElement("Row",
-                        actor => { group = new LayoutGroup(actor, Orientation.Horizontal); });
-                    return group;
-                }
-
-                var row = CreateRow();
-                var column = 0;
-
-                void AddItemToRow(Action<Actor> callback)
-                {
-                    row.AddBothStretchedElement("Item", callback);
-
-                    column++;
-
-                    if (column > 7)
-                    {
-                        row = CreateRow();
-                        column = 0;
-                    }
-                }
-
-                AddItemToRow(actor => { });
-            }
-            */
 
             var parent = gameScene.AddActor("LayoutRoot");
             ExpressionRenderer mainExpressionRenderer = null;
@@ -77,7 +44,20 @@ namespace LD49
                                         Zero.Instance
                                     ))),
                             One.Instance));
+
+                    mainExpressionRenderer.OnExpressionChange += () =>
+                    {
+                        Reckoning.tooltipTextRenderer.Text = "";
+                    };
                 })
+                .AddHorizontallyStretchedElement("tooltip", 60,
+                    controlsRoot =>
+                    {
+                        new BoundingRectBorder(controlsRoot, Color.Orange);
+                        Reckoning.tooltipTextRenderer = new BoundedTextRenderer(controlsRoot, "...",
+                            MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White, HorizontalAlignment.Center,
+                            VerticalAlignment.Center, Overflow.Ignore);
+                    })
                 .AddHorizontallyStretchedElement("controls", 200,
                     controlsRoot =>
                     {

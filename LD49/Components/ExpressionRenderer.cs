@@ -1,4 +1,5 @@
-﻿using LD49.Data;
+﻿using System;
+using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
@@ -11,6 +12,7 @@ namespace LD49.Components
         private readonly bool isHoverable;
         private MathExpression expressionImpl;
         private Actor mainChild;
+        public event Action OnExpressionChange;
 
         public ExpressionRenderer(Actor actor, bool isHoverable, MathExpression expression, int expressionDepth = 0) :
             base(actor)
@@ -32,6 +34,7 @@ namespace LD49.Components
                 Clear();
                 BuildExpression(value);
                 this.expressionImpl = value;
+                OnExpressionChange?.Invoke();
             }
         }
 
