@@ -15,11 +15,11 @@ namespace LD49.Components
         public ControlPanel(Actor actor, ExpressionRenderer mainExpressionRenderer) : base(actor)
         {
             this.layout = RequireComponent<LayoutGroup>();
-            LoadPage(0);
             this.mainExpressionRenderer = mainExpressionRenderer;
+            LoadPrimesPage(0);
         }
 
-        private void LoadPage(int pageNumber)
+        private void LoadPrimesPage(int pageNumber)
         {
             ClearPage();
             var primes = Prime.All.Values;
@@ -27,7 +27,7 @@ namespace LD49.Components
 
             if (pageNumber != 0)
             {
-                BuildNavigationButton(() => LoadPage(pageNumber - 1));
+                BuildNavigationButton(() => LoadPrimesPage(pageNumber - 1));
             }
             else
             {
@@ -45,7 +45,8 @@ namespace LD49.Components
                         {
                             var prime = primes.ElementAt(i);
 
-                            SetupPrimeButton(primeButtonActor, prime, () => { LoadUIPage(prime); });
+                            SetupPrimeButton(primeButtonActor, prime,
+                                () => { LoadOperatorPage(prime); });
                         }
                         else
                         {
@@ -56,7 +57,7 @@ namespace LD49.Components
 
             if (!isAtEnd)
             {
-                BuildNavigationButton(() => LoadPage(pageNumber + 1));
+                BuildNavigationButton(() => LoadPrimesPage(pageNumber + 1));
             }
             else
             {
@@ -64,12 +65,16 @@ namespace LD49.Components
             }
         }
 
-        private void LoadUIPage(Prime prime)
+        private void LoadOperatorPage(MathExpression prime)
         {
             ClearPage();
             this.layout.HorizontallyStretchedSpacer();
 
-            this.layout.AddBothStretchedElement("Back", buttonActor => { new NumberRenderer(buttonActor, prime); });
+            this.layout.AddBothStretchedElement("Back", buttonActor =>
+            {
+                new ExpressionRenderer(buttonActor, prime);
+                SetupExecuteButton(buttonActor, () => LoadPrimesPage(0));
+            });
             this.layout.AddBothStretchedElement("Add",
                 buttonActor =>
                 {
@@ -121,6 +126,14 @@ namespace LD49.Components
                                 MathOperator.Divide(this.mainExpressionRenderer.Expression, prime);
                         });
                 });
+            this.layout.AddBothStretchedElement("Combine",
+                buttonActor =>
+                {
+                    new NumberRenderer(buttonActor, Infinity.Instance);
+
+                    SetupExecuteButton(buttonActor,
+                        () => { });
+                });
 
             this.layout.HorizontallyStretchedSpacer();
         }
@@ -133,17 +146,17 @@ namespace LD49.Components
             void ClickAction(MouseButton button)
             {
                 callback();
-                LoadPage(0);
+                LoadPrimesPage(0);
             }
 
             clickable.OnClick += ClickAction;
             new CallbackOnDestroy(buttonActor, () => clickable.OnClick -= ClickAction);
         }
 
-        private void SetupPrimeButton(Actor primeButtonActor, Prime prime, Action callback)
+        private void SetupPrimeButton(Actor primeButtonActor, MathExpression prime, Action callback)
         {
             new Hoverable(primeButtonActor);
-            new NumberRenderer(primeButtonActor, prime);
+            new ExpressionRenderer(primeButtonActor, prime);
             var clickable = new Clickable(primeButtonActor);
 
             void ClickAction(MouseButton button)
