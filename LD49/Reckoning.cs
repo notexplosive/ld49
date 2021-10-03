@@ -54,13 +54,14 @@ namespace LD49
             */
 
             var parent = gameScene.AddActor("LayoutRoot");
+            ExpressionRenderer mainExpressionRenderer = null;
             new BoundingRect(parent, Point.Zero);
             new BoundingRectToViewportSize(parent);
             new LayoutGroup(parent, Orientation.Vertical)
                 .SetMarginSize(new Point(100, 50))
                 .AddBothStretchedElement("main expression", expressionActor =>
                 {
-                    new ExpressionRenderer(expressionActor,
+                    mainExpressionRenderer = new ExpressionRenderer(expressionActor,
                         MathOperator.Multiply(
                             MathOperator.Add(
                                 Prime.Seven,
@@ -78,7 +79,12 @@ namespace LD49
                             One.Instance));
                 })
                 .AddHorizontallyStretchedElement("controls", 200,
-                    controlsRoot => { new LayoutGroup(controlsRoot, Orientation.Horizontal); })
+                    controlsRoot =>
+                    {
+                        new BoundingRectBorder(controlsRoot, Color.Orange);
+                        var layout = new LayoutGroup(controlsRoot, Orientation.Horizontal);
+                        new ControlPanel(controlsRoot, mainExpressionRenderer);
+                    })
                 ;
         }
     }
