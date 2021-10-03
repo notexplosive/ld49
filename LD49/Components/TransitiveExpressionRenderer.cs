@@ -7,21 +7,22 @@ namespace LD49.Components
 {
     public class TransitiveExpressionRenderer : BaseComponent
     {
-        public TransitiveExpressionRenderer(Actor actor, TransitiveExpression expression) : base(actor)
+        public TransitiveExpressionRenderer(Actor actor, TransitiveExpression expression, int expressionDepth) :
+            base(actor)
         {
             var transitiveType = expression is AddMathExpression
                 ? TransitiveExpression.SubType.Add
                 : TransitiveExpression.SubType.Multiply;
 
             var layout = new LayoutGroup(this.actor,
-                transitiveType == TransitiveExpression.SubType.Add ? Orientation.Horizontal : Orientation.Vertical);
+                expressionDepth % 2 == 0 ? Orientation.Horizontal : Orientation.Vertical);
 
             var content = expression.GetContents();
             var i = 0;
 
             foreach (var subexpression in content)
             {
-                layout.AddBothStretchedElement("item", child => { new ExpressionRenderer(child, subexpression); });
+                layout.AddBothStretchedElement("item", child => { new ExpressionRenderer(child, subexpression, expressionDepth + 1); });
 
                 if (i < content.Length - 1)
                 {

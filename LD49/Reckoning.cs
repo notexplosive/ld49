@@ -57,11 +57,11 @@ namespace LD49
             new BoundingRect(parent, Point.Zero);
             new BoundingRectToViewportSize(parent);
             new LayoutGroup(parent, Orientation.Vertical)
-                .PixelSpacer(100)
+                .SetMarginSize(new Point(100, 50))
                 .AddBothStretchedElement("main expression", expressionActor =>
                 {
                     new ExpressionRenderer(expressionActor,
-                        MathOperator.Add(
+                        MathOperator.Multiply(
                             MathOperator.Add(
                                 Prime.Seven,
                                 MathOperator.Multiply(
@@ -70,12 +70,16 @@ namespace LD49
                                         Prime.FiftyNine),
                                     MathOperator.Add(
                                         MathOperator.Inverse(
-                                            MathOperator.Negate(MathOperator.Add(NamedVariable.Z, NamedVariable.X))),
+                                            MathOperator.Negate(
+                                                MathOperator.Multiply(MathOperator.Add(NamedVariable.Z, Prime.Thirteen),
+                                                    NamedVariable.X))),
                                         Zero.Instance
                                     ))),
                             One.Instance));
                 })
-                .PixelSpacer(100);
+                .AddHorizontallyStretchedElement("controls", 200,
+                    controlsRoot => { new LayoutGroup(controlsRoot, Orientation.Horizontal); })
+                ;
         }
     }
 }

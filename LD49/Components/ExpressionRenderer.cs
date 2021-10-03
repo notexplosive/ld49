@@ -7,7 +7,7 @@ namespace LD49.Components
 {
     public class ExpressionRenderer : BaseComponent
     {
-        public ExpressionRenderer(Actor actor, MathExpression expression) : base(actor)
+        public ExpressionRenderer(Actor actor, MathExpression expression, int expressionDepth = 0) : base(actor)
         {
             if (expression is Number number)
             {
@@ -16,7 +16,7 @@ namespace LD49.Components
 
             if (expression is TransitiveExpression transitiveExpression)
             {
-                new TransitiveExpressionRenderer(actor, transitiveExpression);
+                new TransitiveExpressionRenderer(actor, transitiveExpression, expressionDepth);
             }
 
             if (expression is NamedVariable variable)
