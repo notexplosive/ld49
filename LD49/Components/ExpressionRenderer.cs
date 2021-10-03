@@ -12,6 +12,7 @@ namespace LD49.Components
         private readonly bool isHoverable;
         private MathExpression expressionImpl;
         private Actor mainChild;
+        public readonly BoundingRect boundingRect;
 
         public ExpressionRenderer(Actor actor, bool isHoverable, MathExpression expression, int expressionDepth = 0) :
             base(actor)
@@ -21,7 +22,7 @@ namespace LD49.Components
             this.expressionDepth = expressionDepth;
             Expression = expression;
 
-            var boundingRect = RequireComponent<BoundingRect>();
+            this.boundingRect = RequireComponent<BoundingRect>();
             boundingRect.onSizeChange += size => { this.mainChild.GetComponent<BoundingRect>().SetSize(size); };
         }
 

@@ -76,14 +76,14 @@ namespace LD49.Components
         {
             new Hoverable(primeButtonActor);
             new TooltipProvider(primeButtonActor, number.ToString());
-            new ExpressionRenderer(primeButtonActor, false, number);
+            var renderer = new ExpressionRenderer(primeButtonActor, false, number);
 
             new Clickable(primeButtonActor);
             var draggable = new Draggable(primeButtonActor);
 
             void DragStart(Vector2 mousePos, Vector2 delta)
             {
-                Reckoning.DragHand.Expression = number;
+                Reckoning.DragHand.PickUp(renderer);
                 Reckoning.DragHand.actor.Visible = true;
             }
 

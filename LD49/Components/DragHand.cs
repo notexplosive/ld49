@@ -9,10 +9,12 @@ namespace LD49.Components
     public class DragHand : BaseComponent
     {
         private readonly ExpressionRenderer expressionRenderer;
+        private readonly BoundingRect boundingRect;
 
         public DragHand(Actor actor) : base(actor)
         {
             this.actor.Visible = false;
+            this.boundingRect = RequireComponent<BoundingRect>();
             this.expressionRenderer = new ExpressionRenderer(this.actor, false, Zero.Instance);
         }
 
@@ -33,6 +35,12 @@ namespace LD49.Components
         public override void OnMouseUpdate(Vector2 currentPosition, Vector2 positionDelta, Vector2 rawDelta)
         {
             transform.Position = currentPosition;
+        }
+
+        public void PickUp(ExpressionRenderer renderer)
+        {
+            this.boundingRect.SetSize(renderer.boundingRect.Size);
+            this.Expression = renderer.Expression;
         }
     }
 }
