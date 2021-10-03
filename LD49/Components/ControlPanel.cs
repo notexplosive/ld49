@@ -71,11 +71,38 @@ namespace LD49.Components
 
             this.layout.AddBothStretchedElement("Back", buttonActor => { new NumberRenderer(buttonActor, prime); });
             this.layout.AddBothStretchedElement("Add",
-                buttonActor => { new OperatorRenderer(buttonActor, MathOperator.Name.Plus, Color.White); });
+                buttonActor =>
+                {
+                    new OperatorRenderer(buttonActor, MathOperator.Name.Plus, Color.White);
+                    SetupExecuteButton(buttonActor,
+                        () =>
+                        {
+                            this.mainExpressionRenderer.Expression =
+                                MathOperator.Add(this.mainExpressionRenderer.Expression, prime);
+                        });
+                });
             this.layout.AddBothStretchedElement("Subtract",
-                buttonActor => { new OperatorRenderer(buttonActor, MathOperator.Name.Minus, Color.White); });
+                buttonActor =>
+                {
+                    new OperatorRenderer(buttonActor, MathOperator.Name.Minus, Color.White);
+                    SetupExecuteButton(buttonActor,
+                        () =>
+                        {
+                            this.mainExpressionRenderer.Expression =
+                                MathOperator.Subtract(this.mainExpressionRenderer.Expression, prime);
+                        });
+                });
             this.layout.AddBothStretchedElement("Multiply",
-                buttonActor => { new OperatorRenderer(buttonActor, MathOperator.Name.Times, Color.White); });
+                buttonActor =>
+                {
+                    new OperatorRenderer(buttonActor, MathOperator.Name.Times, Color.White);
+                    SetupExecuteButton(buttonActor,
+                        () =>
+                        {
+                            this.mainExpressionRenderer.Expression =
+                                MathOperator.Multiply(this.mainExpressionRenderer.Expression, prime);
+                        });
+                });
             this.layout.AddBothStretchedElement("Divide",
                 buttonActor =>
                 {
@@ -106,6 +133,7 @@ namespace LD49.Components
             void ClickAction(MouseButton button)
             {
                 callback();
+                LoadPage(0);
             }
 
             clickable.OnClick += ClickAction;
