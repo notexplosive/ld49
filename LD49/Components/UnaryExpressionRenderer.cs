@@ -1,7 +1,7 @@
 ﻿using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace LD49.Components
 {
@@ -14,27 +14,37 @@ namespace LD49.Components
             this.expression = expression;
 
             var isNegate = expression is NegateExpression;
-            
+
             var layout = new LayoutGroup(this.actor,
                 isNegate ? Orientation.Horizontal : Orientation.Vertical);
-            
-            layout.AddBothStretchedElement("first", firstActor =>
+
+            var negateColor = Color.Cyan;
+
+            if (isNegate)
             {
-                if (isNegate)
-                {
-                    new OperatorRenderer(firstActor,MathOperator.Name.Minus);
-                }
-                else
-                {
-                    new NumberRenderer(firstActor, One.Instance);
-                    new OperatorRenderer(firstActor,MathOperator.Name.Divide);
-                }
-            });
-            
-            layout.AddBothStretchedElement("second", secondActor =>
+                layout.AddVerticallyStretchedElement("first", 32,
+                    firstActor => { new OperatorRenderer(firstActor, MathOperator.Name.Minus, negateColor); });
+            }
+            else
             {
-                new ExpressionRenderer(secondActor, expression.GetInnerValue());
-            });
+                layout.AddBothStretchedElement("first",
+                    firstActor =>
+                    {
+                        new NumberRenderer(firstActor, One.Instance);
+                        new OperatorRenderer(firstActor, MathOperator.Name.Divide, Color.Gray);
+                    });
+            }
+
+            layout.AddBothStretchedElement("second",
+                secondActor =>
+                {
+                    if (isNegate)
+                    {
+                        new BoundingRectBorder(secondActor, negateColor);
+                    }
+
+                    new ExpressionRenderer(secondActor, expression.GetInnerValue());
+                });
         }
     }
 }

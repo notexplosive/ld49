@@ -8,10 +8,12 @@ namespace LD49.Components
     public class OperatorRenderer : ReckonRenderer
     {
         private readonly MathOperator.Name symbol;
+        private readonly Color color;
 
-        public OperatorRenderer(Actor actor, MathOperator.Name symbol) : base(actor)
+        public OperatorRenderer(Actor actor, MathOperator.Name symbol, Color color) : base(actor)
         {
             this.symbol = symbol;
+            this.color = color;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -21,25 +23,25 @@ namespace LD49.Components
 
             if (this.symbol == MathOperator.Name.Times || this.symbol == MathOperator.Name.Plus)
             {
-                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(legLength, 0), Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(legLength, 0), color,
                     transform.Depth, 8f);
-                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(-legLength, 0), Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(-legLength, 0), color,
                     transform.Depth, 8f);
-                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(0, -legLength), Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(0, -legLength), color,
                     transform.Depth, 8f);
-                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(0, legLength), Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(0, legLength), color,
                     transform.Depth, 8f);
             }
 
             if (this.symbol == MathOperator.Name.Times)
             {
-                LineDrawer.DrawLine(spriteBatch, center, center + Normal(1, 1) * legLength, Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + Normal(1, 1) * legLength, color,
                     transform.Depth, 8f);
-                LineDrawer.DrawLine(spriteBatch, center, center + Normal(-1, -1) * legLength, Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + Normal(-1, -1) * legLength, color,
                     transform.Depth, 8f);
-                LineDrawer.DrawLine(spriteBatch, center, center + Normal(1, -1) * legLength, Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + Normal(1, -1) * legLength, color,
                     transform.Depth, 8f);
-                LineDrawer.DrawLine(spriteBatch, center, center + Normal(-1, 1) * legLength, Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + Normal(-1, 1) * legLength, color,
                     transform.Depth, 8f);
             }
 
@@ -48,15 +50,15 @@ namespace LD49.Components
                 // Underscore underneath the number
                 var longLegLength = ShortSide / 2;
                 LineDrawer.DrawLine(spriteBatch, center + new Vector2(longLegLength, longLegLength),
-                    center + new Vector2(-longLegLength, longLegLength), Color.Gray,
+                    center + new Vector2(-longLegLength, longLegLength), color,
                     transform.Depth, 8f);
             }
 
             if (this.symbol == MathOperator.Name.Minus)
             {
-                LineDrawer.DrawLine(spriteBatch, center, center + Normal(-1, 0) * legLength, Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + Normal(-1, 0) * legLength, color,
                     transform.Depth, 8f);
-                LineDrawer.DrawLine(spriteBatch, center, center + Normal(1, 0) * legLength, Color.Gray,
+                LineDrawer.DrawLine(spriteBatch, center, center + Normal(1, 0) * legLength, color,
                     transform.Depth, 8f);
             }
         }

@@ -1,7 +1,7 @@
 ﻿using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace LD49.Components
 {
@@ -31,7 +31,8 @@ namespace LD49.Components
                             new OperatorRenderer(child,
                                 transitiveType == TransitiveExpression.SubType.Add
                                     ? MathOperator.Name.Plus
-                                    : MathOperator.Name.Times);
+                                    : MathOperator.Name.Times,
+                                Color.Gray);
                         });
                 }
 
