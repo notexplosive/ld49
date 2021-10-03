@@ -22,6 +22,8 @@ namespace LD49
 
             var parent = gameScene.AddActor("LayoutRoot");
             ExpressionRenderer mainExpressionRenderer = null;
+            ExpressionRenderer storageExpressionRenderer = null;
+
             new BoundingRect(parent, Point.Zero);
             new BoundingRectToViewportSize(parent);
             new LayoutGroup(parent, Orientation.Vertical)
@@ -45,10 +47,7 @@ namespace LD49
                                     ))),
                             One.Instance));
 
-                    mainExpressionRenderer.OnExpressionChange += () =>
-                    {
-                        Reckoning.tooltipTextRenderer.Text = "";
-                    };
+                    mainExpressionRenderer.OnExpressionChange += () => { Reckoning.tooltipTextRenderer.Text = ""; };
                 })
                 .AddHorizontallyStretchedElement("tooltip", 60,
                     controlsRoot =>
@@ -66,9 +65,15 @@ namespace LD49
 
                         layout.AddBothStretchedElement("inventory", inventoryActor =>
                         {
-                            new LayoutGroup(inventoryActor,Orientation.Horizontal);
+                            new LayoutGroup(inventoryActor, Orientation.Horizontal).SetPaddingBetweenElements(5);
                             new ControlPanel(inventoryActor, mainExpressionRenderer);
                         });
+
+                        layout.AddVerticallyStretchedElement("storage", 300,
+                            storageActor =>
+                            {
+                                storageExpressionRenderer = new ExpressionRenderer(storageActor, true, Zero.Instance);
+                            });
                     })
                 ;
         }
