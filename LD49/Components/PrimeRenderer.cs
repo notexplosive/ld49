@@ -41,7 +41,7 @@ namespace LD49.Components
         }
     }
 
-    public class NumberRenderer : BaseComponent
+    public class PrimeRenderer : BaseComponent
     {
         private static readonly Color[] Colors =
         {
@@ -58,7 +58,7 @@ namespace LD49.Components
         private readonly Number number;
         private float totalTime;
 
-        public NumberRenderer(Actor actor, Number number) : base(actor)
+        public PrimeRenderer(Actor actor, Number number) : base(actor)
         {
             this.boundingRect = RequireComponent<BoundingRect>();
             this.number = number;
@@ -131,7 +131,7 @@ namespace LD49.Components
 
         public Color GetColor(int index)
         {
-            return NumberRenderer.Colors[index % NumberRenderer.Colors.Length];
+            return PrimeRenderer.Colors[index % PrimeRenderer.Colors.Length];
         }
 
         private int GetPrimeIndex(Prime prime)

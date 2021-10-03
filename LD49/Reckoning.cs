@@ -1,4 +1,5 @@
-﻿using LD49.Components;
+﻿using System;
+using LD49.Content;
 using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
@@ -18,8 +19,6 @@ namespace LD49
             SceneLayers.BackgroundColor = Color.Black;
             var gameScene = SceneLayers.AddNewScene();
 
-            var numberSize = 200;
-
             var layoutRoot = gameScene.AddActor("LayoutRoot");
             new BoundingRect(layoutRoot, Point.Zero);
             new BoundingRectToViewportSize(layoutRoot);
@@ -28,7 +27,7 @@ namespace LD49
             LayoutGroup CreateRow()
             {
                 LayoutGroup group = null;
-                rows.AddHorizontallyStretchedElement("Row", numberSize,
+                rows.AddBothStretchedElement("Row",
                     actor => { group = new LayoutGroup(actor, Orientation.Horizontal); });
                 return group;
             }
@@ -38,10 +37,9 @@ namespace LD49
                 row.actor.GetComponent<BoundingRect>().Height);
             var column = 0;
 
-            foreach (var prime in Prime.All.Values)
+            void AddItemToRow(Action<Actor> callback)
             {
-                row.AddVerticallyStretchedElement("Item", numberSize,
-                    actor => { new NumberRenderer(actor, prime); });
+                row.AddBothStretchedElement("Item", callback);
 
                 column++;
 
@@ -51,6 +49,8 @@ namespace LD49
                     column = 0;
                 }
             }
+
+            AddItemToRow(actor => { new TransitiveExpressionRenderer(actor, (TransitiveExpression)MathOperator.Add(MathOperator.Add(Prime.Seven, Prime.Seventeen),Prime.Thirteen)); });
         }
     }
 }

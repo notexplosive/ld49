@@ -109,5 +109,10 @@ namespace LD49.Data
 
             public abstract TExpressionType Build();
         }
+
+        public MathExpression[] GetContents()
+        {
+            return this.content.ToArray();
+        }
     }
 }
