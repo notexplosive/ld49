@@ -1,5 +1,4 @@
-﻿using System;
-using LD49.Components;
+﻿using LD49.Components;
 using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
@@ -19,54 +18,59 @@ namespace LD49
             SceneLayers.BackgroundColor = Color.Black;
             var gameScene = SceneLayers.AddNewScene();
 
-            var layoutRoot = gameScene.AddActor("LayoutRoot");
-            new BoundingRect(layoutRoot, Point.Zero);
-            new BoundingRectToViewportSize(layoutRoot);
-            var rows = new LayoutGroup(layoutRoot, Orientation.Vertical);
-
-            LayoutGroup CreateRow()
+            /*
             {
-                LayoutGroup group = null;
-                rows.AddBothStretchedElement("Row",
-                    actor => { group = new LayoutGroup(actor, Orientation.Horizontal); });
-                return group;
-            }
+                var layoutRoot = gameScene.AddActor("LayoutRoot");
+                new BoundingRect(layoutRoot, Point.Zero);
+                new BoundingRectToViewportSize(layoutRoot);
+                var rows = new LayoutGroup(layoutRoot, Orientation.Vertical);
 
-            var row = CreateRow();
-            MachinaGame.Print(row.actor.GetComponent<BoundingRect>().Width,
-                row.actor.GetComponent<BoundingRect>().Height);
-            var column = 0;
-
-            void AddItemToRow(Action<Actor> callback)
-            {
-                row.AddBothStretchedElement("Item", callback);
-
-                column++;
-
-                if (column > 7)
+                LayoutGroup CreateRow()
                 {
-                    row = CreateRow();
-                    column = 0;
+                    LayoutGroup group = null;
+                    rows.AddBothStretchedElement("Row",
+                        actor => { group = new LayoutGroup(actor, Orientation.Horizontal); });
+                    return group;
                 }
-            }
 
-            AddItemToRow(actor =>
-            {
-                new ExpressionRenderer(actor,
-                    (TransitiveExpression)
+                var row = CreateRow();
+                var column = 0;
+
+                void AddItemToRow(Action<Actor> callback)
+                {
+                    row.AddBothStretchedElement("Item", callback);
+
+                    column++;
+
+                    if (column > 7)
+                    {
+                        row = CreateRow();
+                        column = 0;
+                    }
+                }
+
+                AddItemToRow(actor => { });
+            }
+            */
+
+            var parent = gameScene.AddActor("LayoutRoot");
+            new BoundingRect(parent, Point.Zero);
+            new BoundingRectToViewportSize(parent);
+
+            new ExpressionRenderer(parent,
+                (TransitiveExpression)
+                MathOperator.Add(
                     MathOperator.Add(
-                        MathOperator.Add(
-                            Prime.Seven,
-                            MathOperator.Multiply(
-                                MathOperator.Add(
-                                    Prime.Seventeen,
-                                    Prime.FiftyNine),
-                                MathOperator.Add(
-                                    Zero.Instance,
-                                    Infinity.Instance
-                                ))),
-                        One.Instance));
-            });
+                        Prime.Seven,
+                        MathOperator.Multiply(
+                            MathOperator.Add(
+                                Prime.Seventeen,
+                                Prime.FiftyNine),
+                            MathOperator.Add(
+                                Zero.Instance,
+                                Infinity.Instance
+                            ))),
+                    One.Instance));
         }
     }
 }
