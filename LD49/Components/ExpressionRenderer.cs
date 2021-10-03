@@ -67,11 +67,11 @@ namespace LD49.Components
             }
             else if (expression is InverseExpression inverseExpression)
             {
-                new UnaryExpressionRenderer(this.mainChild, inverseExpression);
+                new UnaryExpressionRenderer(this.mainChild, inverseExpression, this.isHoverable);
             }
             else if (expression is NegateExpression negateExpression)
             {
-                new UnaryExpressionRenderer(this.mainChild, negateExpression);
+                new UnaryExpressionRenderer(this.mainChild, negateExpression, this.isHoverable);
             }
         }
     }

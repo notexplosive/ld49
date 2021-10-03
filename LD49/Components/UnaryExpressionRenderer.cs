@@ -9,7 +9,7 @@ namespace LD49.Components
     {
         private readonly UnaryExpression expression;
 
-        public UnaryExpressionRenderer(Actor actor, UnaryExpression expression) : base(actor)
+        public UnaryExpressionRenderer(Actor actor, UnaryExpression expression, bool isHoverable) : base(actor)
         {
             this.expression = expression;
 
@@ -20,8 +20,11 @@ namespace LD49.Components
 
             var negateColor = Color.Cyan;
 
-            new Hoverable(this.actor);
-            new TooltipProvider(this.actor, expression.ToString());
+            if (isHoverable)
+            {
+                new Hoverable(this.actor);
+                new TooltipProvider(this.actor, expression.ToString());
+            }
 
             if (isNegate)
             {
@@ -46,7 +49,7 @@ namespace LD49.Components
                         new BoundingRectBorder(secondActor, negateColor);
                     }
 
-                    new ExpressionRenderer(secondActor, true, expression.GetInnerValue(), isNegate ? 2 : 1);
+                    new ExpressionRenderer(secondActor, isHoverable, expression.GetInnerValue(), isNegate ? 2 : 1);
                 });
         }
     }

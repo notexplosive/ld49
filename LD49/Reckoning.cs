@@ -174,7 +174,15 @@ namespace LD49
                                             MathOperator.Add(storageExpressionRenderer.Expression, expression);
                                     });
                                 })
-                            .HorizontallyStretchedSpacer()
+                            .AddBothStretchedElement("Subtract Button",
+                                subtractButton =>
+                                {
+                                    SetupOverlayButton(subtractButton, MathOperator.Name.Minus, expression =>
+                                    {
+                                        storageExpressionRenderer.Expression =
+                                            MathOperator.Subtract(storageExpressionRenderer.Expression, expression);
+                                    });
+                                })
                             .AddBothStretchedElement("Multiply Button",
                                 multiplyButton =>
                                 {
@@ -182,6 +190,15 @@ namespace LD49
                                     {
                                         storageExpressionRenderer.Expression =
                                             MathOperator.Multiply(storageExpressionRenderer.Expression, expression);
+                                    });
+                                })
+                            .AddBothStretchedElement("Multiply Button",
+                                divideButton =>
+                                {
+                                    SetupOverlayButton(divideButton, MathOperator.Name.Divide, expression =>
+                                    {
+                                        storageExpressionRenderer.Expression =
+                                            MathOperator.Divide(storageExpressionRenderer.Expression, expression);
                                     });
                                 })
                             .HorizontallyStretchedSpacer()
