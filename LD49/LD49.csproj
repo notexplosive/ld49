@@ -36,8 +36,5 @@
     <ItemGroup>
         <Compile Remove="screenshots\**" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Components" />
-    </ItemGroup>
     <Import Project="..\machina\MachinaAssets\MachinaAssets.projitems" Label="Shared" />
 </Project>
