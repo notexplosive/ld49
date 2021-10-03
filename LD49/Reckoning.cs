@@ -15,7 +15,7 @@ namespace LD49
         {
         }
 
-        public static ExpressionRenderer DragHand { private set; get; }
+        public static DragHand DragHand { private set; get; }
 
         protected override void OnGameLoad()
         {
@@ -30,15 +30,7 @@ namespace LD49
             hand.transform.Depth = 100; // very close to front
             new BoundingRect(hand, new Point(200,200)).SetOffsetToCenter();
 
-            // make this it's own component if drag feels funky, probably need to be smarter about delta
-            new AdHoc(hand).onMouseUpdate += (Vector2 currentPosition, Vector2 positionDelta, Vector2 rawDelta) =>
-            {
-                hand.transform.Position = currentPosition;
-            };
-
-            hand.Visible = false;
-
-            Reckoning.DragHand = new ExpressionRenderer(hand, false, Zero.Instance);
+            Reckoning.DragHand = new DragHand(hand);
 
             new BoundingRect(parent, Point.Zero);
             new BoundingRectToViewportSize(parent);
