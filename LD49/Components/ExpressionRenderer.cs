@@ -21,9 +21,9 @@ namespace LD49.Components
             {
                 layout.AddBothStretchedElement("item", child =>
                 {
-                    if (subexpression is Prime prime)
+                    if (subexpression is Number number)
                     {
-                        new PrimeRenderer(child, prime);
+                        new NumberRenderer(child, number);
                     }
 
                     if (subexpression is TransitiveExpression transitiveExpression)

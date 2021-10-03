@@ -62,10 +62,10 @@ namespace LD49
                                     Prime.Seventeen,
                                     Prime.FiftyNine),
                                 MathOperator.Add(
-                                    Prime.Three,
-                                    Prime.Thirteen
+                                    Zero.Instance,
+                                    Infinity.Instance
                                 ))),
-                        Prime.Thirteen));
+                        One.Instance));
             });
         }
     }

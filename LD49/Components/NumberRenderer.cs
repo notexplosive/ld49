@@ -40,7 +40,7 @@ namespace LD49.Components
         }
     }
 
-    public class PrimeRenderer : BaseComponent
+    public class NumberRenderer : BaseComponent
     {
         private static readonly Color[] Colors =
         {
@@ -57,7 +57,7 @@ namespace LD49.Components
         private readonly Number number;
         private float totalTime;
 
-        public PrimeRenderer(Actor actor, Number number) : base(actor)
+        public NumberRenderer(Actor actor, Number number) : base(actor)
         {
             this.boundingRect = RequireComponent<BoundingRect>();
             this.number = number;
@@ -105,6 +105,48 @@ namespace LD49.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (this.number is SpecialNumber specialNumber)
+            {
+                var lightGray = new Color(0.9f, 0.9f, 0.9f, 1f);
+
+                if (specialNumber is Zero)
+                {
+                    DrawRing(spriteBatch,
+                        Radius / 2f,
+                        20,
+                        lightGray,
+                        0f,
+                        RotationLevel.Normal);
+                }
+
+                if (specialNumber is Infinity)
+                {
+                    DrawRing(spriteBatch, Radius, 20,
+                        NumberRenderer.Colors[MachinaGame.Random.Dirty.Next(NumberRenderer.Colors.Length)], 2f,
+                        RotationLevel.Both);
+                    DrawRing(spriteBatch, Radius, 20,
+                        NumberRenderer.Colors[MachinaGame.Random.Dirty.Next(NumberRenderer.Colors.Length)], 1f,
+                        RotationLevel.Horizontal);
+                    DrawRing(spriteBatch, Radius, 20,
+                        NumberRenderer.Colors[MachinaGame.Random.Dirty.Next(NumberRenderer.Colors.Length)], 0.5f,
+                        RotationLevel.Vertical);
+                }
+
+                if (specialNumber is One)
+                {
+                    var center = this.boundingRect.Rect.Center.ToVector2();
+                    var offset = new Vector2(0, Radius / 2f);
+                    LineDrawer.DrawLine(spriteBatch, center - offset, center + offset, lightGray, transform.Depth, 10f);
+
+                    DrawRing(spriteBatch,
+                        Radius / 4f,
+                        20,
+                        lightGray,
+                        0f,
+                        RotationLevel.Normal);
+                }
+            }
+
             if (this.number is Prime prime)
             {
                 var primeIndex = GetPrimeIndex(prime);
@@ -130,7 +172,7 @@ namespace LD49.Components
 
         public Color GetColor(int index)
         {
-            return PrimeRenderer.Colors[index % PrimeRenderer.Colors.Length];
+            return NumberRenderer.Colors[index % NumberRenderer.Colors.Length];
         }
 
         private int GetPrimeIndex(Prime prime)
