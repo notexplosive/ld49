@@ -7,5 +7,10 @@
         private Infinity() : base(int.MaxValue)
         {
         }
+
+        public override string ToString()
+        {
+            return "Infinity";
+        }
     }
 }
