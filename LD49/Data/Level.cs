@@ -69,9 +69,59 @@ namespace LD49.Data
                             Prime.FiftyThree)))),
 
             Poem.IntroduceNegative,
-            // : 0 = X + 1 + 1 + 1 -> X (can only add on main and Negate in storage)
+            
+            // -X = 0, multiply by negative one
+            new Level(
+                new Allowances()
+                    .EnableMultiplyingTo_Expression()
+                    .EnableAddingTo_Storage()
+                    .EnableNegating_Storage()
+                    .EnableXNamedValue(),
+                new Equation(
+                    Zero.Instance, MathOperator.Negate(NamedVariable.X))
+            ),
+            
             // : storage can only add and negate, main expression can only add
+            new Level(
+                new Allowances()
+                    .EnableAddingTo_Expression()
+                    .EnableNegating_Storage()
+                    .EnableAddingTo_Storage()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(
+                    Zero.Instance, AddMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, Prime.Three, Prime.Seven))
+                ),
+            
+            // : storage can only add,mul and negate, main expression can only add
+            new Level(
+                new Allowances()
+                    .EnableAddingTo_Expression()
+                    .EnableNegating_Storage()
+                    .EnableAddingTo_Storage()
+                    .EnableMultiplyingTo_Storage()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(
+                    Zero.Instance, AddMathExpression.CreateMany(NamedVariable.X, MultiplyMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Five)))
+            ),
+            
+            new Level(
+                new Allowances()
+                    .EnableAddingTo_Expression()
+                    .EnableNegating_Storage()
+                    .EnableAddingTo_Storage()
+                    .EnableMultiplyingTo_Storage()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(
+                    Zero.Instance, AddMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, MultiplyMathExpression.CreateMany(Prime.Three, MathOperator.Negate(Prime.Seven), Prime.Five), Prime.Seven))
+            ),
+            
             Poem.IntroduceReciprocal,
+            
+            
+            
             // : 0 = X * 1 * 1 * 1 -> X (can only multiply on main and Invert in storage)
             // : storage can only multiply and invert, main expression can only multiply
             Poem.IntroduceInfinity,

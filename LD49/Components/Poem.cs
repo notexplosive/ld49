@@ -42,31 +42,32 @@ namespace LD49.Components
             new Page("this is a Negative", MathOperator.Negate(Prime.Thirteen)),
             new Page("every Number has a Negative, except Zero", Zero.Instance),
             new Page("a Negative plus its counterpart is Zero", Zero.Instance),
+            new Page("multiplying by Negative One is the same as Negating", MathOperator.Negate(One.Instance)),
             new Page("you might have heard of a thing called 'subtracting'",
                 MathOperator.Negate(
                     MathOperator.Add(Prime.Two, MathOperator.Add(Prime.Eleven, Prime.Three)))),
-            new Page("subtracting is just adding a negative", MathOperator.Negate(Prime.Two)),
-            new Page("i have devised a machine to help you use them, feel free to experiment",
+            new Page("subtracting is just adding a Negative", MathOperator.Negate(Prime.Two)),
+            new Page("i have created a device to help you use them, feel free to experiment",
                 MathOperator.Negate(MathOperator.Add(Prime.NinetySeven, Prime.FiftyNine))));
 
         public static Poem IntroduceReciprocal = new Poem(
             new Page("this is a Reciprocal", MathOperator.Inverse(Prime.Thirteen)),
             new Page("every Number has a Reciprocal, except One", One.Instance),
             new Page("a Reciprocal times its counterpart is One", One.Instance),
-            new Page("the reciprocal of Zero is dangerous", Infinity.Instance),
+            new Page("the Reciprocal of Zero is dangerous", Infinity.Instance),
             new Page("you might have heard of a thing called 'dividing'",
                 MathOperator.Inverse(
                     MathOperator.Add(Prime.Two, MathOperator.Add(Prime.Eleven, Prime.Three)))),
             new Page("dividing is just multiplying by a Reciprocal", MathOperator.Inverse(Prime.Two)),
-            new Page("i have modified the machine to use Reciprocals, feel free to experiment",
+            new Page("i have modified the device to use Reciprocals, feel free to experiment",
                 MathOperator.Inverse(MathOperator.Add(Prime.NinetySeven, Prime.FiftyNine))));
 
         public static Poem IntroduceInfinity = new Poem(
-            new Page("this is Infinity", Infinity.Instance),
+            new Page("this is Antizero", Infinity.Instance),
+            new Page("some people call it Infinity", Infinity.Instance),
             new Page("it is unstable", Infinity.Instance),
             new Page("it is dangerous", Infinity.Instance),
-            new Page("it is the Antizero", Infinity.Instance),
-            new Page("once born, Infinity can only be destroyed by Zero", Zero.Instance),
+            new Page("once born, Infinity can only be destroyed with Zero", Zero.Instance),
             new Page("but the Zero will wash away everything, so perhaps it is best to start over", NamedVariable.X)
         );
 
