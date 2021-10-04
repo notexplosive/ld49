@@ -32,7 +32,7 @@ namespace LD49.Components
                 layout.AddBothStretchedElement("item",
                     child => { new ExpressionRenderer(child, isHoverable, subexpression, expressionDepth + 1); });
 
-                if (i < content.Length - 1)
+                if (i < content.Length - 1 && transitiveType == TransitiveExpression.SubType.Add)
                 {
                     layout.AddBothStretchedElement("symbol",
                         child =>

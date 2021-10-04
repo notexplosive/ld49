@@ -10,12 +10,10 @@ namespace LD49.Data
     {
         public static ILevel[] All =
         {
-            /*
             // DEBUG
             new Level(Allowances.EverythingEnabled,
                 new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
             // DEBUG
-            */
             
             Poem.Introduction,
             new Level(Allowances.OnlyAddSubtract_OneZero_Tutorial,

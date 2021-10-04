@@ -111,6 +111,17 @@ namespace LD49.Data
             return result;
         }
 
+        public static MathExpression CreateMany(params MathExpression[] many)
+        {
+            var builder = new Builder();
+            foreach (var item in many)
+            {
+                builder.Add(item);
+            }
+
+            return MultiplyMathExpression.Simplify(builder.Build());
+        }
+
         private class Builder : TransitiveBuilder<Builder, MultiplyMathExpression>
         {
             public override MultiplyMathExpression Build()

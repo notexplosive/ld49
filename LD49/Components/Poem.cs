@@ -20,9 +20,9 @@ namespace LD49.Components
 
         public static Poem IntroducePrimes = new Poem(
             new Page("these are Primes",
-                AddMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Thirteen, Prime.TwentyNine)),
+                MultiplyMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Thirteen, Prime.TwentyNine)),
             new Page("some people think they're important",
-                AddMathExpression.CreateMany(Prime.Eleven, Prime.FiftyThree, Prime.FortyOne, Prime.ThirtySeven,
+                MultiplyMathExpression.CreateMany(Prime.Eleven, Prime.FiftyThree, Prime.FortyOne, Prime.ThirtySeven,
                     Prime.FiftyNine)),
             new Page("i think they're clutter", Zero.Instance),
             new Page("push them all to one side so we can isolate the X", NamedVariable.X)
