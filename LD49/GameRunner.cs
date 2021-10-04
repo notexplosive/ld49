@@ -8,21 +8,21 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LD49
 {
-    public class Reckoning : MachinaGame
+    public class GameRunner : MachinaGame
     {
         private static int currentLevelIndex;
 
         public static Scene gameScene;
         // public static BoundedTextRenderer tooltipTextRenderer;
 
-        public Reckoning(string[] args) : base("Reckoning", args, new Point(1600, 900), new Point(1600, 900),
+        public GameRunner(string[] args) : base("Expression Compression", args, new Point(1600, 900), new Point(1600, 900),
             ResizeBehavior.MaintainDesiredResolution)
         {
         }
 
         public static DragHand DragHand { set; get; }
 
-        public static Level CurrentLevel => Level.All[Reckoning.currentLevelIndex] as Level;
+        public static Level CurrentLevel => Level.All[GameRunner.currentLevelIndex] as Level;
 
         protected override void OnGameLoad()
         {
@@ -49,18 +49,18 @@ namespace LD49
                     this.startingWindowSize);
             }
 
-            Reckoning.gameScene = SceneLayers.AddNewScene();
+            GameRunner.gameScene = SceneLayers.AddNewScene();
 
             var otherScene = SceneLayers.AddNewScene();
             new AdHoc(otherScene.AddActor("debug")).onKey += (key, state, modifiers) =>
             {
                 if (modifiers.ControlShift && key == Keys.Space && state == ButtonState.Pressed)
                 {
-                    Reckoning.LoadNextLevel();
+                    GameRunner.LoadNextLevel();
                 }
             };
 
-            Reckoning.LoadLevel(0);
+            GameRunner.LoadLevel(0);
         }
 
         private static void LoadLevel(int i)
@@ -74,7 +74,7 @@ namespace LD49
 
             if (thing is Level level)
             {
-                Reckoning.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
+                GameRunner.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
             }
 
             if (thing is Poem poem)
@@ -86,7 +86,7 @@ namespace LD49
         public static void BuildLevel(Allowances allowances, Equation startingEquation,
             MathExpression winningExpression)
         {
-            Reckoning.gameScene.DeleteAllActors();
+            GameRunner.gameScene.DeleteAllActors();
 
             ExpressionRenderer leftExpressionRenderer = null;
             ExpressionRenderer rightExpressionRenderer = null;
@@ -104,30 +104,30 @@ namespace LD49
                 {
                     if (leftExpressionRenderer.Expression == winningExpression)
                     {
-                        new LevelTransition(Reckoning.gameScene.AddActor("Level transition"), true);
+                        new LevelTransition(GameRunner.gameScene.AddActor("Level transition"), true);
                     }
                 }
                 else
                 {
                     if (rightExpressionRenderer.Expression == winningExpression
-                        && !Reckoning.IsInvalidState(leftExpressionRenderer.Expression, winningExpression)
+                        && !GameRunner.IsInvalidState(leftExpressionRenderer.Expression, winningExpression)
                         || leftExpressionRenderer.Expression == winningExpression
-                        && !Reckoning.IsInvalidState(rightExpressionRenderer.Expression, winningExpression))
+                        && !GameRunner.IsInvalidState(rightExpressionRenderer.Expression, winningExpression))
                     {
-                        new LevelTransition(Reckoning.gameScene.AddActor("Level transition"), true);
+                        new LevelTransition(GameRunner.gameScene.AddActor("Level transition"), true);
                     }
                 }
             }
 
-            var hand = Reckoning.gameScene.AddActor("Hand");
+            var hand = GameRunner.gameScene.AddActor("Hand");
             hand.transform.Depth = 100; // very close to front
             new BoundingRect(hand, new Point(200, 200)).SetOffsetToCenter();
 
-            Reckoning.DragHand = new DragHand(hand);
+            GameRunner.DragHand = new DragHand(hand);
 
             // Build Main Expression
             {
-                var gameScreen = Reckoning.gameScene.AddActor("GameScreen");
+                var gameScreen = GameRunner.gameScene.AddActor("GameScreen");
                 new BoundingRect(gameScreen, Point.Zero);
                 new BoundingRectToViewportSize(gameScreen);
                 var gameLayout = new LayoutGroup(gameScreen, Orientation.Vertical);
@@ -142,7 +142,7 @@ namespace LD49
                         VerticalAlignment.Center, Overflow.Ignore);
                     new Hoverable(button);
                     new TooltipProvider(button, "Reset");
-                    new Clickable(button).OnClick += button => { Reckoning.ReloadLevel(); };
+                    new Clickable(button).OnClick += button => { GameRunner.ReloadLevel(); };
                 });
 
                 gameLayout.AddBothStretchedElement("equation", equationActor =>
@@ -203,7 +203,7 @@ namespace LD49
                                         storageTopRibbonLayout.AddBothStretchedElement("add", buttonActor =>
                                         {
                                             new BoundingRectBorder(buttonActor, NumberRenderer.Colors[6]);
-                                            Reckoning.SetupDropSite(buttonActor, MathOperator.Name.Plus,
+                                            GameRunner.SetupDropSite(buttonActor, MathOperator.Name.Plus,
                                                 expression =>
                                                 {
                                                     storageExpressionRenderer.Expression =
@@ -218,7 +218,7 @@ namespace LD49
                                         storageTopRibbonLayout.AddBothStretchedElement("multiply", buttonActor =>
                                         {
                                             new BoundingRectBorder(buttonActor, NumberRenderer.Colors[6]);
-                                            Reckoning.SetupDropSite(buttonActor, MathOperator.Name.Times,
+                                            GameRunner.SetupDropSite(buttonActor, MathOperator.Name.Times,
                                                 expression =>
                                                 {
                                                     storageExpressionRenderer.Expression =
@@ -296,11 +296,11 @@ namespace LD49
 
             // Build overlay panel
             {
-                var overlayPanelActor = Reckoning.gameScene.AddActor("OverlayPanel");
+                var overlayPanelActor = GameRunner.gameScene.AddActor("OverlayPanel");
                 overlayPanelActor.transform.Depth = 200; // close to front but behind cursor
                 var boundingRect = new BoundingRect(overlayPanelActor,
-                    new Point(Reckoning.gameScene.camera.UnscaledViewportSize.X,
-                        Reckoning.gameScene.camera.UnscaledViewportSize.Y / 4));
+                    new Point(GameRunner.gameScene.camera.UnscaledViewportSize.X,
+                        GameRunner.gameScene.camera.UnscaledViewportSize.Y / 4));
                 overlayPanelActor.transform.Position -= new Vector2(0, boundingRect.Size.Y);
 
                 new LayoutGroup(overlayPanelActor, Orientation.Vertical)
@@ -318,7 +318,7 @@ namespace LD49
                             overlayButtons.AddBothStretchedElement("Add Button",
                                 button =>
                                 {
-                                    Reckoning.SetupOverlayButton(button, MathOperator.Name.Plus, Color.Orange,
+                                    GameRunner.SetupOverlayButton(button, MathOperator.Name.Plus, Color.Orange,
                                         expression =>
                                         {
                                             DoToBothSides(originalExpression =>
@@ -331,7 +331,7 @@ namespace LD49
                         {
                             overlayButtons.AddBothStretchedElement("Subtract Button", button =>
                             {
-                                Reckoning.SetupOverlayButton(button, MathOperator.Name.Minus, Color.Orange,
+                                GameRunner.SetupOverlayButton(button, MathOperator.Name.Minus, Color.Orange,
                                     expression =>
                                     {
                                         DoToBothSides(originalExpression =>
@@ -344,7 +344,7 @@ namespace LD49
                         {
                             overlayButtons.AddBothStretchedElement("Multiply Button", button =>
                             {
-                                Reckoning.SetupOverlayButton(button, MathOperator.Name.Times, Color.Orange,
+                                GameRunner.SetupOverlayButton(button, MathOperator.Name.Times, Color.Orange,
                                     expression =>
                                     {
                                         DoToBothSides(originalExpression =>
@@ -357,7 +357,7 @@ namespace LD49
                         {
                             overlayButtons.AddBothStretchedElement("Divide Button", button =>
                             {
-                                Reckoning.SetupOverlayButton(button, MathOperator.Name.Divide, Color.Orange,
+                                GameRunner.SetupOverlayButton(button, MathOperator.Name.Divide, Color.Orange,
                                     expression =>
                                     {
                                         DoToBothSides(originalExpression =>
@@ -369,7 +369,7 @@ namespace LD49
                         overlayButtons.HorizontallyStretchedSpacer();
                     });
 
-                new OverlayTrigger(overlayPanelActor, Reckoning.DragHand,
+                new OverlayTrigger(overlayPanelActor, GameRunner.DragHand,
                     Vector2.Zero);
             }
         }
@@ -389,7 +389,7 @@ namespace LD49
             new BoundingRectFill(buttonActor, new Color(color, 0.25f));
             new OperatorRenderer(buttonActor, operatorName, Color.White, false);
             new Hoverable(buttonActor);
-            new DropSite(buttonActor, Reckoning.DragHand, onDrop);
+            new DropSite(buttonActor, GameRunner.DragHand, onDrop);
         }
 
         private static void SetupDropSite(Actor buttonActor, MathOperator.Name operatorName,
@@ -397,19 +397,19 @@ namespace LD49
         {
             new OperatorRenderer(buttonActor, operatorName, Color.White, false);
             new Hoverable(buttonActor);
-            new DropSite(buttonActor, Reckoning.DragHand, onDrop);
+            new DropSite(buttonActor, GameRunner.DragHand, onDrop);
             new TooltipProvider(buttonActor, "DropSite");
         }
 
         public static void LoadNextLevel()
         {
-            Reckoning.currentLevelIndex++;
-            Reckoning.LoadLevel(Reckoning.currentLevelIndex);
+            GameRunner.currentLevelIndex++;
+            GameRunner.LoadLevel(GameRunner.currentLevelIndex);
         }
 
         public static void ReloadLevel()
         {
-            Reckoning.LoadLevel(Reckoning.currentLevelIndex);
+            GameRunner.LoadLevel(GameRunner.currentLevelIndex);
         }
     }
 }

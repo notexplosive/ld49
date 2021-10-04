@@ -44,7 +44,7 @@ namespace LD49.Components
                                 multiplyExpression.CanDistribute())
                             {
                                 operatorLayout.VerticallyStretchedSpacer();
-                                if (Reckoning.CurrentLevel.allowances.allowDistribute)
+                                if (GameRunner.CurrentLevel.allowances.allowDistribute)
                                 {
                                     operatorLayout.AddHorizontallyStretchedElement("DistributeButton", 50,
                                         buttonActor =>

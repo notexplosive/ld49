@@ -40,14 +40,14 @@ namespace LD49.Components
             this.tween.AppendVectorTween(new Vector2(0, -300), 0.5f, EaseFuncs.EaseOutBack, this.offset);
             this.tween.AppendFloatTween(0f, 0.5f, EaseFuncs.CubicEaseOut, this.opacity);
 
-            Reckoning.DragHand.PickedUp += () => this.tween.Refresh();
+            GameRunner.DragHand.PickedUp += () => this.tween.Refresh();
 
             // this.tween.AppendCallback(() => this.tween.Refresh());
         }
 
         public override void Update(float dt)
         {
-            if (Reckoning.DragHand.IsHolding)
+            if (GameRunner.DragHand.IsHolding)
             {
                 this.tween.Refresh();
             }
@@ -62,7 +62,7 @@ namespace LD49.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!Reckoning.DragHand.IsHolding)
+            if (!GameRunner.DragHand.IsHolding)
             {
                 var rect = this.boundingRect.RectF;
                 rect.Offset(this.offset.CurrentValue);

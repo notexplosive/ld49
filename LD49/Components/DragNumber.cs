@@ -35,14 +35,14 @@ namespace LD49.Components
 
         private void DragStart(Vector2 mousePos, Vector2 delta)
         {
-            Reckoning.DragHand.PickUp(this.renderer);
-            Reckoning.DragHand.actor.Visible = true;
+            GameRunner.DragHand.PickUp(this.renderer);
+            GameRunner.DragHand.actor.Visible = true;
         }
 
         private void DragEnd(Vector2 mousePos, Vector2 delta)
         {
-            Reckoning.DragHand.actor.Visible = false;
-            Reckoning.DragHand.Drop(mousePos);
+            GameRunner.DragHand.actor.Visible = false;
+            GameRunner.DragHand.Drop(mousePos);
         }
 
         public override void Update(float dt)

@@ -85,13 +85,13 @@ namespace LD49.Components
 
         public static void BuildPageScene(Poem poem, int pageIndex)
         {
-            Reckoning.gameScene.DeleteAllActors();
+            GameRunner.gameScene.DeleteAllActors();
 
             var page = poem.GetPage(pageIndex);
             var nextPage = poem.GetPage(pageIndex + 1);
             var prevPage = poem.GetPage(pageIndex - 1);
 
-            var gameScreen = Reckoning.gameScene.AddActor("GameScreen");
+            var gameScreen = GameRunner.gameScene.AddActor("GameScreen");
             new BoundingRect(gameScreen, Point.Zero);
             new BoundingRectToViewportSize(gameScreen);
             var gameLayout = new LayoutGroup(gameScreen, Orientation.Vertical);
@@ -135,7 +135,7 @@ namespace LD49.Components
                         new ExpressionRenderer(nextButton, false, Zero.Instance);
                         Poem.SetupButton(nextButton, () =>
                         {
-                            new LevelTransition(Reckoning.gameScene.AddActor("Level transition"), true);
+                            new LevelTransition(GameRunner.gameScene.AddActor("Level transition"), true);
                         });
                     }
                 });
