@@ -48,6 +48,11 @@ namespace LD49.Data
                 TransitiveExpression.FilterOppositeExpressions(expression.content.ToArray(), Zero.Instance,
                     MathOperator.Negate);
 
+            if (finalExpressions.Contains(Infinity.Instance))
+            {
+                return Infinity.Instance;
+            }
+            
             if (finalExpressions.Count > 1)
             {
                 var builder = new Builder();

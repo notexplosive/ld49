@@ -29,6 +29,7 @@ namespace LD49.Data
 
             var tempContent = expression.content.ToArray();
 
+            // Distribute negative one
             // (-1) * X * Y -> -X * -Y
             for (var i = 0; i < tempContent.Length; i++)
             {
@@ -46,6 +47,11 @@ namespace LD49.Data
                 TransitiveExpression.FilterOppositeExpressions(tempContent, One.Instance,
                     MathOperator.Inverse);
 
+            if (finalExpressions.Contains(Infinity.Instance))
+            {
+                return Infinity.Instance;
+            }
+            
             if (finalExpressions.Count > 1)
             {
                 var builder = new Builder();
