@@ -275,11 +275,10 @@ namespace LD49
                 overlayPanelActor.transform.Depth = 200; // close to front but behind cursor
                 var boundingRect = new BoundingRect(overlayPanelActor,
                     new Point(Reckoning.gameScene.camera.UnscaledViewportSize.X,
-                        Reckoning.gameScene.camera.UnscaledViewportSize.Y / 2));
+                        Reckoning.gameScene.camera.UnscaledViewportSize.Y / 4));
                 overlayPanelActor.transform.Position -= new Vector2(0, boundingRect.Size.Y);
 
                 new LayoutGroup(overlayPanelActor, Orientation.Vertical)
-                    .VerticallyStretchedSpacer()
                     .AddBothStretchedElement("OverlayContent", overlayContentActor =>
                     {
                         new Hoverable(overlayPanelActor); // prevents hovers on things below it

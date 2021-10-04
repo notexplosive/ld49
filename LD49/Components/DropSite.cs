@@ -37,7 +37,7 @@ namespace LD49.Components
         public override void Draw(SpriteBatch spriteBatch)
         {
             var rect = this.boundingRect.RectF;
-            rect.Inflate(20f * this.borderScale.CurrentValue, 20f * this.borderScale.CurrentValue);
+            rect.Inflate(60f * this.borderScale.CurrentValue, 20f * this.borderScale.CurrentValue);
 
             var color = new Color(NumberRenderer.Colors[2], this.opacity.CurrentValue);
 
