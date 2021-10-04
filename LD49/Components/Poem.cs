@@ -46,8 +46,8 @@ namespace LD49.Components
             new Page("you might have heard of a thing called 'subtracting'",
                 MathOperator.Negate(
                     MathOperator.Add(Prime.Two, MathOperator.Add(Prime.Eleven, Prime.Three)))),
-            new Page("subtracting is just adding a Negative", MathOperator.Negate(Prime.Two)),
-            new Page("i have created a device to help you use them, feel free to experiment",
+            new Page("subtracting is just adding a Negative", MathOperator.Add(NamedVariable.X, MathOperator.Negate(Prime.Two))),
+            new Page("i have created a space in the corner to help you think about this",
                 MathOperator.Negate(MathOperator.Add(Prime.NinetySeven, Prime.FiftyNine))));
 
         public static Poem IntroduceReciprocal = new Poem(
@@ -57,9 +57,9 @@ namespace LD49.Components
             new Page("the Reciprocal of Zero is dangerous", Infinity.Instance),
             new Page("you might have heard of a thing called 'dividing'",
                 MathOperator.Inverse(
-                    MathOperator.Add(Prime.Two, MathOperator.Add(Prime.Eleven, Prime.Three)))),
-            new Page("dividing is just multiplying by a Reciprocal", MathOperator.Inverse(Prime.Two)),
-            new Page("i have modified the device to use Reciprocals, feel free to experiment",
+                    MathOperator.Multiply(Prime.Two, MathOperator.Multiply(Prime.Eleven, Prime.Three)))),
+            new Page("dividing is just multiplying by a Reciprocal", MathOperator.Multiply(NamedVariable.X, MathOperator.Inverse(Prime.Two))),
+            new Page("i have modified the corner space to use Reciprocals",
                 MathOperator.Inverse(MathOperator.Add(Prime.NinetySeven, Prime.FiftyNine))));
 
         public static Poem IntroduceInfinity = new Poem(
