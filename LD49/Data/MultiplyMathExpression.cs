@@ -27,9 +27,23 @@ namespace LD49.Data
                 return Zero.Instance;
             }
 
+            var tempContent = expression.content.ToArray();
+
+            // (-1) * X * Y -> -X * -Y
+            for (var i = 0; i < tempContent.Length; i++)
+            {
+                if (tempContent[i] is NegateExpression negate && negate.GetInnerValue() == One.Instance)
+                {
+                    for (var j = 0; j < tempContent.Length; j++)
+                    {
+                        tempContent[j] = MathOperator.Negate(tempContent[j]);
+                    }
+                }
+            }
+
             // Cancel out inverses
             var finalExpressions =
-                TransitiveExpression.FilterOppositeExpressions(expression.content.ToArray(), One.Instance,
+                TransitiveExpression.FilterOppositeExpressions(tempContent, One.Instance,
                     MathOperator.Inverse);
 
             if (finalExpressions.Count > 1)
