@@ -67,6 +67,7 @@ namespace LD49.Components
             new Page("some people call it Infinity", Infinity.Instance),
             new Page("it is unstable", Infinity.Instance),
             new Page("it is dangerous", Infinity.Instance),
+            new Page("no amount of Reckoning can save us from Infinity", Infinity.Instance),
             new Page("once born, Infinity can only be destroyed with Zero", Zero.Instance),
             new Page("but the Zero will wash away everything, so perhaps it is best to start over", NamedVariable.X)
         );
