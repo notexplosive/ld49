@@ -23,7 +23,7 @@ namespace LD49.Components
 
             if (isEndOfLevel)
             {
-                this.tween.AppendWaitTween(1);
+                // this.tween.AppendWaitTween(1);
             }
 
             this.tween.AppendVectorTween(

@@ -135,7 +135,10 @@ namespace LD49.Components
                     else
                     {
                         new ExpressionRenderer(nextButton, false, Zero.Instance);
-                        Poem.SetupButton(nextButton, () => { Reckoning.LoadNextLevel(); });
+                        Poem.SetupButton(nextButton, () =>
+                        {
+                            new LevelTransition(Reckoning.gameScene.AddActor("Level transition"), true);
+                        });
                     }
                 });
             });

@@ -15,7 +15,7 @@ namespace LD49
         public static Scene gameScene;
         // public static BoundedTextRenderer tooltipTextRenderer;
 
-        public Reckoning(string[] args) : base("The Reckoning", args, new Point(1600, 900), new Point(1600, 900),
+        public Reckoning(string[] args) : base("Reckoning", args, new Point(1600, 900), new Point(1600, 900),
             ResizeBehavior.MaintainDesiredResolution)
         {
         }
