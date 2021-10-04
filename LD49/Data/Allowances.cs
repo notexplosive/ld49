@@ -25,7 +25,7 @@
 
         // WHATEVER THIS IS
         public bool allowDistribute;
-        
+
         // AD-HOC
         public bool firstLevelTutorial;
 
@@ -47,11 +47,11 @@
             // VALUES
             allowXNamedValue = true,
             allowAllPrimes = true,
-            
+
             // leaving this off for now, I think it's too confusing
             allowDistribute = false
         };
-        
+
         public static readonly Allowances OnlyAddSubtract_OneZero_Tutorial = new Allowances
         {
             // MAIN EXPRESSION
@@ -69,12 +69,84 @@
             // VALUES
             allowXNamedValue = false,
             allowAllPrimes = false,
-            
+
             // AD-HOC
             firstLevelTutorial = true,
-            
+
             // leaving this off for now, I think it's too confusing
             allowDistribute = false
         };
+
+        public Allowances EnableAddingTo_Expression()
+        {
+            this.allowAddingTo_Expression = true;
+            return this;
+        }
+
+        public Allowances EnableSubtractingTo_Expression()
+        {
+            this.allowSubtractingTo_Expression = true;
+            return this;
+        }
+
+        public Allowances EnableDividingTo_Expression()
+        {
+            this.allowDividingTo_Expression = true;
+            return this;
+        }
+
+        public Allowances EnableMultiplyingTo_Expression()
+        {
+            this.allowMultiplyingTo_Expression = true;
+            return this;
+        }
+
+        public Allowances EnableAddingTo_Storage()
+        {
+            this.allowAddingTo_Storage = true;
+            return this;
+        }
+
+        public Allowances EnableMultiplyingTo_Storage()
+        {
+            this.allowMultiplyingTo_Storage = true;
+            return this;
+        }
+
+        public Allowances EnableInverting_Storage()
+        {
+            this.allowInverting_Storage = true;
+            return this;
+        }
+
+        public Allowances EnableNegating_Storage()
+        {
+            this.allowNegating_Storage = true;
+            return this;
+        }
+
+        public Allowances EnableXNamedValue()
+        {
+            this.allowXNamedValue = true;
+            return this;
+        }
+
+        public Allowances EnableAllPrimes()
+        {
+            this.allowAllPrimes = true;
+            return this;
+        }
+
+        public Allowances EnableLevelTutorial()
+        {
+            this.firstLevelTutorial = true;
+            return this;
+        }
+
+        public Allowances EnableDistribute()
+        {
+            this.allowDistribute = true;
+            return this;
+        }
     }
 }

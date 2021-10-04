@@ -10,25 +10,63 @@ namespace LD49.Data
     {
         public static ILevel[] All =
         {
-            // DEBUG
+#if DEBUG
             new Level(Allowances.EverythingEnabled,
                 new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
-            // DEBUG
-            
+#endif
+
             Poem.Introduction,
+
             new Level(Allowances.OnlyAddSubtract_OneZero_Tutorial,
                 new Equation(MathOperator.Add(One.Instance, MathOperator.Add(One.Instance, One.Instance))),
                 Zero.Instance),
-            
+
             Poem.IntroduceX,
-            // one level X + 1 = 1 
+
+            new Level(
+                new Allowances().EnableAddingTo_Expression().EnableSubtractingTo_Expression().EnableXNamedValue(),
+                new Equation(AddMathExpression.CreateMany(NamedVariable.X, One.Instance,One.Instance,One.Instance,One.Instance,One.Instance), One.Instance)
+            ),
+
             Poem.IntroducePrimes,
             // 3 levels with just primes
             //      - just add and subtract
-            new Level(Allowances.EverythingEnabled,
-                new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
+            new Level(
+                new Allowances()
+                    .EnableAddingTo_Expression().EnableSubtractingTo_Expression()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(MathOperator.Add(Prime.FiftyNine, Prime.Seven),
+                    AddMathExpression.CreateMany(Prime.Thirteen, Prime.Seventeen, Prime.EightyNine, NamedVariable.X))),
             //      - just multiply and divide
+            //      todo: this is basically identical to the previous one... maybe that's OK?
+            new Level(
+                new Allowances()
+                    .EnableDividingTo_Expression().EnableMultiplyingTo_Expression()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(MathOperator.Multiply(Prime.FiftyNine, Prime.Seven),
+                    MultiplyMathExpression.CreateMany(Prime.Thirteen, Prime.Seventeen, Prime.EightyNine,
+                        NamedVariable.X))),
             //      - both mul/div and add/sub - "easy mode"
+            new Level(
+                new Allowances()
+                    .EnableAddingTo_Expression().EnableSubtractingTo_Expression()
+                    .EnableDividingTo_Expression().EnableMultiplyingTo_Expression()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(
+                    MathOperator.Add(
+                        Prime.ThirtyOne,
+                        Prime.SeventyThree),
+                    MultiplyMathExpression.CreateMany(
+                        Prime.SixtyOne,
+                        Prime.SeventyOne,
+                        Prime.SixtySeven,
+                        AddMathExpression.CreateMany(
+                            MathOperator.Multiply(NamedVariable.X, Prime.TwentyThree), 
+                            Prime.Five, 
+                            Prime.FiftyThree)))),
 
             Poem.IntroduceNegative,
             // : 0 = X + 1 + 1 + 1 -> X (can only add on main and Negate in storage)
@@ -38,7 +76,7 @@ namespace LD49.Data
             // : storage can only multiply and invert, main expression can only multiply
             Poem.IntroduceInfinity,
             // Everything is enabled, except you can only add and multiply on main expression
-            Poem.Credits,
+            Poem.Credits
         };
 
         public readonly Allowances allowances;

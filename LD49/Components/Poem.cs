@@ -32,10 +32,10 @@ namespace LD49.Components
             new Page("this is X", NamedVariable.X),
             new Page("they are precious", NamedVariable.X),
             new Page("they are delicate", NamedVariable.X),
-            new Page("they must be kept safe in their own expression", NamedVariable.X),
+            new Page("they must be kept safe in their own Expression", NamedVariable.X),
             new Page("from now on your goal is to isolate X", NamedVariable.X),
             new Page("do not destroy X or you will have to start again", Zero.Instance),
-            new Page("stay away from dangerous numbers", Infinity.Instance)
+            new Page("stay away from dangerous Numbers", Infinity.Instance)
         );
 
         public static Poem IntroduceNegative = new Poem(

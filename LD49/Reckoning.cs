@@ -264,10 +264,6 @@ namespace LD49
                             .SetMarginSize(new Point(50, 50))
                             .SetPaddingBetweenElements(5);
 
-                        new BoundedTextRenderer(inventoryActor, "Codex (Drag from here)",
-                            MachinaGame.Assets.GetSpriteFont("DefaultFont"), NumberRenderer.Colors[4],
-                            HorizontalAlignment.Center);
-
                         new ControlPanel(inventoryActor, allowances);
                     });
                 });
