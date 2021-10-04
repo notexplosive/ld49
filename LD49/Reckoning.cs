@@ -23,7 +23,24 @@ namespace LD49
             SceneLayers.BackgroundColor = Color.Black;
             var gameScene = SceneLayers.AddNewScene();
 
-            BuildLevel(gameScene);
+            var expression = MathOperator.Multiply(
+                MathOperator.Add(
+                    Prime.Seven,
+                    MathOperator.Multiply(
+                        MathOperator.Add(
+                            Prime.Seventeen,
+                            Prime.FiftyNine),
+                        MathOperator.Add(
+                            MathOperator.Inverse(
+                                MathOperator.Negate(
+                                    MathOperator.Multiply(
+                                        MathOperator.Add(NamedVariable.Z, Prime.Thirteen),
+                                        NamedVariable.X))),
+                            Zero.Instance
+                        ))),
+                One.Instance);
+            
+            BuildLevel(gameScene, expression);
         }
 
         private void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName, Color color,
@@ -43,7 +60,7 @@ namespace LD49
             new TooltipProvider(buttonActor, "DropSite");
         }
 
-        private void BuildLevel(Scene gameScene)
+        private void BuildLevel(Scene gameScene, MathExpression expression)
         {
             ExpressionRenderer mainExpressionRenderer = null;
             ExpressionRenderer storageExpressionRenderer = null;
@@ -65,23 +82,7 @@ namespace LD49
                     .AddBothStretchedElement("main expression", expressionActor =>
                     {
                         expressionHoverable = new Hoverable(expressionActor);
-                        mainExpressionRenderer = new ExpressionRenderer(expressionActor, true,
-                            MathOperator.Multiply(
-                                MathOperator.Add(
-                                    Prime.Seven,
-                                    MathOperator.Multiply(
-                                        MathOperator.Add(
-                                            Prime.Seventeen,
-                                            Prime.FiftyNine),
-                                        MathOperator.Add(
-                                            MathOperator.Inverse(
-                                                MathOperator.Negate(
-                                                    MathOperator.Multiply(
-                                                        MathOperator.Add(NamedVariable.Z, Prime.Thirteen),
-                                                        NamedVariable.X))),
-                                            Zero.Instance
-                                        ))),
-                                One.Instance));
+                        mainExpressionRenderer = new ExpressionRenderer(expressionActor, true, expression);
 
                         mainExpressionRenderer.OnExpressionChange += () =>
                         {
