@@ -36,9 +36,7 @@ namespace LD49.Components
                 {
                     actor.scene.camera.UnscaledPosition = new Vector2(0, -offset);
 
-                    // temp
-                    Reckoning.BuildLevel(actor.scene, new Allowances(), Prime.Seven, Prime.Three);
-                    // /temp
+                    Reckoning.LoadNextLevel();
 
                     new LevelTransition(actor.scene.AddActor("LevelStart"), false);
                 });

@@ -22,8 +22,28 @@
         // VALUES
         public bool allowXNamedValue;
         public bool allowAllPrimes;
-        
+
         // AD-HOC
         public bool firstLevelTutorial;
+
+        // static instances for convenience
+        public static readonly Allowances EverythingEnabled = new Allowances
+        {
+            // MAIN EXPRESSION
+            allowAddingTo_Expression = true,
+            allowSubtractingTo_Expression = true,
+            allowDividingTo_Expression = true,
+            allowMultiplyingTo_Expression = true,
+
+            // STORAGE
+            allowAddingTo_Storage = true,
+            allowMultiplyingTo_Storage = true,
+            allowInverting_Storage = true,
+            allowNegating_Storage = true,
+
+            // VALUES
+            allowXNamedValue = true,
+            allowAllPrimes = true
+        };
     }
 }

@@ -9,6 +9,9 @@ namespace LD49
 {
     public class Reckoning : MachinaGame
     {
+        private static int currentLevel;
+
+        private static Scene gameScene;
         // public static BoundedTextRenderer tooltipTextRenderer;
 
         public Reckoning(string[] args) : base("The Reckoning", args, new Point(1600, 900), new Point(1600, 900),
@@ -21,29 +24,22 @@ namespace LD49
         protected override void OnGameLoad()
         {
             SceneLayers.BackgroundColor = Color.Black;
-            var gameScene = SceneLayers.AddNewScene();
+            Reckoning.gameScene = SceneLayers.AddNewScene();
 
-            var startingExpression = MathOperator.Add(One.Instance, One.Instance);
-            var allowances = new Allowances
-            {
-                allowSubtractingTo_Expression = true,
-                allowAddingTo_Expression = true,
-                firstLevelTutorial = true
-            };
-
-            Reckoning.BuildLevel(gameScene, allowances, startingExpression, Zero.Instance);
+            var level = Level.All[0];
+            Reckoning.BuildLevel(level.allowances, level.startingExpression,level.endingExpression);
         }
 
-        public static void BuildLevel(Scene gameScene, Allowances allowances, MathExpression startingExpression,
+        public static void BuildLevel(Allowances allowances, MathExpression startingExpression,
             MathExpression winningExpression)
         {
-            gameScene.DeleteAllActors();
+            Reckoning.gameScene.DeleteAllActors();
 
             ExpressionRenderer mainExpressionRenderer = null;
             ExpressionRenderer storageExpressionRenderer = null;
             Hoverable expressionHoverable = null;
 
-            var hand = gameScene.AddActor("Hand");
+            var hand = Reckoning.gameScene.AddActor("Hand");
             hand.transform.Depth = 100; // very close to front
             new BoundingRect(hand, new Point(200, 200)).SetOffsetToCenter();
 
@@ -51,7 +47,7 @@ namespace LD49
 
             // Build Main Expression
             {
-                var gameScreen = gameScene.AddActor("GameScreen");
+                var gameScreen = Reckoning.gameScene.AddActor("GameScreen");
                 new BoundingRect(gameScreen, Point.Zero);
                 new BoundingRectToViewportSize(gameScreen);
                 new LayoutGroup(gameScreen, Orientation.Vertical)
@@ -197,10 +193,11 @@ namespace LD49
 
             // Build overlay panel
             {
-                var overlayPanelActor = gameScene.AddActor("OverlayPanel");
+                var overlayPanelActor = Reckoning.gameScene.AddActor("OverlayPanel");
                 overlayPanelActor.transform.Depth = 200; // close to front but behind cursor
                 var boundingRect = new BoundingRect(overlayPanelActor,
-                    new Point(gameScene.camera.UnscaledViewportSize.X, gameScene.camera.UnscaledViewportSize.Y / 2));
+                    new Point(Reckoning.gameScene.camera.UnscaledViewportSize.X,
+                        Reckoning.gameScene.camera.UnscaledViewportSize.Y / 2));
                 overlayPanelActor.transform.Position -= new Vector2(0, boundingRect.Size.Y);
 
                 new LayoutGroup(overlayPanelActor, Orientation.Vertical)
@@ -289,6 +286,14 @@ namespace LD49
             new Hoverable(buttonActor);
             new DropSite(buttonActor, Reckoning.DragHand, onDrop);
             new TooltipProvider(buttonActor, "DropSite");
+        }
+
+        public static void LoadNextLevel()
+        {
+            Reckoning.currentLevel++;
+
+            var level = Level.All[Reckoning.currentLevel];
+            Reckoning.BuildLevel(level.allowances, level.startingExpression, level.endingExpression);
         }
     }
 }
