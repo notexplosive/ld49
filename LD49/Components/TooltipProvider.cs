@@ -6,6 +6,10 @@ using MonoGame.Extended;
 
 namespace LD49.Components
 {
+    /// <summary>
+    /// Totall repurposed as the "hover feedback" class, tooltips are no longer a thing
+    /// lmao 420 blaze it pptphpthptphpthpt
+    /// </summary>
     public class TooltipProvider : BaseComponent
     {
         private readonly string tooltipText;
@@ -36,7 +40,7 @@ namespace LD49.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (this.hoverable != null && this.hoverable.IsHovered)
+            if (this.hoverable != null && this.hoverable.IsHovered && !Reckoning.DragHand.IsHolding)
             {
                 spriteBatch.FillRectangle(this.boundingRect.Rect, new Color(Color.Orange, 0.15f), transform.Depth + 20);
             }
