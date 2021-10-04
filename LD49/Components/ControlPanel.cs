@@ -44,7 +44,7 @@ namespace LD49.Components
             else
             {
                 // does nothing, just clears tooltip
-                BuildNavigationButton("", NavigationImage.None, () => { });
+                // BuildNavigationButton("", NavigationImage.None, () => { });
             }
 
             var isAtEnd = false;
@@ -74,7 +74,7 @@ namespace LD49.Components
             else
             {
                 // does nothing, just clears tooltip
-                BuildNavigationButton("", NavigationImage.None, () => { });
+                // BuildNavigationButton("", NavigationImage.None, () => { });
             }
         }
 

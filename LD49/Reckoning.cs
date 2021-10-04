@@ -87,80 +87,89 @@ namespace LD49
                         */
                     .AddHorizontallyStretchedElement("controlsRoot", 300, controlsRoot =>
                     {
-                        new BoundingRectBorder(controlsRoot, Color.Orange);
-                        var layout = new LayoutGroup(controlsRoot, Orientation.Horizontal);
+                        var controlsLayout = new LayoutGroup(controlsRoot, Orientation.Horizontal);
 
-                        layout.AddBothStretchedElement("numbers", inventoryActor =>
+                        controlsLayout.AddVerticallyStretchedElement("storage", 300, storageActorWrapper =>
                         {
-                            new LayoutGroup(inventoryActor, Orientation.Horizontal).SetPaddingBetweenElements(5);
-                            new ControlPanel(inventoryActor, mainExpressionRenderer);
-                        });
-
-                        layout.AddVerticallyStretchedElement("storage", 300,
-                            storageActorWrapper =>
-                            {
-                                new LayoutGroup(storageActorWrapper, Orientation.Vertical)
-                                    .AddHorizontallyStretchedElement("button ribbon", 60, buttonRibbonActor =>
-                                    {
-                                        new LayoutGroup(buttonRibbonActor, Orientation.Horizontal)
-                                            .AddBothStretchedElement("add", addButtonActor =>
+                            new BoundingRectBorder(storageActorWrapper, NumberRenderer.Colors[1]);
+                            new LayoutGroup(storageActorWrapper, Orientation.Vertical)
+                                .SetMarginSize(new Point(10, 10))
+                                .AddHorizontallyStretchedElement("button ribbon", 60, buttonRibbonActor =>
+                                {
+                                    new LayoutGroup(buttonRibbonActor, Orientation.Horizontal)
+                                        .AddBothStretchedElement("add", addButtonActor =>
+                                        {
+                                            new BoundingRectBorder(addButtonActor, NumberRenderer.Colors[2]);
+                                            SetupDropSite(addButtonActor, MathOperator.Name.Plus, expression =>
                                             {
-                                                SetupDropSite(addButtonActor, MathOperator.Name.Plus, expression =>
+                                                storageExpressionRenderer.Expression =
+                                                    MathOperator.Add(storageExpressionRenderer.Expression,
+                                                        expression);
+                                            });
+                                        })
+                                        .AddBothStretchedElement("multiply", multiplyButtonActor =>
+                                        {
+                                            new BoundingRectBorder(multiplyButtonActor, NumberRenderer.Colors[2]);
+                                            SetupDropSite(multiplyButtonActor, MathOperator.Name.Times,
+                                                expression =>
                                                 {
                                                     storageExpressionRenderer.Expression =
-                                                        MathOperator.Add(storageExpressionRenderer.Expression,
+                                                        MathOperator.Multiply(
+                                                            storageExpressionRenderer.Expression,
                                                             expression);
                                                 });
-                                            })
-                                            .AddBothStretchedElement("multiply", multiplyButtonActor =>
-                                            {
-                                                SetupDropSite(multiplyButtonActor, MathOperator.Name.Times,
-                                                    expression =>
-                                                    {
-                                                        storageExpressionRenderer.Expression =
-                                                            MathOperator.Multiply(
-                                                                storageExpressionRenderer.Expression,
-                                                                expression);
-                                                    });
-                                            });
-                                    })
-                                    .AddBothStretchedElement("storage inner", storageActor =>
-                                    {
-                                        var dragNumber = new DragNumber(storageActor, Zero.Instance);
-                                        storageExpressionRenderer = dragNumber.expressionRenderer;
-                                    })
-                                    .AddHorizontallyStretchedElement("lower button ribbon", 60,
-                                        lowerButtonRibbonActor =>
-                                        {
-                                            new LayoutGroup(lowerButtonRibbonActor, Orientation.Horizontal)
-                                                .AddBothStretchedElement("negate", buttonActor =>
-                                                {
-                                                    new BoundedTextRenderer(buttonActor, "Negate",
-                                                        MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
-                                                        HorizontalAlignment.Center, VerticalAlignment.Center,
-                                                        Overflow.Ignore);
-                                                    new UIButton(buttonActor, () =>
-                                                    {
-                                                        storageExpressionRenderer.Expression =
-                                                            MathOperator.Negate(
-                                                                storageExpressionRenderer.Expression);
-                                                    });
-                                                })
-                                                .AddBothStretchedElement("inverse", buttonActor =>
-                                                {
-                                                    new BoundedTextRenderer(buttonActor, "Inverse",
-                                                        MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
-                                                        HorizontalAlignment.Center, VerticalAlignment.Center,
-                                                        Overflow.Ignore);
-                                                    new UIButton(buttonActor, () =>
-                                                    {
-                                                        storageExpressionRenderer.Expression =
-                                                            MathOperator.Inverse(
-                                                                storageExpressionRenderer.Expression);
-                                                    });
-                                                });
                                         });
-                            });
+                                })
+                                .AddBothStretchedElement("storage inner", storageActor =>
+                                {
+                                    var dragNumber = new DragNumber(storageActor, Zero.Instance);
+                                    storageExpressionRenderer = dragNumber.expressionRenderer;
+                                })
+                                .AddHorizontallyStretchedElement("lower button ribbon", 60,
+                                    lowerButtonRibbonActor =>
+                                    {
+                                        new LayoutGroup(lowerButtonRibbonActor, Orientation.Horizontal)
+                                            .AddBothStretchedElement("negate", buttonActor =>
+                                            {
+                                                new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
+                                                new BoundedTextRenderer(buttonActor, "Negate",
+                                                    MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
+                                                    HorizontalAlignment.Center, VerticalAlignment.Center,
+                                                    Overflow.Ignore);
+                                                new UIButton(buttonActor, () =>
+                                                {
+                                                    storageExpressionRenderer.Expression =
+                                                        MathOperator.Negate(
+                                                            storageExpressionRenderer.Expression);
+                                                });
+                                            })
+                                            .AddBothStretchedElement("inverse", buttonActor =>
+                                            {
+                                                new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
+                                                new BoundedTextRenderer(buttonActor, "Inverse",
+                                                    MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
+                                                    HorizontalAlignment.Center, VerticalAlignment.Center,
+                                                    Overflow.Ignore);
+                                                new UIButton(buttonActor, () =>
+                                                {
+                                                    storageExpressionRenderer.Expression =
+                                                        MathOperator.Inverse(
+                                                            storageExpressionRenderer.Expression);
+                                                });
+                                            });
+                                    });
+                        });
+
+                        controlsLayout.PixelSpacer(32);
+
+                        controlsLayout.AddBothStretchedElement("numbers", inventoryActor =>
+                        {
+                            new BoundingRectBorder(inventoryActor, NumberRenderer.Colors[0]);
+                            new LayoutGroup(inventoryActor, Orientation.Horizontal)
+                                .SetMarginSize(new Point(0, 50))
+                                .SetPaddingBetweenElements(5);
+                            new ControlPanel(inventoryActor, mainExpressionRenderer);
+                        });
                     });
             }
 

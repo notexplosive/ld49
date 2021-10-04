@@ -9,7 +9,7 @@ namespace LD49.Components
 {
     public class NumberRenderer : BaseComponent
     {
-        private static readonly Color[] Colors =
+        public static readonly Color[] Colors =
         {
             HexToColor.Convert("287271"),
             HexToColor.Convert("2A9D8F"),
