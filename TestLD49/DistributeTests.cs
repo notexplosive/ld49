@@ -71,5 +71,23 @@ namespace TestLD49
                             NamedVariable.Y)))
                 .Should().Be(MathOperator.Multiply(NamedVariable.X, NamedVariable.Y));
         }
+
+        [Fact]
+        public void negate_distributes_across_an_add()
+        {
+            MathOperator.Negate(MathOperator.Add(NamedVariable.X, NamedVariable.Y))
+                .Should().Be(
+                    MathOperator.Add(MathOperator.Negate(NamedVariable.X), MathOperator.Negate(NamedVariable.Y))
+                );
+        }
+
+        [Fact]
+        public void inverse_distributes_across_multiplication()
+        {
+            MathOperator.Inverse(MathOperator.Multiply(NamedVariable.X, NamedVariable.Y))
+                .Should().Be(
+                    MathOperator.Multiply(MathOperator.Inverse(NamedVariable.X),MathOperator.Inverse(NamedVariable.Y))
+                );
+        }
     }
 }

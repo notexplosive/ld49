@@ -28,6 +28,12 @@
                 return MathOperator.Multiply(value, NegateExpression.Create(One.Instance));
             }
 
+            if (value is AddMathExpression addMathExpression)
+            {
+                // -(X + Y) -> (-X) + (-Y)
+                return AddMathExpression.Distribute(NegateExpression.Create(One.Instance), addMathExpression);
+            }
+
             return new NegateExpression(value);
         }
     }
