@@ -116,19 +116,7 @@ namespace LD49.Components
 
         private int GetPrimeIndex(Prime prime)
         {
-            var index = 0;
-            foreach (var currentPrime in Prime.All.Values)
-            {
-                if (currentPrime == prime)
-                {
-                    return index;
-                }
-
-                index++;
-            }
-
-            MachinaGame.Print(prime, "is not a prime?");
-            return 0;
+            return Prime.IndexLookup[prime];
         }
     }
 }

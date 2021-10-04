@@ -166,8 +166,12 @@ namespace LD49
                         {
                             new BoundingRectBorder(inventoryActor, NumberRenderer.Colors[0]);
                             new LayoutGroup(inventoryActor, Orientation.Horizontal)
-                                .SetMarginSize(new Point(0, 50))
+                                .SetMarginSize(new Point(50, 50))
                                 .SetPaddingBetweenElements(5);
+                            
+                            new BoundedTextRenderer(inventoryActor, "Codex (Drag from here)",
+                                MachinaGame.Assets.GetSpriteFont("DefaultFont"), NumberRenderer.Colors[5], HorizontalAlignment.Center, VerticalAlignment.Top);
+                            
                             new ControlPanel(inventoryActor, mainExpressionRenderer);
                         });
                     });

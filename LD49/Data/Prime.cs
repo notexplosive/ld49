@@ -5,6 +5,8 @@ namespace LD49.Data
     public class Prime : Number
     {
         public static readonly Dictionary<int, Prime> All = new Dictionary<int, Prime>();
+        public static readonly Dictionary<Prime, int> IndexLookup = new Dictionary<Prime, int>();
+
         public static readonly Prime Two = new Prime(2);
         public static readonly Prime Three = new Prime(3);
         public static readonly Prime Five = new Prime(5);
@@ -33,6 +35,7 @@ namespace LD49.Data
 
         private Prime(int value) : base(value)
         {
+            Prime.IndexLookup.Add(this, Prime.All.Count);
             Prime.All.Add(this.value, this);
         }
     }
