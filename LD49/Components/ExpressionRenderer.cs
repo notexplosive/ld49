@@ -63,7 +63,7 @@ namespace LD49.Components
             }
             else if (expression is NamedVariable variable)
             {
-                new NamedVariableRenderer(this.mainChild, variable);
+                new NamedVariableRenderer(this.mainChild, variable, this.isHoverable);
             }
             else if (expression is InverseExpression inverseExpression)
             {

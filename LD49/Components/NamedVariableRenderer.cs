@@ -11,13 +11,16 @@ namespace LD49.Components
         private readonly NamedVariable variable;
         private readonly ReckonRenderer reckonRenderer;
 
-        public NamedVariableRenderer(Actor actor, NamedVariable variable) : base(actor)
+        public NamedVariableRenderer(Actor actor, NamedVariable variable, bool isHoverable) : base(actor)
         {
             this.reckonRenderer = new ReckonRenderer(actor, RequireComponent<BoundingRect>());
             this.variable = variable;
-            
-            new Hoverable(this.actor);
-            new TooltipProvider(this.actor, variable.ToString());
+
+            if (isHoverable)
+            {
+                new Hoverable(this.actor);
+                new TooltipProvider(this.actor, variable.ToString());
+            }
         }
 
         public override void Update(float dt)
