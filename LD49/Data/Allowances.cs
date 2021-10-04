@@ -3,18 +3,18 @@
     public struct Allowances
     {
         // MAIN EXPRESSION
-        public bool allowAddingToExpression;
-        public bool allowSubtractingToExpression;
-        public bool allowDividingToExpression;
-        public bool allowMultiplyingToExpression;
+        public bool allowAddingTo_Expression;
+        public bool allowSubtractingTo_Expression;
+        public bool allowDividingTo_Expression;
+        public bool allowMultiplyingTo_Expression;
 
         // STORAGE
-        public bool allowAddingToStorage;
-        public bool allowMultiplyingToStorage;
-        public bool allowInvertingStorage;
-        public bool allowNegatingStorage;
-        public bool allowStorage => this.allowAddingToStorage && this.allowMultiplyingToStorage && this.allowInvertingStorage &&
-                                    this.allowNegatingStorage;
+        public bool allowAddingTo_Storage;
+        public bool allowMultiplyingTo_Storage;
+        public bool allowInverting_Storage;
+        public bool allowNegating_Storage;
+        public bool AllowStorage => this.allowAddingTo_Storage && this.allowMultiplyingTo_Storage && this.allowInverting_Storage &&
+                                    this.allowNegating_Storage;
         
         // VALUES
         public bool allowXNamedValue;

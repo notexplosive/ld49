@@ -39,8 +39,10 @@ namespace LD49
                             Zero.Instance
                         ))),
                 One.Instance);
-            
-            BuildLevel(gameScene, expression);
+
+            var allowances = new Allowances();
+
+            BuildLevel(gameScene, allowances, expression);
         }
 
         private void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName, Color color,
@@ -60,8 +62,10 @@ namespace LD49
             new TooltipProvider(buttonActor, "DropSite");
         }
 
-        private void BuildLevel(Scene gameScene, MathExpression expression)
+        private void BuildLevel(Scene gameScene, Allowances allowances, MathExpression startingExpression)
         {
+            gameScene.DeleteAllActors();
+
             ExpressionRenderer mainExpressionRenderer = null;
             ExpressionRenderer storageExpressionRenderer = null;
             Hoverable expressionHoverable = null;
@@ -82,7 +86,7 @@ namespace LD49
                     .AddBothStretchedElement("main expression", expressionActor =>
                     {
                         expressionHoverable = new Hoverable(expressionActor);
-                        mainExpressionRenderer = new ExpressionRenderer(expressionActor, true, expression);
+                        mainExpressionRenderer = new ExpressionRenderer(expressionActor, true, startingExpression);
 
                         mainExpressionRenderer.OnExpressionChange += () =>
                         {
@@ -104,76 +108,97 @@ namespace LD49
                     {
                         var controlsLayout = new LayoutGroup(controlsRoot, Orientation.Horizontal);
 
-                        controlsLayout.AddVerticallyStretchedElement("storage", 300, storageActorWrapper =>
+                        if (allowances.AllowStorage)
                         {
-                            new BoundingRectBorder(storageActorWrapper, NumberRenderer.Colors[1]);
-                            new LayoutGroup(storageActorWrapper, Orientation.Vertical)
-                                .SetMarginSize(new Point(10, 10))
-                                .AddHorizontallyStretchedElement("button ribbon", 60, buttonRibbonActor =>
-                                {
-                                    new LayoutGroup(buttonRibbonActor, Orientation.Horizontal)
-                                        .AddBothStretchedElement("add", addButtonActor =>
+                            controlsLayout.AddVerticallyStretchedElement("storage", 300, storageActorWrapper =>
+                            {
+                                new BoundingRectBorder(storageActorWrapper, NumberRenderer.Colors[1]);
+                                new LayoutGroup(storageActorWrapper, Orientation.Vertical)
+                                    .SetMarginSize(new Point(10, 10))
+                                    .AddHorizontallyStretchedElement("button ribbon", 60, buttonRibbonActor =>
+                                    {
+                                        var storageTopRibbonLayout =
+                                            new LayoutGroup(buttonRibbonActor, Orientation.Horizontal);
+
+                                        if (allowances.allowAddingTo_Storage)
                                         {
-                                            new BoundingRectBorder(addButtonActor, NumberRenderer.Colors[2]);
-                                            SetupDropSite(addButtonActor, MathOperator.Name.Plus, expression =>
+                                            storageTopRibbonLayout.AddBothStretchedElement("add", buttonActor =>
                                             {
-                                                storageExpressionRenderer.Expression =
-                                                    MathOperator.Add(storageExpressionRenderer.Expression,
-                                                        expression);
-                                            });
-                                        })
-                                        .AddBothStretchedElement("multiply", multiplyButtonActor =>
-                                        {
-                                            new BoundingRectBorder(multiplyButtonActor, NumberRenderer.Colors[2]);
-                                            SetupDropSite(multiplyButtonActor, MathOperator.Name.Times,
-                                                expression =>
+                                                new BoundingRectBorder(buttonActor, NumberRenderer.Colors[2]);
+                                                SetupDropSite(buttonActor, MathOperator.Name.Plus, expression =>
                                                 {
                                                     storageExpressionRenderer.Expression =
-                                                        MathOperator.Multiply(
-                                                            storageExpressionRenderer.Expression,
+                                                        MathOperator.Add(storageExpressionRenderer.Expression,
                                                             expression);
                                                 });
-                                        });
-                                })
-                                .AddBothStretchedElement("storage inner", storageActor =>
-                                {
-                                    var dragNumber = new DragNumber(storageActor, Zero.Instance);
-                                    storageExpressionRenderer = dragNumber.expressionRenderer;
-                                })
-                                .AddHorizontallyStretchedElement("lower button ribbon", 60,
-                                    lowerButtonRibbonActor =>
-                                    {
-                                        new LayoutGroup(lowerButtonRibbonActor, Orientation.Horizontal)
-                                            .AddBothStretchedElement("negate", buttonActor =>
-                                            {
-                                                new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
-                                                new BoundedTextRenderer(buttonActor, "Recipr.",
-                                                    MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
-                                                    HorizontalAlignment.Center, VerticalAlignment.Center,
-                                                    Overflow.Ignore);
-                                                new UIButton(buttonActor, () =>
-                                                {
-                                                    storageExpressionRenderer.Expression =
-                                                        MathOperator.Negate(
-                                                            storageExpressionRenderer.Expression);
-                                                });
-                                            })
-                                            .AddBothStretchedElement("inverse", buttonActor =>
-                                            {
-                                                new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
-                                                new BoundedTextRenderer(buttonActor, "Inverse",
-                                                    MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
-                                                    HorizontalAlignment.Center, VerticalAlignment.Center,
-                                                    Overflow.Ignore);
-                                                new UIButton(buttonActor, () =>
-                                                {
-                                                    storageExpressionRenderer.Expression =
-                                                        MathOperator.Inverse(
-                                                            storageExpressionRenderer.Expression);
-                                                });
                                             });
-                                    });
-                        });
+                                        }
+
+                                        if (allowances.allowMultiplyingTo_Storage)
+                                        {
+                                            storageTopRibbonLayout.AddBothStretchedElement("multiply", buttonActor =>
+                                            {
+                                                new BoundingRectBorder(buttonActor, NumberRenderer.Colors[2]);
+                                                SetupDropSite(buttonActor, MathOperator.Name.Times,
+                                                    expression =>
+                                                    {
+                                                        storageExpressionRenderer.Expression =
+                                                            MathOperator.Multiply(
+                                                                storageExpressionRenderer.Expression,
+                                                                expression);
+                                                    });
+                                            });
+                                        }
+                                    })
+                                    .AddBothStretchedElement("storage inner", storageActor =>
+                                    {
+                                        var dragNumber = new DragNumber(storageActor, Zero.Instance);
+                                        storageExpressionRenderer = dragNumber.expressionRenderer;
+                                    })
+                                    .AddHorizontallyStretchedElement("lower button ribbon", 60,
+                                        lowerButtonRibbonActor =>
+                                        {
+                                            var lowerRibbon = new LayoutGroup(lowerButtonRibbonActor,
+                                                Orientation.Horizontal);
+
+                                            if (allowances.allowNegating_Storage)
+                                            {
+                                                lowerRibbon.AddBothStretchedElement("negate", buttonActor =>
+                                                {
+                                                    new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
+                                                    new BoundedTextRenderer(buttonActor, "Recipr.",
+                                                        MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
+                                                        HorizontalAlignment.Center, VerticalAlignment.Center,
+                                                        Overflow.Ignore);
+                                                    new UIButton(buttonActor, () =>
+                                                    {
+                                                        storageExpressionRenderer.Expression =
+                                                            MathOperator.Negate(
+                                                                storageExpressionRenderer.Expression);
+                                                    });
+                                                });
+                                            }
+
+                                            if (allowances.allowInverting_Storage)
+                                            {
+                                                lowerRibbon.AddBothStretchedElement("inverse", buttonActor =>
+                                                {
+                                                    new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
+                                                    new BoundedTextRenderer(buttonActor, "Inverse",
+                                                        MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
+                                                        HorizontalAlignment.Center, VerticalAlignment.Center,
+                                                        Overflow.Ignore);
+                                                    new UIButton(buttonActor, () =>
+                                                    {
+                                                        storageExpressionRenderer.Expression =
+                                                            MathOperator.Inverse(
+                                                                storageExpressionRenderer.Expression);
+                                                    });
+                                                });
+                                            }
+                                        });
+                            });
+                        }
 
                         controlsLayout.PixelSpacer(32);
 
@@ -207,33 +232,62 @@ namespace LD49
                     {
                         new Hoverable(overlayPanelActor); // prevents hovers on things below it
                         new BoundingRectFill(overlayContentActor, new Color(Color.Orange, 0.25f));
-                        new LayoutGroup(overlayContentActor, Orientation.Horizontal)
-                            .SetMarginSize(new Point(32, 32))
-                            .HorizontallyStretchedSpacer()
-                            .AddBothStretchedElement("Add Button",
-                                addButton =>
+                        var overlayButtons = new LayoutGroup(overlayContentActor, Orientation.Horizontal);
+                        overlayButtons.SetMarginSize(new Point(32, 32));
+                        overlayButtons.SetPaddingBetweenElements(100);
+                        overlayButtons.HorizontallyStretchedSpacer();
+
+                        if (allowances.allowAddingTo_Expression)
+                        {
+                            overlayButtons.AddBothStretchedElement("Add Button", button =>
+                            {
+                                SetupOverlayButton(button, MathOperator.Name.Plus, Color.Orange, expression =>
                                 {
-                                    SetupOverlayButton(addButton, MathOperator.Name.Plus, Color.Orange, expression =>
+                                    mainExpressionRenderer.Expression =
+                                        MathOperator.Add(mainExpressionRenderer.Expression, expression);
+                                });
+                            });
+                        }
+
+                        if (allowances.allowSubtractingTo_Expression)
+                        {
+                            overlayButtons.AddBothStretchedElement("Subtract Button", button =>
+                            {
+                                SetupOverlayButton(button, MathOperator.Name.Minus, Color.Orange, expression =>
+                                {
+                                    mainExpressionRenderer.Expression =
+                                        MathOperator.Subtract(mainExpressionRenderer.Expression, expression);
+                                });
+                            });
+                        }
+
+                        if (allowances.allowMultiplyingTo_Expression)
+                        {
+                            overlayButtons.AddBothStretchedElement("Multiply Button", button =>
+                            {
+                                SetupOverlayButton(button, MathOperator.Name.Times, Color.Orange,
+                                    expression =>
                                     {
                                         mainExpressionRenderer.Expression =
-                                            MathOperator.Add(mainExpressionRenderer.Expression, expression);
+                                            MathOperator.Multiply(mainExpressionRenderer.Expression, expression);
                                     });
-                                })
-                            .HorizontallyStretchedSpacer()
-                            .AddBothStretchedElement("Multiply Button",
-                                multiplyButton =>
+                            });
+                        }
+
+                        if (allowances.allowDividingTo_Expression)
+                        {
+                            overlayButtons.AddBothStretchedElement("Divide Button", button =>
+                            {
+                                SetupOverlayButton(button, MathOperator.Name.Divide, Color.Orange, expression =>
                                 {
-                                    SetupOverlayButton(multiplyButton, MathOperator.Name.Times, Color.Orange,
-                                        expression =>
-                                        {
-                                            mainExpressionRenderer.Expression =
-                                                MathOperator.Multiply(mainExpressionRenderer.Expression, expression);
-                                        });
-                                })
-                            .HorizontallyStretchedSpacer()
-                            ;
-                    })
-                    ;
+                                    mainExpressionRenderer.Expression =
+                                        MathOperator.Divide(mainExpressionRenderer.Expression, expression);
+                                });
+                            });
+                        }
+
+                        overlayButtons.HorizontallyStretchedSpacer();
+                    });
 
                 new OverlayTrigger(overlayPanelActor, Reckoning.DragHand, expressionHoverable,
                     Vector2.Zero);

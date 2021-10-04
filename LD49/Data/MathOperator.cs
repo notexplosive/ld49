@@ -7,6 +7,7 @@
             Plus,
             Minus,
             Times,
+            FractionBar,
             Divide
         }
 

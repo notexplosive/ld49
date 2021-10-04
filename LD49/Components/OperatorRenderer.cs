@@ -62,7 +62,7 @@ namespace LD49.Components
                     transform.Depth, 8f);
             }
 
-            if (this.symbol == MathOperator.Name.Divide)
+            if (this.symbol == MathOperator.Name.FractionBar)
             {
                 // Underscore underneath the number
                 var longLegLength = this.reckonRenderer.ShortSide / 2;

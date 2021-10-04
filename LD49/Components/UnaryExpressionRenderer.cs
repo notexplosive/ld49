@@ -37,7 +37,7 @@ namespace LD49.Components
                     firstActor =>
                     {
                         new NumberRenderer(firstActor, One.Instance, false);
-                        new OperatorRenderer(firstActor, MathOperator.Name.Divide, Color.Gray, false);
+                        new OperatorRenderer(firstActor, MathOperator.Name.FractionBar, Color.Gray, false);
                     });
             }
 
