@@ -38,6 +38,7 @@ namespace LD49
                 new OperatorRenderer(buttonActor, operatorName, Color.White, false);
                 new Hoverable(buttonActor);
                 new DropSite(buttonActor, Reckoning.DragHand, onDrop);
+                new TooltipProvider(buttonActor, "DropSite");
             }
 
             // Build Main Expression

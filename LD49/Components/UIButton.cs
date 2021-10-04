@@ -15,6 +15,7 @@ namespace LD49.Components
         {
             this.callback = callback;
             new Hoverable(this.actor);
+            new TooltipProvider(this.actor, "Button");
             this.clickable = new Clickable(this.actor);
 
             this.clickable.OnClick += OnClick;

@@ -1,5 +1,8 @@
 ﻿using Machina.Components;
 using Machina.Engine;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 
 namespace LD49.Components
 {
@@ -8,9 +11,11 @@ namespace LD49.Components
         private readonly string tooltipText;
         private Hoverable hoverable;
         private bool hasSetup = false;
+        private readonly BoundingRect boundingRect;
 
         public TooltipProvider(Actor actor, string tooltipText) : base(actor)
         {
+            this.boundingRect = RequireComponent<BoundingRect>();
             this.tooltipText = tooltipText;
         }
 
@@ -26,6 +31,14 @@ namespace LD49.Components
                 }
 
                 this.hasSetup = true;
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (this.hoverable != null && this.hoverable.IsHovered)
+            {
+                spriteBatch.FillRectangle(this.boundingRect.Rect, new Color(Color.Orange, 0.15f), transform.Depth + 20);
             }
         }
 
