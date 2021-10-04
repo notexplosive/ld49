@@ -13,9 +13,12 @@
         public bool allowMultiplyingTo_Storage;
         public bool allowInverting_Storage;
         public bool allowNegating_Storage;
-        public bool AllowStorage => this.allowAddingTo_Storage && this.allowMultiplyingTo_Storage && this.allowInverting_Storage &&
-                                    this.allowNegating_Storage;
-        
+
+        public bool AllowStorage => this.allowAddingTo_Storage
+                                    || this.allowMultiplyingTo_Storage
+                                    || this.allowInverting_Storage
+                                    || this.allowNegating_Storage;
+
         // VALUES
         public bool allowXNamedValue;
         public bool allowAllPrimes;

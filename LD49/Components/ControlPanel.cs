@@ -20,15 +20,21 @@ namespace LD49.Components
         private readonly LayoutGroup layout;
         private readonly ExpressionRenderer mainExpressionRenderer;
 
-        public ControlPanel(Actor actor, ExpressionRenderer mainExpressionRenderer) : base(actor)
+        public ControlPanel(Actor actor, ExpressionRenderer mainExpressionRenderer, Allowances allowances) : base(actor)
         {
             this.allNumbers = new List<MathExpression>();
             this.allNumbers.Add(Zero.Instance);
             this.allNumbers.Add(One.Instance);
-            this.allNumbers.Add(NamedVariable.X);
-            this.allNumbers.Add(NamedVariable.Y);
-            this.allNumbers.Add(NamedVariable.Z);
-            this.allNumbers.AddRange(Prime.All.Values);
+
+            if (allowances.allowXNamedValue)
+            {
+                this.allNumbers.Add(NamedVariable.X);
+            }
+
+            if (allowances.allowAllPrimes)
+            {
+                this.allNumbers.AddRange(Prime.All.Values);
+            }
 
             this.layout = RequireComponent<LayoutGroup>();
             this.mainExpressionRenderer = mainExpressionRenderer;
@@ -43,11 +49,6 @@ namespace LD49.Components
             if (pageNumber != 0)
             {
                 BuildNavigationButton("Previous Page", NavigationImage.Previous, () => LoadNumberPage(pageNumber - 1));
-            }
-            else
-            {
-                // does nothing, just clears tooltip
-                // BuildNavigationButton("", NavigationImage.None, () => { });
             }
 
             var isAtEnd = false;
@@ -73,11 +74,6 @@ namespace LD49.Components
             if (!isAtEnd)
             {
                 BuildNavigationButton("Next Page", NavigationImage.Next, () => LoadNumberPage(pageNumber + 1));
-            }
-            else
-            {
-                // does nothing, just clears tooltip
-                // BuildNavigationButton("", NavigationImage.None, () => { });
             }
         }
 

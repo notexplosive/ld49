@@ -40,7 +40,7 @@ namespace LD49
                         ))),
                 One.Instance);
 
-            var allowances = new Allowances();
+            var allowances = new Allowances {allowAddingTo_Storage = true};
 
             BuildLevel(gameScene, allowances, expression);
         }
@@ -213,7 +213,7 @@ namespace LD49
                                 MachinaGame.Assets.GetSpriteFont("DefaultFont"), NumberRenderer.Colors[4],
                                 HorizontalAlignment.Center);
 
-                            new ControlPanel(inventoryActor, mainExpressionRenderer);
+                            new ControlPanel(inventoryActor, mainExpressionRenderer, allowances);
                         });
                     });
             }
