@@ -58,5 +58,18 @@ namespace TestLD49
                 MathOperator.Multiply(MathOperator.Multiply(NamedVariable.X, NamedVariable.Y),
                     MathOperator.Negate(One.Instance)));
         }
+
+        [Fact]
+        public void multiply_by_negative_one_twice_to_be_positive()
+        {
+            MathOperator.Multiply(
+                    MathOperator.Negate(One.Instance),
+                    MathOperator.Multiply(
+                        MathOperator.Negate(One.Instance),
+                        MathOperator.Multiply(
+                            NamedVariable.X,
+                            NamedVariable.Y)))
+                .Should().Be(MathOperator.Multiply(NamedVariable.X, NamedVariable.Y));
+        }
     }
 }
