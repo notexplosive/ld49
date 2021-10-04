@@ -50,5 +50,13 @@ namespace TestLD49
             AddMathExpression.Distribute(thingToDistribute, addExpression as AddMathExpression).ToString().Should()
                 .Be("((Z * (X + Y)) + ((X + Y) * 7))");
         }
+
+        [Fact]
+        public void negate_a_multiplication_should_multiply_by_negative_one()
+        {
+            MathOperator.Negate(MathOperator.Multiply(NamedVariable.X, NamedVariable.Y)).Should().Be(
+                MathOperator.Multiply(MathOperator.Multiply(NamedVariable.X, NamedVariable.Y),
+                    MathOperator.Negate(One.Instance)));
+        }
     }
 }
