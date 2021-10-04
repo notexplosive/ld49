@@ -92,7 +92,7 @@ namespace LD49
                     equationLayout.AddVerticallyStretchedElement("equals sign", 40,
                         equalsSignActor =>
                         {
-                            new OperatorRenderer(equationActor, MathOperator.Name.Equals, Color.White, false);
+                            new OperatorRenderer(equalsSignActor, MathOperator.Name.Equals, Color.White, false);
                         });
 
                     if (!startingEquation.isJustExpression)
@@ -180,7 +180,7 @@ namespace LD49
                                             lowerRibbon.AddBothStretchedElement("negate", buttonActor =>
                                             {
                                                 new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
-                                                new BoundedTextRenderer(buttonActor, "Recipr.",
+                                                new BoundedTextRenderer(buttonActor, "Negate",
                                                     MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
                                                     HorizontalAlignment.Center, VerticalAlignment.Center,
                                                     Overflow.Ignore);
@@ -198,7 +198,7 @@ namespace LD49
                                             lowerRibbon.AddBothStretchedElement("inverse", buttonActor =>
                                             {
                                                 new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
-                                                new BoundedTextRenderer(buttonActor, "Inverse",
+                                                new BoundedTextRenderer(buttonActor, "Recipr.",
                                                     MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
                                                     HorizontalAlignment.Center, VerticalAlignment.Center,
                                                     Overflow.Ignore);
@@ -315,8 +315,11 @@ namespace LD49
 
         private static bool IsInvalidState(MathExpression expression, MathExpression winningExpression)
         {
-            // dab on the haters
-            return expression.ToString().Contains(winningExpression.ToString());
+            // fuck it, we're using ToString()
+            bool isInTermsOfItself = expression.ToString().Contains(winningExpression.ToString());
+            bool isInTermsOfInfinity = expression.ToString().Contains(Infinity.Instance.ToString());
+
+            return isInTermsOfInfinity || isInTermsOfItself;
         }
 
         private static void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName, Color color,

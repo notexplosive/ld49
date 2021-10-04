@@ -7,6 +7,8 @@ namespace LD49.Data
         public static Level[] All =
         {
             new Level(Allowances.EverythingEnabled,
+                new Equation(Infinity.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
+            new Level(Allowances.EverythingEnabled,
                 new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
             new Level(Allowances.EverythingEnabled, new Equation(Prime.Seven)),
             new Level(Allowances.EverythingEnabled,

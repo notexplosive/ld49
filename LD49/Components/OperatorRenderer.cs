@@ -3,6 +3,7 @@ using Machina.Components;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 
 namespace LD49.Components
 {
@@ -68,6 +69,29 @@ namespace LD49.Components
                 var longLegLength = this.reckonRenderer.ShortSide / 2;
                 LineDrawer.DrawLine(spriteBatch, center + new Vector2(longLegLength, longLegLength),
                     center + new Vector2(-longLegLength, longLegLength), this.color,
+                    transform.Depth, 8f);
+            }
+
+            if (this.symbol == MathOperator.Name.Divide)
+            {
+                spriteBatch.DrawCircle(new CircleF(center + new Vector2(0, -legLength), 10), 20, this.color, 8f,
+                    transform.Depth);
+                spriteBatch.DrawCircle(new CircleF(center + new Vector2(0, legLength), 10), 20, this.color, 8f,
+                    transform.Depth);
+
+                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(legLength, 0), this.color,
+                    transform.Depth, 8f);
+                LineDrawer.DrawLine(spriteBatch, center, center + new Vector2(-legLength, 0), this.color,
+                    transform.Depth, 8f);
+            }
+
+            if (this.symbol == MathOperator.Name.Equals)
+            {
+                LineDrawer.DrawLine(spriteBatch, center + new Vector2(-legLength / 2, -20),
+                    center + new Vector2(legLength, -20), this.color,
+                    transform.Depth, 8f);
+                LineDrawer.DrawLine(spriteBatch, center + new Vector2(-legLength / 2, 20),
+                    center + new Vector2(legLength, 20), this.color,
                     transform.Depth, 8f);
             }
 
