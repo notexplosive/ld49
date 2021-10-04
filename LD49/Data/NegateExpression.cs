@@ -9,32 +9,32 @@
 
         public override int UnderlyingValue => -this.inner.UnderlyingValue;
 
-        public static MathExpression Create(MathExpression value)
+        public static MathExpression Create(MathExpression expression)
         {
-            if (value is Zero)
+            if (expression is Zero)
             {
                 return Zero.Instance;
             }
 
-            if (value is NegateExpression givenNegate)
+            if (expression is NegateExpression givenNegate)
             {
                 // (-(-X)) -> X
                 return givenNegate.inner;
             }
 
-            if (value is MultiplyMathExpression multiplyMathExpression)
+            if (expression is MultiplyMathExpression multiplyMathExpression)
             {
                 // -(X * Y) -> (-1) * X * Y
-                return MathOperator.Multiply(value, NegateExpression.Create(One.Instance));
+                return MathOperator.Multiply(expression, NegateExpression.Create(One.Instance));
             }
 
-            if (value is AddMathExpression addMathExpression)
+            if (expression is AddMathExpression addMathExpression)
             {
                 // -(X + Y) -> (-X) + (-Y)
                 return AddMathExpression.Distribute(NegateExpression.Create(One.Instance), addMathExpression);
             }
 
-            return new NegateExpression(value);
+            return new NegateExpression(expression);
         }
     }
 }

@@ -100,6 +100,17 @@ namespace LD49.Data
             return MultiplyMathExpression.Simplify(builder.Build());
         }
 
+        public static MathExpression InverseEach(MultiplyMathExpression multiplyMathExpression)
+        {
+            MathExpression result = One.Instance;
+            foreach (var item in multiplyMathExpression.content)
+            {
+                result = MathOperator.Multiply(result, MathOperator.Inverse(item));
+            }
+
+            return result;
+        }
+
         private class Builder : TransitiveBuilder<Builder, MultiplyMathExpression>
         {
             public override MultiplyMathExpression Build()
