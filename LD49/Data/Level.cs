@@ -120,7 +120,55 @@ namespace LD49.Data
             
             Poem.IntroduceReciprocal,
             
+            // 1/X = 1, multiply by X
+            new Level(
+                new Allowances()
+                    .EnableDividingTo_Expression()
+                    .EnableInverting_Storage()
+                    .EnableMultiplyingTo_Storage()
+                    .SetStorageStartValue_One()
+                    .EnableXNamedValue(),
+                new Equation(
+                    One.Instance, MathOperator.Inverse(NamedVariable.X))
+            ),
             
+            // : storage can only mul and invert, main expression can only mul
+            new Level(
+                new Allowances()
+                    .EnableMultiplyingTo_Expression()
+                    .EnableInverting_Storage()
+                    .EnableMultiplyingTo_Storage()
+                    .EnableXNamedValue()
+                    .SetStorageStartValue_One()
+                    .EnableAllPrimes(),
+                new Equation(
+                    One.Instance, MultiplyMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, Prime.Three, Prime.Seven))
+                ),
+            
+            // : storage can only add,mul and negate, main expression can only add
+            new Level(
+                new Allowances()
+                    .EnableMultiplyingTo_Expression()
+                    .EnableInverting_Storage()
+                    .EnableAddingTo_Storage()
+                    .EnableMultiplyingTo_Storage()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(
+                    One.Instance, MultiplyMathExpression.CreateMany(NamedVariable.X, AddMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Five)))
+            ),
+            
+            new Level(
+                new Allowances()
+                    .EnableMultiplyingTo_Expression()
+                    .EnableInverting_Storage()
+                    .EnableAddingTo_Storage()
+                    .EnableMultiplyingTo_Storage()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(
+                    Zero.Instance, MultiplyMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, AddMathExpression.CreateMany(Prime.Three, MathOperator.Inverse(Prime.Seven), Prime.Five), Prime.Seven))
+            ),
             
             // : 0 = X * 1 * 1 * 1 -> X (can only multiply on main and Invert in storage)
             // : storage can only multiply and invert, main expression can only multiply
