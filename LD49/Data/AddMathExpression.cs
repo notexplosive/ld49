@@ -13,6 +13,17 @@ namespace LD49.Data
             return prevValue + currentValue;
         }
 
+        public static MathExpression CreateMany(params MathExpression[] many)
+        {
+            var builder = new Builder();
+            foreach (var item in many)
+            {
+                builder.Add(item);
+            }
+
+            return AddMathExpression.Simplify(builder.Build());
+        }
+
         public static MathExpression Create(MathExpression left, MathExpression right)
         {
             // X + (A + B) -> X + A + B

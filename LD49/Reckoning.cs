@@ -11,7 +11,7 @@ namespace LD49
     {
         private static int currentLevelIndex;
 
-        private static Scene gameScene;
+        public static Scene gameScene;
         // public static BoundedTextRenderer tooltipTextRenderer;
 
         public Reckoning(string[] args) : base("The Reckoning", args, new Point(1600, 900), new Point(1600, 900),
@@ -19,17 +19,34 @@ namespace LD49
         {
         }
 
-        public static DragHand DragHand { private set; get; }
+        public static DragHand DragHand { set; get; }
 
-        public static Level CurrentLevel => Level.All[Reckoning.currentLevelIndex];
+        public static Level CurrentLevel => Level.All[Reckoning.currentLevelIndex] as Level;
 
         protected override void OnGameLoad()
         {
             SceneLayers.BackgroundColor = Color.Black;
             Reckoning.gameScene = SceneLayers.AddNewScene();
 
-            var level = Level.All[0];
-            Reckoning.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
+            Reckoning.LoadLevel(0);
+        }
+
+        private static void LoadLevel(int i)
+        {
+            if (i >= Level.All.Length)
+                return;
+            
+            var thing = Level.All[i];
+
+            if (thing is Level level)
+            {
+                Reckoning.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
+            }
+
+            if (thing is Poem poem)
+            {
+                Poem.BuildPageScene(poem, 0);
+            }
         }
 
         public static void BuildLevel(Allowances allowances, Equation startingEquation,
@@ -91,10 +108,7 @@ namespace LD49
                         VerticalAlignment.Center, Overflow.Ignore);
                     new Hoverable(button);
                     new TooltipProvider(button, "Reset");
-                    new Clickable(button).OnClick += (button) =>
-                    {
-                        Reckoning.ReloadLevel();
-                    };
+                    new Clickable(button).OnClick += button => { Reckoning.ReloadLevel(); };
                 });
 
                 gameLayout.AddBothStretchedElement("equation", equationActor =>
@@ -360,15 +374,12 @@ namespace LD49
         public static void LoadNextLevel()
         {
             Reckoning.currentLevelIndex++;
-
-            var level = Level.All[Reckoning.currentLevelIndex];
-            Reckoning.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
+            Reckoning.LoadLevel(Reckoning.currentLevelIndex);
         }
-        
+
         public static void ReloadLevel()
         {
-            var level = Level.All[Reckoning.currentLevelIndex];
-            Reckoning.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
+            Reckoning.LoadLevel(Reckoning.currentLevelIndex);
         }
     }
 }

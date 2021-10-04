@@ -1,18 +1,35 @@
-﻿using System;
+﻿using LD49.Components;
 
 namespace LD49.Data
 {
-    public class Level
+    public interface ILevel
     {
-        public static Level[] All =
+    }
+
+    public class Level : ILevel
+    {
+        public static ILevel[] All =
         {
-            new Level(Allowances.EverythingEnabled,
-                new Equation(Infinity.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
+            Poem.Introduction,
+            new Level(Allowances.OnlyAddSubtract_OneZero_Tutorial,
+                new Equation(MathOperator.Add(One.Instance, MathOperator.Add(One.Instance, One.Instance))),
+                Zero.Instance),
+            Poem.IntroducePrimes,
+            // 3 levels with just primes
+            //      - just add and subtract
             new Level(Allowances.EverythingEnabled,
                 new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
-            new Level(Allowances.EverythingEnabled, new Equation(Prime.Seven)),
-            new Level(Allowances.EverythingEnabled,
-                new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X)))
+            //      - just multiply and divide
+            //      - both multiply and divide together
+            Poem.IntroduceNegative,
+            // : 0 = X + 1 + 1 + 1 -> X (can only add on main and Negate in storage)
+            // : storage can only add and negate, main expression can only add
+            Poem.IntroduceReciprocal,
+            // : 0 = X * 1 * 1 * 1 -> X (can only multiply on main and Invert in storage)
+            // : storage can only multiply and invert, main expression can only multiply
+            Poem.IntroduceInfinity,
+            // Everything is enabled
+            Poem.Credits,
         };
 
         public readonly Allowances allowances;

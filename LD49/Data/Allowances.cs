@@ -51,5 +51,30 @@
             // leaving this off for now, I think it's too confusing
             allowDistribute = false
         };
+        
+        public static readonly Allowances OnlyAddSubtract_OneZero_Tutorial = new Allowances
+        {
+            // MAIN EXPRESSION
+            allowAddingTo_Expression = true,
+            allowSubtractingTo_Expression = true,
+            allowDividingTo_Expression = false,
+            allowMultiplyingTo_Expression = false,
+
+            // STORAGE
+            allowAddingTo_Storage = false,
+            allowMultiplyingTo_Storage = false,
+            allowInverting_Storage = false,
+            allowNegating_Storage = false,
+
+            // VALUES
+            allowXNamedValue = false,
+            allowAllPrimes = false,
+            
+            // AD-HOC
+            firstLevelTutorial = true,
+            
+            // leaving this off for now, I think it's too confusing
+            allowDistribute = false
+        };
     }
 }

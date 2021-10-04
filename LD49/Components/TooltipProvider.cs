@@ -40,7 +40,7 @@ namespace LD49.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (this.hoverable != null && this.hoverable.IsHovered && !Reckoning.DragHand.IsHolding)
+            if (this.hoverable != null && this.hoverable.IsHovered && (Reckoning.DragHand == null || !Reckoning.DragHand.IsHolding))
             {
                 spriteBatch.FillRectangle(this.boundingRect.Rect, new Color(Color.Orange, 0.15f), transform.Depth + 20);
             }
