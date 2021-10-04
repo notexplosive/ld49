@@ -51,8 +51,8 @@ namespace LD49.Data
             return $"({string.Join($" {this.symbol} ", this.content)})";
         }
 
-        protected static List<MathExpression> FilterExpressions(MathExpression[] allExpressions,
-            SpecialNumber eraseNumber, Func<MathExpression, MathExpression> invertFunction)
+        protected static List<MathExpression> FilterOppositeExpressions(MathExpression[] allExpressions,
+            SpecialNumber eraser, Func<MathExpression, MathExpression> invertFunction)
         {
             for (var i = 0; i < allExpressions.Length; i++)
             {
@@ -65,8 +65,8 @@ namespace LD49.Data
 
                         if (left == invertFunction(right) || right == invertFunction(left))
                         {
-                            allExpressions[i] = eraseNumber;
-                            allExpressions[j] = eraseNumber;
+                            allExpressions[i] = eraser;
+                            allExpressions[j] = eraser;
                         }
                     }
                 }
@@ -76,7 +76,7 @@ namespace LD49.Data
 
             foreach (var exp in allExpressions)
             {
-                if (exp != eraseNumber)
+                if (exp != eraser)
                 {
                     result.Add(exp);
                 }

@@ -29,7 +29,7 @@ namespace LD49.Data
 
             // Cancel out inverses
             var finalExpressions =
-                TransitiveExpression.FilterExpressions(expression.content.ToArray(), One.Instance,
+                TransitiveExpression.FilterOppositeExpressions(expression.content.ToArray(), One.Instance,
                     MathOperator.Inverse);
 
             if (finalExpressions.Count > 1)

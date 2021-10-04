@@ -34,7 +34,7 @@ namespace LD49.Data
         {
             // Cancel out negates
             var finalExpressions =
-                TransitiveExpression.FilterExpressions(expression.content.ToArray(), Zero.Instance,
+                TransitiveExpression.FilterOppositeExpressions(expression.content.ToArray(), Zero.Instance,
                     MathOperator.Negate);
 
             if (finalExpressions.Count > 1)
