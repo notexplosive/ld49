@@ -17,26 +17,50 @@ namespace LD49.Data
         public static readonly Prime Nineteen = new Prime(19);
         public static readonly Prime TwentyThree = new Prime(23);
         public static readonly Prime TwentyNine = new Prime(29);
-        public static readonly Prime ThirtyOne = new Prime(31);
-        public static readonly Prime ThirtySeven = new Prime(37);
-        public static readonly Prime FortyOne = new Prime(41);
-        public static readonly Prime FortyThree = new Prime(43);
-        public static readonly Prime FortySeven = new Prime(47);
-        public static readonly Prime FiftyThree = new Prime(53);
-        public static readonly Prime FiftyNine = new Prime(59);
-        public static readonly Prime SixtyOne = new Prime(61);
-        public static readonly Prime SixtySeven = new Prime(67);
-        public static readonly Prime SeventyOne = new Prime(71);
-        public static readonly Prime SeventyThree = new Prime(73);
-        public static readonly Prime SeventyNine = new Prime(79);
-        public static readonly Prime EightyThree = new Prime(83);
-        public static readonly Prime EightyNine = new Prime(89);
-        public static readonly Prime NinetySeven = new Prime(97);
+        public static readonly Prime ThirtyOne = Prime.Create(31);
+
+        public static readonly Prime[] LittlePrimes =
+        {
+            Prime.Two,
+            Prime.Three,
+            Prime.Five,
+            Prime.Seven,
+            Prime.Eleven,
+            Prime.Thirteen,
+            Prime.Seventeen,
+            Prime.Nineteen,
+            Prime.TwentyThree,
+            Prime.TwentyNine,
+            Prime.ThirtyOne
+        };
 
         private Prime(int value) : base(value)
         {
             Prime.IndexLookup.Add(this, Prime.All.Count);
             Prime.All.Add(this.value, this);
         }
+
+        public static Prime Create(int value)
+        {
+            return new Prime(value);
+        }
+    }
+
+    public static class BigPrime
+    {
+        public static readonly Prime ThirtySeven = Prime.Create(37);
+        public static readonly Prime FortyOne = Prime.Create(41);
+        public static readonly Prime FortyThree = Prime.Create(43);
+        public static readonly Prime FortySeven = Prime.Create(47);
+        public static readonly Prime FiftyThree = Prime.Create(53);
+        public static readonly Prime FiftyNine = Prime.Create(59);
+        public static readonly Prime SixtyOne = Prime.Create(61);
+        public static readonly Prime SixtySeven = Prime.Create(67);
+        public static readonly Prime SeventyOne = Prime.Create(71);
+        public static readonly Prime SeventyThree = Prime.Create(73);
+        public static readonly Prime SeventyNine = Prime.Create(79);
+        public static readonly Prime EightyThree = Prime.Create(83);
+        public static readonly Prime EightyNine = Prime.Create(89);
+        public static readonly Prime NinetySeven = Prime.Create(97);
     }
 }

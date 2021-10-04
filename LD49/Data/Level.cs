@@ -38,8 +38,8 @@ namespace LD49.Data
                     .EnableAddingTo_Expression().EnableSubtractingTo_Expression()
                     .EnableXNamedValue()
                     .EnableAllPrimes(),
-                new Equation(MathOperator.Add(Prime.FiftyNine, Prime.Seven),
-                    AddMathExpression.CreateMany(Prime.Thirteen, Prime.Seventeen, Prime.EightyNine, NamedVariable.X))),
+                new Equation(MathOperator.Add(Prime.Eleven, Prime.Seven),
+                    AddMathExpression.CreateMany(Prime.Thirteen, Prime.Seventeen, Prime.Two, NamedVariable.X))),
             //      - just multiply and divide
             //      todo: this is basically identical to the previous one... maybe that's OK?
             new Level(
@@ -47,8 +47,8 @@ namespace LD49.Data
                     .EnableDividingTo_Expression().EnableMultiplyingTo_Expression()
                     .EnableXNamedValue()
                     .EnableAllPrimes(),
-                new Equation(MathOperator.Multiply(Prime.FiftyNine, Prime.Seven),
-                    MultiplyMathExpression.CreateMany(Prime.Thirteen, Prime.Seventeen, Prime.EightyNine,
+                new Equation(MathOperator.Multiply(Prime.Two, Prime.Seven),
+                    MultiplyMathExpression.CreateMany(Prime.Thirteen, Prime.Seventeen, Prime.Three,
                         NamedVariable.X))),
             //      - both mul/div and add/sub - "easy mode"
             new Level(
@@ -59,16 +59,16 @@ namespace LD49.Data
                     .EnableAllPrimes(),
                 new Equation(
                     MathOperator.Add(
-                        Prime.ThirtyOne,
-                        Prime.SeventyThree),
+                        Prime.Seven,
+                        Prime.Eleven),
                     MultiplyMathExpression.CreateMany(
-                        Prime.SixtyOne,
-                        Prime.SeventyOne,
-                        Prime.SixtySeven,
+                        Prime.Five,
+                        Prime.Three,
+                        Prime.TwentyNine,
                         AddMathExpression.CreateMany(
                             MathOperator.Multiply(NamedVariable.X, Prime.TwentyThree),
-                            Prime.Five,
-                            Prime.FiftyThree)))),
+                            Prime.Nineteen,
+                            Prime.Seventeen)))),
 
             Poem.IntroduceNegative,
 

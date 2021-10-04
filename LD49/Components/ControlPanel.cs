@@ -33,7 +33,7 @@ namespace LD49.Components
 
             if (allowances.allowAllPrimes)
             {
-                this.allNumbers.AddRange(Prime.All.Values);
+                this.allNumbers.AddRange(Prime.LittlePrimes);
             }
 
             this.layout = RequireComponent<LayoutGroup>();

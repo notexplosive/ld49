@@ -22,8 +22,8 @@ namespace LD49.Components
             new Page("these are Primes",
                 MultiplyMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Thirteen, Prime.TwentyNine)),
             new Page("some people think they're important",
-                MultiplyMathExpression.CreateMany(Prime.Eleven, Prime.FiftyThree, Prime.FortyOne, Prime.ThirtySeven,
-                    Prime.FiftyNine)),
+                MultiplyMathExpression.CreateMany(Prime.Eleven, Prime.Three, Prime.TwentyNine, Prime.Five,
+                    Prime.Nineteen)),
             new Page("i think they're clutter", Zero.Instance),
             new Page("push them all to one side so we can isolate the X", NamedVariable.X)
         );
@@ -48,7 +48,7 @@ namespace LD49.Components
                     MathOperator.Add(Prime.Two, MathOperator.Add(Prime.Eleven, Prime.Three)))),
             new Page("subtracting is just adding a Negative", MathOperator.Add(NamedVariable.X, MathOperator.Negate(Prime.Two))),
             new Page("i have created a space in the corner to help you think about this",
-                MathOperator.Negate(MathOperator.Add(Prime.NinetySeven, Prime.FiftyNine))));
+                MathOperator.Negate(MathOperator.Add(Prime.Seven, Prime.Seventeen))));
 
         public static Poem IntroduceReciprocal = new Poem(
             new Page("this is a Reciprocal", MathOperator.Inverse(Prime.Thirteen)),
@@ -60,7 +60,7 @@ namespace LD49.Components
                     MathOperator.Multiply(Prime.Two, MathOperator.Multiply(Prime.Eleven, Prime.Three)))),
             new Page("dividing is just multiplying by a Reciprocal", MathOperator.Multiply(NamedVariable.X, MathOperator.Inverse(Prime.Two))),
             new Page("i have modified the corner space to use Reciprocals",
-                MathOperator.Inverse(MathOperator.Add(Prime.NinetySeven, Prime.FiftyNine))));
+                MathOperator.Inverse(MathOperator.Add(Prime.Nineteen, Prime.TwentyNine))));
 
         public static Poem IntroduceInfinity = new Poem(
             new Page("this is Antizero", Infinity.Instance),
@@ -73,9 +73,9 @@ namespace LD49.Components
         );
 
         public static Poem Credits = new Poem(
-            new Page("thank you for playing", Prime.SeventyNine),
-            new Page("more games like this at NotExplosive.net", Prime.NinetySeven),
-            new Page("please wishlist 'Three in a Rogue' on steam\n(sorry for the shameless plug)", Prime.FiftyThree)
+            new Page("thank you for playing", BigPrime.SeventyNine),
+            new Page("more games like this at NotExplosive.net", BigPrime.NinetySeven),
+            new Page("please wishlist 'Three in a Rogue' on steam\n(sorry for the shameless plug)", BigPrime.FiftyThree)
         );
 
         private readonly Page[] pages;
