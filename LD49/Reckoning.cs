@@ -82,6 +82,21 @@ namespace LD49
                 var gameLayout = new LayoutGroup(gameScreen, Orientation.Vertical);
                 gameLayout.SetMarginSize(new Point(100, 50));
 
+                gameLayout.AddElement("reset button", new Point(300, 100), button =>
+                {
+                    new BoundingRectBorder(button, NumberRenderer.Colors[6]);
+                    new BoundedTextRenderer(button, "Reset",
+                        MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
+                        HorizontalAlignment.Center,
+                        VerticalAlignment.Center, Overflow.Ignore);
+                    new Hoverable(button);
+                    new TooltipProvider(button, "Reset");
+                    new Clickable(button).OnClick += (button) =>
+                    {
+                        Reckoning.ReloadLevel();
+                    };
+                });
+
                 gameLayout.AddBothStretchedElement("equation", equationActor =>
                 {
                     var equationLayout = new LayoutGroup(equationActor, Orientation.Horizontal);
@@ -346,6 +361,12 @@ namespace LD49
         {
             Reckoning.currentLevelIndex++;
 
+            var level = Level.All[Reckoning.currentLevelIndex];
+            Reckoning.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
+        }
+        
+        public static void ReloadLevel()
+        {
             var level = Level.All[Reckoning.currentLevelIndex];
             Reckoning.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
         }
