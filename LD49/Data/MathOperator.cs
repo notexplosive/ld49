@@ -8,7 +8,8 @@
             Minus,
             Times,
             FractionBar,
-            Divide
+            Divide,
+            Equals
         }
 
         public static MathExpression Multiply(MathExpression left, MathExpression right)

@@ -1,28 +1,34 @@
-﻿namespace LD49.Data
+﻿using System;
+
+namespace LD49.Data
 {
     public class Level
     {
         public static Level[] All =
         {
-            new Level(Allowances.EverythingEnabled, Prime.Seven),
-            new Level(Allowances.EverythingEnabled, Prime.Thirteen)
+            new Level(Allowances.EverythingEnabled,
+                new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
+            new Level(Allowances.EverythingEnabled, new Equation(Prime.Seven)),
+            new Level(Allowances.EverythingEnabled,
+                new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X)))
         };
 
         public readonly Allowances allowances;
         public readonly MathExpression endingExpression = NamedVariable.X;
-        public readonly MathExpression startingExpression = One.Instance;
+        public readonly Equation startingEquation = new Equation(One.Instance, One.Instance);
 
         public Level(Allowances allowances)
         {
             this.allowances = allowances;
         }
 
-        public Level(Allowances allowances, MathExpression startingExpression) : this(allowances)
+        public Level(Allowances allowances, Equation startingEquation) : this(allowances)
         {
-            this.startingExpression = startingExpression;
+            this.startingEquation = startingEquation;
         }
-        
-        public Level(Allowances allowances, MathExpression startingExpression, MathExpression endingExpression) : this(allowances,startingExpression)
+
+        public Level(Allowances allowances, Equation startingEquation, MathExpression endingExpression) : this(
+            allowances, startingEquation)
         {
             this.endingExpression = endingExpression;
         }

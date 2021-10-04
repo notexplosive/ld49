@@ -18,10 +18,9 @@ namespace LD49.Components
 
         private readonly List<MathExpression> allNumbers;
         private readonly LayoutGroup layout;
-        private readonly ExpressionRenderer mainExpressionRenderer;
         private readonly Allowances allowances;
 
-        public ControlPanel(Actor actor, ExpressionRenderer mainExpressionRenderer, Allowances allowances) : base(actor)
+        public ControlPanel(Actor actor, Allowances allowances) : base(actor)
         {
             this.allNumbers = new List<MathExpression>();
             this.allNumbers.Add(Zero.Instance);
@@ -38,7 +37,6 @@ namespace LD49.Components
             }
 
             this.layout = RequireComponent<LayoutGroup>();
-            this.mainExpressionRenderer = mainExpressionRenderer;
 
             this.allowances = allowances;
             LoadNumberPage(0);

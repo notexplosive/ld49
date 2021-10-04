@@ -23,6 +23,9 @@
         public bool allowXNamedValue;
         public bool allowAllPrimes;
 
+        // WHATEVER THIS IS
+        public bool allowDistribute;
+        
         // AD-HOC
         public bool firstLevelTutorial;
 
@@ -43,7 +46,10 @@
 
             // VALUES
             allowXNamedValue = true,
-            allowAllPrimes = true
+            allowAllPrimes = true,
+            
+            // leaving this off for now
+            allowDistribute = false
         };
     }
 }

@@ -11,15 +11,13 @@ namespace LD49.Components
         private readonly DragHand dragHand;
         private readonly Vector2 offPosition;
         private readonly Vector2 onPosition;
-        private readonly Hoverable targetHoverable;
         private readonly TweenChain tween = new TweenChain();
         private bool isOn;
 
-        public OverlayTrigger(Actor actor, DragHand dragHand, Hoverable targetHoverable, Vector2 onPosition) :
+        public OverlayTrigger(Actor actor, DragHand dragHand, Vector2 onPosition) :
             base(actor)
         {
             this.dragHand = dragHand;
-            this.targetHoverable = targetHoverable;
             this.onPosition = onPosition;
             this.offPosition = transform.Position;
             this.actor.Visible = false;
@@ -57,7 +55,7 @@ namespace LD49.Components
                 TweenTo(this.offPosition);
                 this.tween.AppendCallback(() => this.actor.Visible = false);
             }
-            
+
             this.isOn = false;
         }
 
