@@ -27,7 +27,8 @@ namespace LD49
             var allowances = new Allowances
             {
                 allowSubtractingTo_Expression = true,
-                allowAddingTo_Expression = true
+                allowAddingTo_Expression = true,
+                firstLevelTutorial = true,
             };
 
             BuildLevel(gameScene, allowances, expression);

@@ -22,5 +22,8 @@
         // VALUES
         public bool allowXNamedValue;
         public bool allowAllPrimes;
+        
+        // AD-HOC
+        public bool firstLevelTutorial;
     }
 }

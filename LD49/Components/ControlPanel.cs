@@ -19,6 +19,7 @@ namespace LD49.Components
         private readonly List<MathExpression> allNumbers;
         private readonly LayoutGroup layout;
         private readonly ExpressionRenderer mainExpressionRenderer;
+        private readonly Allowances allowances;
 
         public ControlPanel(Actor actor, ExpressionRenderer mainExpressionRenderer, Allowances allowances) : base(actor)
         {
@@ -38,6 +39,8 @@ namespace LD49.Components
 
             this.layout = RequireComponent<LayoutGroup>();
             this.mainExpressionRenderer = mainExpressionRenderer;
+
+            this.allowances = allowances;
             LoadNumberPage(0);
         }
 
@@ -77,9 +80,14 @@ namespace LD49.Components
             }
         }
 
-        private void SetupNumberButton(Actor primeButtonActor, MathExpression number)
+        private void SetupNumberButton(Actor numberActor, MathExpression number)
         {
-            new DragNumber(primeButtonActor, number);
+            new DragNumber(numberActor, number);
+
+            if (this.allowances.firstLevelTutorial && number is One)
+            {
+                new TutorialRenderer(numberActor);
+            }
         }
 
         private void BuildNavigationButton(string tooltip, NavigationImage image, Action callback)
