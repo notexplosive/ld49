@@ -247,13 +247,6 @@ namespace TestLD49
         }
 
         [Fact]
-        public void negate_does_not_distribute()
-        {
-            MathOperator.Negate(
-                MathOperator.Add(Prime.Three, Prime.Seven)).ToString().Should().Be("(-(3 + 7))");
-        }
-
-        [Fact]
         public void expression_over_expression_is_one()
         {
             MathOperator.Divide(
@@ -274,15 +267,19 @@ namespace TestLD49
         }
 
         [Fact]
-        public void expressions_do_not_cancel_out_add()
+        public void expressions_cancel_out_add()
         {
-            MathOperator.Subtract(MathOperator.Add(Prime.Five, Prime.Three),MathOperator.Add(Prime.Three, Prime.Five)).ToString().Should().Be("((-(3 + 5)) + 3 + 5)");
+            MathOperator.Subtract(MathOperator.Add(Prime.Five, Prime.Three), MathOperator.Add(Prime.Three, Prime.Five))
+                .ToString()
+                .Should().Be("0");
         }
-        
+
         [Fact]
-        public void expressions_do_not_cancel_out_multiply()
+        public void expressions_cancel_out_multiply()
         {
-            MathOperator.Divide(MathOperator.Multiply(Prime.Five, Prime.Three),MathOperator.Multiply(Prime.Three, Prime.Five)).ToString().Should().Be("((1 / (3 * 5)) * 3 * 5)");
+            MathOperator
+                .Divide(MathOperator.Multiply(Prime.Five, Prime.Three), MathOperator.Multiply(Prime.Three, Prime.Five))
+                .ToString().Should().Be("1");
         }
     }
 }

@@ -32,7 +32,7 @@ namespace TestLD49
                     Prime.Seven);
 
             AddMathExpression.Distribute(thingToDistribute, addExpression as AddMathExpression).ToString().Should()
-                .Be("((Y * (-(X + 11))) + (7 * (-(X + 11))) + (-(X + 11)))");
+                .Be("((-X) + (-11) + (Y * ((-X) + (-11))) + (7 * ((-X) + (-11))))");
         }
 
         [Fact]

@@ -25,6 +25,9 @@ namespace LD49.Components
             this.allNumbers = new List<MathExpression>();
             this.allNumbers.Add(Zero.Instance);
             this.allNumbers.Add(One.Instance);
+            this.allNumbers.Add(NamedVariable.X);
+            this.allNumbers.Add(NamedVariable.Y);
+            this.allNumbers.Add(NamedVariable.Z);
             this.allNumbers.AddRange(Prime.All.Values);
 
             this.layout = RequireComponent<LayoutGroup>();
