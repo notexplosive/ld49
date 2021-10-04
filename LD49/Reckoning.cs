@@ -23,6 +23,28 @@ namespace LD49
             SceneLayers.BackgroundColor = Color.Black;
             var gameScene = SceneLayers.AddNewScene();
 
+            BuildLevel(gameScene);
+        }
+
+        private void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName, Color color,
+            Action<MathExpression> onDrop)
+        {
+            new BoundingRectFill(buttonActor, new Color(color, 0.25f));
+            new OperatorRenderer(buttonActor, operatorName, Color.White, false);
+            new Hoverable(buttonActor);
+            new DropSite(buttonActor, Reckoning.DragHand, onDrop);
+        }
+
+        private void SetupDropSite(Actor buttonActor, MathOperator.Name operatorName, Action<MathExpression> onDrop)
+        {
+            new OperatorRenderer(buttonActor, operatorName, Color.White, false);
+            new Hoverable(buttonActor);
+            new DropSite(buttonActor, Reckoning.DragHand, onDrop);
+            new TooltipProvider(buttonActor, "DropSite");
+        }
+
+        private void BuildLevel(Scene gameScene)
+        {
             ExpressionRenderer mainExpressionRenderer = null;
             ExpressionRenderer storageExpressionRenderer = null;
             Hoverable expressionHoverable = null;
@@ -32,14 +54,6 @@ namespace LD49
             new BoundingRect(hand, new Point(200, 200)).SetOffsetToCenter();
 
             Reckoning.DragHand = new DragHand(hand);
-
-            void SetupDropSite(Actor buttonActor, MathOperator.Name operatorName, Action<MathExpression> onDrop)
-            {
-                new OperatorRenderer(buttonActor, operatorName, Color.White, false);
-                new Hoverable(buttonActor);
-                new DropSite(buttonActor, Reckoning.DragHand, onDrop);
-                new TooltipProvider(buttonActor, "DropSite");
-            }
 
             // Build Main Expression
             {
@@ -132,7 +146,7 @@ namespace LD49
                                             .AddBothStretchedElement("negate", buttonActor =>
                                             {
                                                 new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
-                                                new BoundedTextRenderer(buttonActor, "Negate",
+                                                new BoundedTextRenderer(buttonActor, "Recipr.",
                                                     MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
                                                     HorizontalAlignment.Center, VerticalAlignment.Center,
                                                     Overflow.Ignore);
@@ -168,22 +182,14 @@ namespace LD49
                             new LayoutGroup(inventoryActor, Orientation.Horizontal)
                                 .SetMarginSize(new Point(50, 50))
                                 .SetPaddingBetweenElements(5);
-                            
+
                             new BoundedTextRenderer(inventoryActor, "Codex (Drag from here)",
-                                MachinaGame.Assets.GetSpriteFont("DefaultFont"), NumberRenderer.Colors[5], HorizontalAlignment.Center, VerticalAlignment.Top);
-                            
+                                MachinaGame.Assets.GetSpriteFont("DefaultFont"), NumberRenderer.Colors[4],
+                                HorizontalAlignment.Center);
+
                             new ControlPanel(inventoryActor, mainExpressionRenderer);
                         });
                     });
-            }
-
-            void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName, Color color,
-                Action<MathExpression> onDrop)
-            {
-                new BoundingRectFill(buttonActor, new Color(color, 0.25f));
-                new OperatorRenderer(buttonActor, operatorName, Color.White, false);
-                new Hoverable(buttonActor);
-                new DropSite(buttonActor, Reckoning.DragHand, onDrop);
             }
 
             // Build overlay panel
