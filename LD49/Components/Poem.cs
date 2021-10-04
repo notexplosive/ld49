@@ -28,6 +28,16 @@ namespace LD49.Components
             new Page("push them all to one side so we can isolate the X", NamedVariable.X)
         );
 
+        public static Poem IntroduceX = new Poem(
+            new Page("this is X", NamedVariable.X),
+            new Page("they are precious", NamedVariable.X),
+            new Page("they are delicate", NamedVariable.X),
+            new Page("they must be kept safe in their own expression", NamedVariable.X),
+            new Page("from now on your goal is to isolate X", NamedVariable.X),
+            new Page("do not destroy X or you will have to start again", Zero.Instance),
+            new Page("stay away from dangerous numbers", Infinity.Instance)
+        );
+
         public static Poem IntroduceNegative = new Poem(
             new Page("this is a Negative", MathOperator.Negate(Prime.Thirteen)),
             new Page("every Number has a Negative, except Zero", Zero.Instance),
@@ -63,7 +73,7 @@ namespace LD49.Components
         public static Poem Credits = new Poem(
             new Page("thank you for playing", Prime.SeventyNine),
             new Page("more games like this at NotExplosive.net", Prime.NinetySeven),
-            new Page("please wishlist 'Three in a Rogue' on steam", Prime.FiftyThree)
+            new Page("please wishlist 'Three in a Rogue' on steam\n(sorry for the shameless plug)", Prime.FiftyThree)
         );
 
         private readonly Page[] pages;

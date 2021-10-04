@@ -20,8 +20,8 @@ namespace LD49.Data
                 new Equation(MathOperator.Add(One.Instance, MathOperator.Add(One.Instance, One.Instance))),
                 Zero.Instance),
             
-            // Poem.Introduce X
-            
+            Poem.IntroduceX,
+            // one level X + 1 = 1 
             Poem.IntroducePrimes,
             // 3 levels with just primes
             //      - just add and subtract

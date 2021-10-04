@@ -4,6 +4,7 @@ using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace LD49
 {
@@ -27,6 +28,15 @@ namespace LD49
         {
             SceneLayers.BackgroundColor = Color.Black;
             Reckoning.gameScene = SceneLayers.AddNewScene();
+
+            var otherScene = SceneLayers.AddNewScene();
+            new AdHoc(otherScene.AddActor("debug")).onKey += (key, state, modifiers) =>
+            {
+                if (modifiers.ControlShift && key == Keys.Space && state == ButtonState.Pressed)
+                {
+                    Reckoning.LoadNextLevel();
+                }
+            };
 
             Reckoning.LoadLevel(0);
         }
