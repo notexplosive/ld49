@@ -13,8 +13,6 @@ namespace LD49.Components
             new Page("this is One", One.Instance),
             new Page("they are stable", Zero.Instance),
             new Page("they are safe", One.Instance),
-            new Page("they are the bedrock on which all other Numbers stand",
-                MathOperator.Add(One.Instance, MathOperator.Add(One.Instance, One.Instance))),
             new Page("your task: turn this sequence of Ones into Zero",
                 MathOperator.Add(One.Instance, MathOperator.Add(One.Instance, One.Instance))));
 

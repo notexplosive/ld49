@@ -26,7 +26,29 @@ namespace LD49
 
         protected override void OnGameLoad()
         {
-            SceneLayers.BackgroundColor = Color.Black;
+            SceneLayers.BackgroundColor = new Color(0.01f, 0.01f, 0.01f);
+            var backgroundScene = SceneLayers.AddNewScene();
+
+            var operatorNames = new[]
+            {
+                MathOperator.Name.Divide,
+                MathOperator.Name.Plus,
+                MathOperator.Name.Minus,
+                MathOperator.Name.Times
+            };
+
+            for (var i = 0; i < 50; i++)
+            {
+                var actor = backgroundScene.AddActor("Orbitter");
+                new BoundingRect(actor, new Point(60, 60));
+                new OperatorRenderer(actor, operatorNames[MachinaGame.Random.Dirty.Next(operatorNames.Length)],
+                    new Color(0.01f, 0.01f, 0.1f),
+                    false);
+                new Orbitter(actor, backgroundScene.camera.ViewportCenter,
+                    MachinaGame.Random.Dirty.NextFloat() * 0.5f + 0.1f,
+                    this.startingWindowSize);
+            }
+
             Reckoning.gameScene = SceneLayers.AddNewScene();
 
             var otherScene = SceneLayers.AddNewScene();
@@ -44,8 +66,10 @@ namespace LD49
         private static void LoadLevel(int i)
         {
             if (i >= Level.All.Length)
+            {
                 return;
-            
+            }
+
             var thing = Level.All[i];
 
             if (thing is Level level)
@@ -207,7 +231,8 @@ namespace LD49
                                 })
                                 .AddBothStretchedElement("storage inner", storageActor =>
                                 {
-                                    var dragNumber = new DragNumber(storageActor, allowances.storageStartValue_One ? One.Instance : Zero.Instance);
+                                    var dragNumber = new DragNumber(storageActor,
+                                        allowances.storageStartValue_One ? One.Instance : Zero.Instance);
                                     storageExpressionRenderer = dragNumber.expressionRenderer;
                                 })
                                 .AddHorizontallyStretchedElement("lower button ribbon", 60,
