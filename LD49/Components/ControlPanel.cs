@@ -65,11 +65,12 @@ namespace LD49.Components
 
                             SetupNumberButton(primeButtonActor, prime);
                         }
-                        else
-                        {
-                            isAtEnd = true;
-                        }
                     });
+                
+                if (this.allNumbers.Count-1 <= i)
+                {
+                    isAtEnd = true;
+                }
             }
 
             if (!isAtEnd)
