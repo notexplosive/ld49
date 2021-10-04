@@ -89,7 +89,7 @@ namespace LD49.Components
             {
                 var primeIndex = GetPrimeIndex(prime);
 
-                var pageSize = 5;
+                var pageSize = 4;
                 var color = GetColor(primeIndex);
                 var sideCount = primeIndex % pageSize + 3;
                 var pageIndex = primeIndex / pageSize + 1;
