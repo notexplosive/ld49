@@ -35,7 +35,6 @@ namespace LD49.Components
 
         private void DragStart(Vector2 mousePos, Vector2 delta)
         {
-            MachinaGame.Print("Picked up", this.expressionRenderer.Expression);
             Reckoning.DragHand.PickUp(this.renderer);
             Reckoning.DragHand.actor.Visible = true;
         }

@@ -4,12 +4,18 @@ using System.Linq;
 using LD49.Data;
 using Machina.Components;
 using Machina.Engine;
-using Microsoft.Xna.Framework;
 
 namespace LD49.Components
 {
     public class ControlPanel : BaseComponent
     {
+        public enum NavigationImage
+        {
+            Next,
+            Previous,
+            None
+        }
+
         private readonly List<MathExpression> allNumbers;
         private readonly LayoutGroup layout;
         private readonly ExpressionRenderer mainExpressionRenderer;
@@ -33,12 +39,12 @@ namespace LD49.Components
 
             if (pageNumber != 0)
             {
-                BuildNavigationButton("Previous Page", () => LoadNumberPage(pageNumber - 1));
+                BuildNavigationButton("Previous Page", NavigationImage.Previous, () => LoadNumberPage(pageNumber - 1));
             }
             else
             {
                 // does nothing, just clears tooltip
-                BuildNavigationButton("", () => { });
+                BuildNavigationButton("", NavigationImage.None, () => { });
             }
 
             var isAtEnd = false;
@@ -63,12 +69,12 @@ namespace LD49.Components
 
             if (!isAtEnd)
             {
-                BuildNavigationButton("Next Page", () => LoadNumberPage(pageNumber + 1));
+                BuildNavigationButton("Next Page", NavigationImage.Next, () => LoadNumberPage(pageNumber + 1));
             }
             else
             {
                 // does nothing, just clears tooltip
-                BuildNavigationButton("", () => { });
+                BuildNavigationButton("", NavigationImage.None, () => { });
             }
         }
 
@@ -77,7 +83,7 @@ namespace LD49.Components
             new DragNumber(primeButtonActor, number);
         }
 
-        private void BuildNavigationButton(string tooltip, Action callback)
+        private void BuildNavigationButton(string tooltip, NavigationImage image, Action callback)
         {
             this.layout.AddBothStretchedElement("navigationButton", navigationButtonActor =>
             {
@@ -89,6 +95,8 @@ namespace LD49.Components
                 {
                     callback();
                 }
+
+                new NavigationArrowRenderer(navigationButtonActor, image);
 
                 clickable.OnClick += ClickAction;
                 new CallbackOnDestroy(navigationButtonActor, () => clickable.OnClick -= ClickAction);
