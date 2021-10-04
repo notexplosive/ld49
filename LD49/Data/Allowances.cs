@@ -13,6 +13,7 @@
         public bool allowMultiplyingTo_Storage;
         public bool allowInverting_Storage;
         public bool allowNegating_Storage;
+        public bool storageStartValue_One;
 
         public bool AllowStorage => this.allowAddingTo_Storage
                                     || this.allowMultiplyingTo_Storage
@@ -146,6 +147,12 @@
         public Allowances EnableDistribute()
         {
             this.allowDistribute = true;
+            return this;
+        }
+
+        public Allowances SetStorageStartValue_One()
+        {
+            this.storageStartValue_One = true;
             return this;
         }
     }

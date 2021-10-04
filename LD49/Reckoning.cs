@@ -207,7 +207,7 @@ namespace LD49
                                 })
                                 .AddBothStretchedElement("storage inner", storageActor =>
                                 {
-                                    var dragNumber = new DragNumber(storageActor, Zero.Instance);
+                                    var dragNumber = new DragNumber(storageActor, allowances.storageStartValue_One ? One.Instance : Zero.Instance);
                                     storageExpressionRenderer = dragNumber.expressionRenderer;
                                 })
                                 .AddHorizontallyStretchedElement("lower button ribbon", 60,
