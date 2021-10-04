@@ -16,6 +16,13 @@
                 return Infinity.Instance;
             }
 
+            if (expression is NegateExpression givenNegateExpression)
+            {
+                // (1 / (-X)) -> (-(1 / X))
+                var negateContent = MathOperator.Negate(givenNegateExpression);
+                return MathOperator.Negate(Create(negateContent));
+            }
+
             if (expression is InverseExpression givenInverse)
             {
                 // (1 / (1 / X)) -> X

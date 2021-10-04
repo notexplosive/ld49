@@ -89,5 +89,35 @@ namespace TestLD49
                     MathOperator.Multiply(MathOperator.Inverse(NamedVariable.X),MathOperator.Inverse(NamedVariable.Y))
                 );
         }
+
+        [Fact]
+        public void inverse_four_times_cancels_out()
+        {
+            MathOperator.Inverse(
+                MathOperator.Inverse(
+                    MathOperator.Inverse(
+                        MathOperator.Inverse(NamedVariable.X
+                        )))).Should().Be(NamedVariable.X);
+        }
+        
+        [Fact]
+        public void inverse_and_negate_are_order_agnostic()
+        {
+            MathOperator.Inverse(
+                MathOperator.Negate(
+                    NamedVariable.X
+                        )).Should().Be(
+                MathOperator.Negate(
+                    MathOperator.Inverse(
+                NamedVariable.X)));
+            
+            MathOperator.Negate(
+                MathOperator.Inverse(
+                    NamedVariable.X
+                )).Should().Be(
+                MathOperator.Inverse(
+                    MathOperator.Negate(
+                        NamedVariable.X)));
+        }
     }
 }

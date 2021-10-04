@@ -25,7 +25,9 @@ namespace LD49.Data
 
             new Level(
                 new Allowances().EnableAddingTo_Expression().EnableSubtractingTo_Expression().EnableXNamedValue(),
-                new Equation(AddMathExpression.CreateMany(NamedVariable.X, One.Instance,One.Instance,One.Instance,One.Instance,One.Instance), One.Instance)
+                new Equation(
+                    AddMathExpression.CreateMany(NamedVariable.X, One.Instance, One.Instance, One.Instance,
+                        One.Instance, One.Instance), One.Instance)
             ),
 
             Poem.IntroducePrimes,
@@ -64,23 +66,33 @@ namespace LD49.Data
                         Prime.SeventyOne,
                         Prime.SixtySeven,
                         AddMathExpression.CreateMany(
-                            MathOperator.Multiply(NamedVariable.X, Prime.TwentyThree), 
-                            Prime.Five, 
+                            MathOperator.Multiply(NamedVariable.X, Prime.TwentyThree),
+                            Prime.Five,
                             Prime.FiftyThree)))),
 
             Poem.IntroduceNegative,
-            
-            // -X = 0, multiply by negative one
+
+            // -X = -1, multiply by negative one
             new Level(
                 new Allowances()
                     .EnableMultiplyingTo_Expression()
+                    .EnableAddingTo_Storage()
+                    .EnableNegating_Storage(),
+                new Equation(
+                    MathOperator.Negate(One.Instance), MathOperator.Negate(NamedVariable.X))
+            ),
+            
+            // -X = 0, subtract -X
+            new Level(
+                new Allowances()
+                    .EnableSubtractingTo_Expression()
                     .EnableAddingTo_Storage()
                     .EnableNegating_Storage()
                     .EnableXNamedValue(),
                 new Equation(
                     Zero.Instance, MathOperator.Negate(NamedVariable.X))
             ),
-            
+
             // : storage can only add and negate, main expression can only add
             new Level(
                 new Allowances()
@@ -90,9 +102,10 @@ namespace LD49.Data
                     .EnableXNamedValue()
                     .EnableAllPrimes(),
                 new Equation(
-                    Zero.Instance, AddMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, Prime.Three, Prime.Seven))
-                ),
-            
+                    Zero.Instance,
+                    AddMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, Prime.Three, Prime.Seven))
+            ),
+
             // : storage can only add,mul and negate, main expression can only add
             new Level(
                 new Allowances()
@@ -103,9 +116,11 @@ namespace LD49.Data
                     .EnableXNamedValue()
                     .EnableAllPrimes(),
                 new Equation(
-                    Zero.Instance, AddMathExpression.CreateMany(NamedVariable.X, MultiplyMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Five)))
+                    Zero.Instance,
+                    AddMathExpression.CreateMany(NamedVariable.X,
+                        MultiplyMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Five)))
             ),
-            
+
             new Level(
                 new Allowances()
                     .EnableAddingTo_Expression()
@@ -115,11 +130,14 @@ namespace LD49.Data
                     .EnableXNamedValue()
                     .EnableAllPrimes(),
                 new Equation(
-                    Zero.Instance, AddMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, MultiplyMathExpression.CreateMany(Prime.Three, MathOperator.Negate(Prime.Seven), Prime.Five), Prime.Seven))
+                    Zero.Instance,
+                    AddMathExpression.CreateMany(NamedVariable.X, Prime.Eleven,
+                        MultiplyMathExpression.CreateMany(Prime.Three, MathOperator.Negate(Prime.Seven), Prime.Five),
+                        Prime.Seven))
             ),
-            
+
             Poem.IntroduceReciprocal,
-            
+
             // 1/X = 1, multiply by X
             new Level(
                 new Allowances()
@@ -131,7 +149,7 @@ namespace LD49.Data
                 new Equation(
                     One.Instance, MathOperator.Inverse(NamedVariable.X))
             ),
-            
+
             // : storage can only mul and invert, main expression can only mul
             new Level(
                 new Allowances()
@@ -142,9 +160,10 @@ namespace LD49.Data
                     .SetStorageStartValue_One()
                     .EnableAllPrimes(),
                 new Equation(
-                    One.Instance, MultiplyMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, Prime.Three, Prime.Seven))
-                ),
-            
+                    One.Instance,
+                    MultiplyMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, Prime.Three, Prime.Seven))
+            ),
+
             // : storage can only add,mul and negate, main expression can only add
             new Level(
                 new Allowances()
@@ -155,9 +174,11 @@ namespace LD49.Data
                     .EnableXNamedValue()
                     .EnableAllPrimes(),
                 new Equation(
-                    One.Instance, MultiplyMathExpression.CreateMany(NamedVariable.X, AddMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Five)))
+                    One.Instance,
+                    MultiplyMathExpression.CreateMany(NamedVariable.X,
+                        AddMathExpression.CreateMany(Prime.Three, Prime.Seven, Prime.Five)))
             ),
-            
+
             new Level(
                 new Allowances()
                     .EnableMultiplyingTo_Expression()
@@ -167,13 +188,39 @@ namespace LD49.Data
                     .EnableXNamedValue()
                     .EnableAllPrimes(),
                 new Equation(
-                    Zero.Instance, MultiplyMathExpression.CreateMany(NamedVariable.X, Prime.Eleven, AddMathExpression.CreateMany(Prime.Three, MathOperator.Inverse(Prime.Seven), Prime.Five), Prime.Seven))
+                    One.Instance,
+                    MultiplyMathExpression.CreateMany(NamedVariable.X, Prime.Eleven,
+                        AddMathExpression.CreateMany(Prime.Three, MathOperator.Inverse(Prime.Seven), Prime.Five),
+                        Prime.Seven))
             ),
-            
-            // : 0 = X * 1 * 1 * 1 -> X (can only multiply on main and Invert in storage)
-            // : storage can only multiply and invert, main expression can only multiply
+
             Poem.IntroduceInfinity,
-            // Everything is enabled, except you can only add and multiply on main expression
+
+            // neg(X) * neg(inv(7)) * inv(5)
+            new Level(
+                new Allowances()
+                    .EnableMultiplyingTo_Expression()
+                    .EnableAddingTo_Expression()
+                    .EnableInverting_Storage()
+                    .EnableNegating_Storage()
+                    .EnableAddingTo_Storage()
+                    .EnableMultiplyingTo_Storage()
+                    .EnableXNamedValue()
+                    .EnableAllPrimes(),
+                new Equation(
+                    One.Instance,
+                    MathOperator.Add(
+                        One.Instance,
+                    MultiplyMathExpression.CreateMany(
+                        Prime.Three,
+                        MathOperator.Negate(NamedVariable.X),
+                        MathOperator.Negate(MathOperator.Inverse(Prime.Seven)),
+                        MathOperator.Inverse(Prime.Five)
+                    )))
+            ),
+
+            // x in complex expressions on both sides, need to extract them out
+
             Poem.Credits
         };
 

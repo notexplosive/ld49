@@ -166,7 +166,7 @@ namespace LD49
                     {
                         controlsLayout.AddVerticallyStretchedElement("storage", 300, storageActorWrapper =>
                         {
-                            new BoundingRectBorder(storageActorWrapper, NumberRenderer.Colors[1]);
+                            new BoundingRectBorder(storageActorWrapper, NumberRenderer.Colors[5]);
                             new LayoutGroup(storageActorWrapper, Orientation.Vertical)
                                 .SetMarginSize(new Point(10, 10))
                                 .AddHorizontallyStretchedElement("button ribbon", 60, buttonRibbonActor =>
@@ -178,7 +178,7 @@ namespace LD49
                                     {
                                         storageTopRibbonLayout.AddBothStretchedElement("add", buttonActor =>
                                         {
-                                            new BoundingRectBorder(buttonActor, NumberRenderer.Colors[2]);
+                                            new BoundingRectBorder(buttonActor, NumberRenderer.Colors[6]);
                                             Reckoning.SetupDropSite(buttonActor, MathOperator.Name.Plus,
                                                 expression =>
                                                 {
@@ -193,7 +193,7 @@ namespace LD49
                                     {
                                         storageTopRibbonLayout.AddBothStretchedElement("multiply", buttonActor =>
                                         {
-                                            new BoundingRectBorder(buttonActor, NumberRenderer.Colors[2]);
+                                            new BoundingRectBorder(buttonActor, NumberRenderer.Colors[6]);
                                             Reckoning.SetupDropSite(buttonActor, MathOperator.Name.Times,
                                                 expression =>
                                                 {
