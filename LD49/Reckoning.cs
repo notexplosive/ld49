@@ -23,35 +23,19 @@ namespace LD49
             SceneLayers.BackgroundColor = Color.Black;
             var gameScene = SceneLayers.AddNewScene();
 
-            var expression = MathOperator.Add(One.Instance, One.Instance);
+            var startingExpression = MathOperator.Add(One.Instance, One.Instance);
             var allowances = new Allowances
             {
                 allowSubtractingTo_Expression = true,
                 allowAddingTo_Expression = true,
-                firstLevelTutorial = true,
+                firstLevelTutorial = true
             };
 
-            BuildLevel(gameScene, allowances, expression);
+            Reckoning.BuildLevel(gameScene, allowances, startingExpression, Zero.Instance);
         }
 
-        private void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName, Color color,
-            Action<MathExpression> onDrop)
-        {
-            new BoundingRectFill(buttonActor, new Color(color, 0.25f));
-            new OperatorRenderer(buttonActor, operatorName, Color.White, false);
-            new Hoverable(buttonActor);
-            new DropSite(buttonActor, Reckoning.DragHand, onDrop);
-        }
-
-        private void SetupDropSite(Actor buttonActor, MathOperator.Name operatorName, Action<MathExpression> onDrop)
-        {
-            new OperatorRenderer(buttonActor, operatorName, Color.White, false);
-            new Hoverable(buttonActor);
-            new DropSite(buttonActor, Reckoning.DragHand, onDrop);
-            new TooltipProvider(buttonActor, "DropSite");
-        }
-
-        private void BuildLevel(Scene gameScene, Allowances allowances, MathExpression startingExpression)
+        public static void BuildLevel(Scene gameScene, Allowances allowances, MathExpression startingExpression,
+            MathExpression winningExpression)
         {
             gameScene.DeleteAllActors();
 
@@ -77,9 +61,12 @@ namespace LD49
                         expressionHoverable = new Hoverable(expressionActor);
                         mainExpressionRenderer = new ExpressionRenderer(expressionActor, true, startingExpression);
 
-                        mainExpressionRenderer.OnExpressionChange += () =>
+                        mainExpressionRenderer.OnExpressionChange += newExpression =>
                         {
-                            /* Reckoning.tooltipTextRenderer.Text = ""; */
+                            if (newExpression == winningExpression)
+                            {
+                                new LevelTransition(gameScreen, true);
+                            }
                         };
                     })
                     /*
@@ -114,12 +101,13 @@ namespace LD49
                                             storageTopRibbonLayout.AddBothStretchedElement("add", buttonActor =>
                                             {
                                                 new BoundingRectBorder(buttonActor, NumberRenderer.Colors[2]);
-                                                SetupDropSite(buttonActor, MathOperator.Name.Plus, expression =>
-                                                {
-                                                    storageExpressionRenderer.Expression =
-                                                        MathOperator.Add(storageExpressionRenderer.Expression,
-                                                            expression);
-                                                });
+                                                Reckoning.SetupDropSite(buttonActor, MathOperator.Name.Plus,
+                                                    expression =>
+                                                    {
+                                                        storageExpressionRenderer.Expression =
+                                                            MathOperator.Add(storageExpressionRenderer.Expression,
+                                                                expression);
+                                                    });
                                             });
                                         }
 
@@ -128,7 +116,7 @@ namespace LD49
                                             storageTopRibbonLayout.AddBothStretchedElement("multiply", buttonActor =>
                                             {
                                                 new BoundingRectBorder(buttonActor, NumberRenderer.Colors[2]);
-                                                SetupDropSite(buttonActor, MathOperator.Name.Times,
+                                                Reckoning.SetupDropSite(buttonActor, MathOperator.Name.Times,
                                                     expression =>
                                                     {
                                                         storageExpressionRenderer.Expression =
@@ -230,7 +218,7 @@ namespace LD49
                         {
                             overlayButtons.AddBothStretchedElement("Add Button", button =>
                             {
-                                SetupOverlayButton(button, MathOperator.Name.Plus, Color.Orange, expression =>
+                                Reckoning.SetupOverlayButton(button, MathOperator.Name.Plus, Color.Orange, expression =>
                                 {
                                     mainExpressionRenderer.Expression =
                                         MathOperator.Add(mainExpressionRenderer.Expression, expression);
@@ -242,11 +230,12 @@ namespace LD49
                         {
                             overlayButtons.AddBothStretchedElement("Subtract Button", button =>
                             {
-                                SetupOverlayButton(button, MathOperator.Name.Minus, Color.Orange, expression =>
-                                {
-                                    mainExpressionRenderer.Expression =
-                                        MathOperator.Subtract(mainExpressionRenderer.Expression, expression);
-                                });
+                                Reckoning.SetupOverlayButton(button, MathOperator.Name.Minus, Color.Orange,
+                                    expression =>
+                                    {
+                                        mainExpressionRenderer.Expression =
+                                            MathOperator.Subtract(mainExpressionRenderer.Expression, expression);
+                                    });
                             });
                         }
 
@@ -254,7 +243,7 @@ namespace LD49
                         {
                             overlayButtons.AddBothStretchedElement("Multiply Button", button =>
                             {
-                                SetupOverlayButton(button, MathOperator.Name.Times, Color.Orange,
+                                Reckoning.SetupOverlayButton(button, MathOperator.Name.Times, Color.Orange,
                                     expression =>
                                     {
                                         mainExpressionRenderer.Expression =
@@ -267,11 +256,12 @@ namespace LD49
                         {
                             overlayButtons.AddBothStretchedElement("Divide Button", button =>
                             {
-                                SetupOverlayButton(button, MathOperator.Name.Divide, Color.Orange, expression =>
-                                {
-                                    mainExpressionRenderer.Expression =
-                                        MathOperator.Divide(mainExpressionRenderer.Expression, expression);
-                                });
+                                Reckoning.SetupOverlayButton(button, MathOperator.Name.Divide, Color.Orange,
+                                    expression =>
+                                    {
+                                        mainExpressionRenderer.Expression =
+                                            MathOperator.Divide(mainExpressionRenderer.Expression, expression);
+                                    });
                             });
                         }
 
@@ -281,6 +271,24 @@ namespace LD49
                 new OverlayTrigger(overlayPanelActor, Reckoning.DragHand, expressionHoverable,
                     Vector2.Zero);
             }
+        }
+
+        private static void SetupOverlayButton(Actor buttonActor, MathOperator.Name operatorName, Color color,
+            Action<MathExpression> onDrop)
+        {
+            new BoundingRectFill(buttonActor, new Color(color, 0.25f));
+            new OperatorRenderer(buttonActor, operatorName, Color.White, false);
+            new Hoverable(buttonActor);
+            new DropSite(buttonActor, Reckoning.DragHand, onDrop);
+        }
+
+        private static void SetupDropSite(Actor buttonActor, MathOperator.Name operatorName,
+            Action<MathExpression> onDrop)
+        {
+            new OperatorRenderer(buttonActor, operatorName, Color.White, false);
+            new Hoverable(buttonActor);
+            new DropSite(buttonActor, Reckoning.DragHand, onDrop);
+            new TooltipProvider(buttonActor, "DropSite");
         }
     }
 }

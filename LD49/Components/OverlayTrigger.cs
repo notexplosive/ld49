@@ -22,6 +22,7 @@ namespace LD49.Components
             this.targetHoverable = targetHoverable;
             this.onPosition = onPosition;
             this.offPosition = transform.Position;
+            this.actor.Visible = false;
         }
 
         public override void Update(float dt)
@@ -42,6 +43,7 @@ namespace LD49.Components
         {
             if (!this.isOn)
             {
+                this.actor.Visible = true;
                 TweenTo(this.onPosition);
             }
 
@@ -53,6 +55,7 @@ namespace LD49.Components
             if (this.isOn)
             {
                 TweenTo(this.offPosition);
+                this.tween.AppendCallback(() => this.actor.Visible = false);
             }
             
             this.isOn = false;

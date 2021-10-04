@@ -32,11 +32,11 @@ namespace LD49.Components
                 Clear();
                 BuildExpression(value);
                 this.expressionImpl = value;
-                OnExpressionChange?.Invoke();
+                OnExpressionChange?.Invoke(value);
             }
         }
 
-        public event Action OnExpressionChange;
+        public event Action<MathExpression> OnExpressionChange;
 
         private void Clear()
         {
