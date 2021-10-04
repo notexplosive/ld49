@@ -48,7 +48,7 @@
             allowXNamedValue = true,
             allowAllPrimes = true,
             
-            // leaving this off for now
+            // leaving this off for now, I think it's too confusing
             allowDistribute = false
         };
     }

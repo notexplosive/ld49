@@ -44,30 +44,36 @@ namespace LD49.Components
                                 multiplyExpression.CanDistribute())
                             {
                                 operatorLayout.VerticallyStretchedSpacer();
-                                operatorLayout.AddHorizontallyStretchedElement("DistributeButton", 50, buttonActor =>
+                                if (Reckoning.CurrentLevel.allowances.allowDistribute)
                                 {
-                                    new BoundingRectBorder(buttonActor, Color.Orange);
-                                    new BoundedTextRenderer(buttonActor, "Distribute",
-                                        MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
-                                        HorizontalAlignment.Center, VerticalAlignment.Center, Overflow.Ignore);
-                                    new Hoverable(buttonActor);
-                                    var clickable = new Clickable(buttonActor);
-
-                                    void OnClick(MouseButton button)
-                                    {
-                                        if (button == MouseButton.Left)
+                                    operatorLayout.AddHorizontallyStretchedElement("DistributeButton", 50,
+                                        buttonActor =>
                                         {
-                                            var addExpression = expression.GetFirstExpression<AddMathExpression>();
-                                            var everythingElse = multiplyExpression.GetExpressionExcept(addExpression);
-                                            parentExpressionRenderer.Expression =
-                                                AddMathExpression.Distribute(everythingElse, addExpression);
-                                        }
-                                    }
+                                            new BoundingRectBorder(buttonActor, Color.Orange);
+                                            new BoundedTextRenderer(buttonActor, "Distribute",
+                                                MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
+                                                HorizontalAlignment.Center, VerticalAlignment.Center, Overflow.Ignore);
+                                            new Hoverable(buttonActor);
+                                            var clickable = new Clickable(buttonActor);
 
-                                    clickable.OnClick += OnClick;
+                                            void OnClick(MouseButton button)
+                                            {
+                                                if (button == MouseButton.Left)
+                                                {
+                                                    var addExpression =
+                                                        expression.GetFirstExpression<AddMathExpression>();
+                                                    var everythingElse =
+                                                        multiplyExpression.GetExpressionExcept(addExpression);
+                                                    parentExpressionRenderer.Expression =
+                                                        AddMathExpression.Distribute(everythingElse, addExpression);
+                                                }
+                                            }
 
-                                    new CallbackOnDestroy(buttonActor, () => { clickable.OnClick -= OnClick; });
-                                });
+                                            clickable.OnClick += OnClick;
+
+                                            new CallbackOnDestroy(buttonActor, () => { clickable.OnClick -= OnClick; });
+                                        });
+                                }
                             }
 
                             new OperatorRenderer(child,

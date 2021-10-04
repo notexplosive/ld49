@@ -9,7 +9,7 @@ namespace LD49
 {
     public class Reckoning : MachinaGame
     {
-        private static int currentLevel;
+        private static int currentLevelIndex;
 
         private static Scene gameScene;
         // public static BoundedTextRenderer tooltipTextRenderer;
@@ -20,6 +20,8 @@ namespace LD49
         }
 
         public static DragHand DragHand { private set; get; }
+
+        public static Level CurrentLevel => Level.All[Reckoning.currentLevelIndex];
 
         protected override void OnGameLoad()
         {
@@ -56,10 +58,10 @@ namespace LD49
                 }
                 else
                 {
-                    if ((rightExpressionRenderer.Expression == winningExpression
-                        && !Reckoning.IsInvalidState(leftExpressionRenderer.Expression, winningExpression))
-                        || (leftExpressionRenderer.Expression == winningExpression
-                        && !Reckoning.IsInvalidState(rightExpressionRenderer.Expression, winningExpression)))
+                    if (rightExpressionRenderer.Expression == winningExpression
+                        && !Reckoning.IsInvalidState(leftExpressionRenderer.Expression, winningExpression)
+                        || leftExpressionRenderer.Expression == winningExpression
+                        && !Reckoning.IsInvalidState(rightExpressionRenderer.Expression, winningExpression))
                     {
                         new LevelTransition(Reckoning.gameScene.AddActor("Level transition"), true);
                     }
@@ -316,8 +318,8 @@ namespace LD49
         private static bool IsInvalidState(MathExpression expression, MathExpression winningExpression)
         {
             // fuck it, we're using ToString()
-            bool isInTermsOfItself = expression.ToString().Contains(winningExpression.ToString());
-            bool isInTermsOfInfinity = expression.ToString().Contains(Infinity.Instance.ToString());
+            var isInTermsOfItself = expression.ToString().Contains(winningExpression.ToString());
+            var isInTermsOfInfinity = expression.ToString().Contains(Infinity.Instance.ToString());
 
             return isInTermsOfInfinity || isInTermsOfItself;
         }
@@ -342,9 +344,9 @@ namespace LD49
 
         public static void LoadNextLevel()
         {
-            Reckoning.currentLevel++;
+            Reckoning.currentLevelIndex++;
 
-            var level = Level.All[Reckoning.currentLevel];
+            var level = Level.All[Reckoning.currentLevelIndex];
             Reckoning.BuildLevel(level.allowances, level.startingEquation, level.endingExpression);
         }
     }
