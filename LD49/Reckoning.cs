@@ -23,24 +23,12 @@ namespace LD49
             SceneLayers.BackgroundColor = Color.Black;
             var gameScene = SceneLayers.AddNewScene();
 
-            var expression = MathOperator.Multiply(
-                MathOperator.Add(
-                    Prime.Seven,
-                    MathOperator.Multiply(
-                        MathOperator.Add(
-                            Prime.Seventeen,
-                            Prime.FiftyNine),
-                        MathOperator.Add(
-                            MathOperator.Inverse(
-                                MathOperator.Negate(
-                                    MathOperator.Multiply(
-                                        MathOperator.Add(NamedVariable.Z, Prime.Thirteen),
-                                        NamedVariable.X))),
-                            Zero.Instance
-                        ))),
-                One.Instance);
-
-            var allowances = new Allowances {allowAddingTo_Storage = true};
+            var expression = MathOperator.Add(One.Instance, One.Instance);
+            var allowances = new Allowances
+            {
+                allowSubtractingTo_Expression = true,
+                allowAddingTo_Expression = true
+            };
 
             BuildLevel(gameScene, allowances, expression);
         }

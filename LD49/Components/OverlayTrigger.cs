@@ -26,7 +26,7 @@ namespace LD49.Components
 
         public override void Update(float dt)
         {
-            if (this.targetHoverable.IsSoftHovered && this.dragHand.IsHolding)
+            if (this.dragHand.IsHolding)
             {
                 BecomeOn();
             }

@@ -29,6 +29,7 @@ namespace LD49.Components
             this.actor.Visible; // this should probably be the other way around but whatever, visible is a proxy for holding
 
         public event Action<MathExpression> Dropped;
+        public event Action PickedUp;
 
         public override void Update(float dt)
         {
@@ -46,7 +47,9 @@ namespace LD49.Components
         public void PickUp(ExpressionRenderer renderer)
         {
             this.boundingRect.SetSize(renderer.boundingRect.Size);
+            this.boundingRect.CenterToBounds();
             Expression = renderer.Expression;
+            PickedUp?.Invoke();
         }
 
         public void Drop(Vector2 mousePos)
