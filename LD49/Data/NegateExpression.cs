@@ -13,6 +13,7 @@
         {
             if (expression is Zero)
             {
+                // (-0) -> 0
                 return Zero.Instance;
             }
 

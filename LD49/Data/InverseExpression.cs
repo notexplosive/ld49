@@ -15,7 +15,7 @@
             {
                 return Infinity.Instance;
             }
-            
+
             if (expression is InverseExpression givenInverse)
             {
                 // (1 / (1 / X)) -> X

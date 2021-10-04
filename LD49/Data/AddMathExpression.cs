@@ -29,7 +29,7 @@ namespace LD49.Data
             // X + (A + B) -> X + A + B
             return AddMathExpression.Simplify(new Builder().Add(left).Add(right).Build());
         }
-        
+
         public static MathExpression Distribute(MathExpression expression, AddMathExpression addExpression)
         {
             MathExpression result = Zero.Instance;
