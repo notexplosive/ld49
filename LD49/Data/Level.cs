@@ -10,17 +10,28 @@ namespace LD49.Data
     {
         public static ILevel[] All =
         {
+            /*
+            // DEBUG
+            new Level(Allowances.EverythingEnabled,
+                new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
+            // DEBUG
+            */
+            
             Poem.Introduction,
             new Level(Allowances.OnlyAddSubtract_OneZero_Tutorial,
                 new Equation(MathOperator.Add(One.Instance, MathOperator.Add(One.Instance, One.Instance))),
                 Zero.Instance),
+            
+            // Poem.Introduce X
+            
             Poem.IntroducePrimes,
             // 3 levels with just primes
             //      - just add and subtract
             new Level(Allowances.EverythingEnabled,
                 new Equation(Zero.Instance, MathOperator.Add(Prime.Thirteen, NamedVariable.X))),
             //      - just multiply and divide
-            //      - both multiply and divide together
+            //      - both mul/div and add/sub - "easy mode"
+
             Poem.IntroduceNegative,
             // : 0 = X + 1 + 1 + 1 -> X (can only add on main and Negate in storage)
             // : storage can only add and negate, main expression can only add
@@ -28,7 +39,7 @@ namespace LD49.Data
             // : 0 = X * 1 * 1 * 1 -> X (can only multiply on main and Invert in storage)
             // : storage can only multiply and invert, main expression can only multiply
             Poem.IntroduceInfinity,
-            // Everything is enabled
+            // Everything is enabled, except you can only add and multiply on main expression
             Poem.Credits,
         };
 

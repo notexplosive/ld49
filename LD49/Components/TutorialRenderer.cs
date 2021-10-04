@@ -25,24 +25,29 @@ namespace LD49.Components
             this.borderScale = new TweenAccessors<float>(0f);
             this.opacity = new TweenAccessors<float>(0f);
 
-            this.tween.AppendWaitTween(3);
             this.tween.AppendCallback(() =>
             {
                 this.offset.CurrentValue = Vector2.Zero;
                 this.borderScale.CurrentValue = 1f;
+                this.opacity.CurrentValue = 0f;
+            });
+            this.tween.AppendWaitTween(2);
+            this.tween.AppendCallback(() =>
+            {
                 this.opacity.CurrentValue = 1f;
             });
             this.tween.AppendFloatTween(0f, 0.25f, EaseFuncs.EaseOutBack, this.borderScale);
             this.tween.AppendVectorTween(new Vector2(0, -300), 0.5f, EaseFuncs.EaseOutBack, this.offset);
             this.tween.AppendFloatTween(0f, 0.5f, EaseFuncs.CubicEaseOut, this.opacity);
-            this.tween.AppendWaitTween(1);
+
+            Reckoning.DragHand.PickedUp += () => this.tween.Refresh();
 
             // this.tween.AppendCallback(() => this.tween.Refresh());
         }
 
         public override void Update(float dt)
         {
-            if (!Reckoning.DragHand.IsHolding)
+            if (Reckoning.DragHand.IsHolding)
             {
                 this.tween.Refresh();
             }

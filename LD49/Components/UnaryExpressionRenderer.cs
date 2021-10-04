@@ -15,10 +15,10 @@ namespace LD49.Components
 
             var isNegate = expression is NegateExpression;
 
-            var layout = new LayoutGroup(this.actor,
-                isNegate ? Orientation.Horizontal : Orientation.Vertical);
+            var layout = new LayoutGroup(this.actor,Orientation.Horizontal);
 
-            var negateColor = Color.Cyan;
+            layout.SetMarginSize(new Point(8, 8));
+            var color = isNegate ? Color.Cyan : Color.OrangeRed;
 
             if (isHoverable)
             {
@@ -26,30 +26,11 @@ namespace LD49.Components
                 new TooltipProvider(this.actor, expression.ToString());
             }
 
-            if (isNegate)
-            {
-                layout.AddVerticallyStretchedElement("first", 32,
-                    firstActor => { new OperatorRenderer(firstActor, MathOperator.Name.Minus, negateColor, false); });
-            }
-            else
-            {
-                layout.AddBothStretchedElement("first",
-                    firstActor =>
-                    {
-                        new NumberRenderer(firstActor, One.Instance, false);
-                        new OperatorRenderer(firstActor, MathOperator.Name.FractionBar, Color.Gray, false);
-                    });
-            }
-
-            layout.AddBothStretchedElement("second",
-                secondActor =>
+            layout.AddBothStretchedElement("first",
+                firstActor =>
                 {
-                    if (isNegate)
-                    {
-                        new BoundingRectBorder(secondActor, negateColor);
-                    }
-
-                    new ExpressionRenderer(secondActor, isHoverable, expression.GetInnerValue(), isNegate ? 2 : 1);
+                    new BoundingRectBorder(firstActor, color);
+                    new ExpressionRenderer(firstActor, false, expression.GetInnerValue());
                 });
         }
     }

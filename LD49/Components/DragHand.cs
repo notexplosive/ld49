@@ -25,19 +25,14 @@ namespace LD49.Components
             set => this.expressionRenderer.Expression = value;
         }
 
-        public bool IsHolding =>
-            this.actor.Visible; // this should probably be the other way around but whatever, visible is a proxy for holding
+        public bool IsHolding
+        {
+            get;
+            private set;
+        }
 
         public event Action<MathExpression> Dropped;
         public event Action PickedUp;
-
-        public override void Update(float dt)
-        {
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-        }
 
         public override void OnMouseUpdate(Vector2 currentPosition, Vector2 positionDelta, Vector2 rawDelta)
         {
@@ -49,11 +44,13 @@ namespace LD49.Components
             this.boundingRect.SetSize(renderer.boundingRect.Size);
             this.boundingRect.CenterToBounds();
             Expression = renderer.Expression;
+            IsHolding = true;
             PickedUp?.Invoke();
         }
 
         public void Drop(Vector2 mousePos)
         {
+            IsHolding = false;
             Dropped?.Invoke(Expression);
         }
     }

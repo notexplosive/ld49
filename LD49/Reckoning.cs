@@ -210,7 +210,7 @@ namespace LD49
                                         {
                                             lowerRibbon.AddBothStretchedElement("negate", buttonActor =>
                                             {
-                                                new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
+                                                new BoundingRectBorder(buttonActor, Color.Cyan);
                                                 new BoundedTextRenderer(buttonActor, "Negate",
                                                     MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
                                                     HorizontalAlignment.Center, VerticalAlignment.Center,
@@ -228,7 +228,7 @@ namespace LD49
                                         {
                                             lowerRibbon.AddBothStretchedElement("inverse", buttonActor =>
                                             {
-                                                new BoundingRectBorder(buttonActor, NumberRenderer.Colors[3]);
+                                                new BoundingRectBorder(buttonActor, Color.OrangeRed);
                                                 new BoundedTextRenderer(buttonActor, "Recipr.",
                                                     MachinaGame.Assets.GetSpriteFont("DefaultFont"), Color.White,
                                                     HorizontalAlignment.Center, VerticalAlignment.Center,
